@@ -32,6 +32,7 @@ public class FileCheck {
 	public Label verificationStatus;
 	public ProgressBar hashProgress;
 	public Label progressLabel;
+	public Button cancelButton;
 	private File selectedFile;
 
 	private final String[] fileHashAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
@@ -42,8 +43,12 @@ public class FileCheck {
 
 	@FXML
 	public void initialize() {
+		//Populate list with hashing algorithms from fileHashAlgorithms
 		fileHashChoice.getItems().addAll(fileHashAlgorithms);
+		//Set default SHA256 algorithm
 		fileHashChoice.setValue(fileHashAlgorithms[0]);
+		//Disable the cancel button, so it cannot be spammed
+		cancelButton.setDisable(true);
 	}
 
 	@FXML
@@ -88,7 +93,8 @@ public class FileCheck {
 			showError("Please select a file first!");
 			return;
 		}
-
+		//Enable the cancel button when operation starts
+		cancelButton.setDisable(false);
 		resetProgress();
 		cancelRequested = false;
 		HashFunction hashFunction = HashUtils.getHashFunction(fileHashChoice.getValue());
@@ -128,6 +134,8 @@ public class FileCheck {
 				Platform.runLater(() -> showError("Error reading file: " + e.getMessage()));
 			} finally {
 				if (cancelRequested) {
+					//Disable cancel button if cancel action is requested
+					cancelButton.setDisable(true);
 					Platform.runLater(this::resetProgress);
 				}
 			}
@@ -152,6 +160,7 @@ public class FileCheck {
 	@FXML
 	private void handleCancel(ActionEvent event) {
 		cancelRequested = true;
+		cancelButton.setDisable(true);
 		progressLabel.setText("Cancelled - " + progressLabel.getText());
 		hashProgress.setStyle("-fx-accent: #ff4444;");
 	}
