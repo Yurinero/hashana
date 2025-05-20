@@ -1,0 +1,22 @@
+{
+  "SHA256": {
+    "name": "SHA-256",
+    "year": 2001,
+    "history": "Part of the SHA-2 family designed by the NSA...",
+    "security": "Considered secure against preimage attacks...",
+    "usage": "Used in Bitcoin, TLS certificates, and many security applications."
+  },
+  "SHA384": {
+    "name": "SHA-384",
+    "year": 2001,
+    "history": "A truncated version of SHA-512...",
+    "security": "Provides 192-bit security against collision attacks...",
+    "usage": "Commonly used in government systems and digital signatures."
+  },
+  "SHA512": {
+    "name": "SHA-512",
+    "history": "Part of the SHA-2 family...",
+    "security": "Offers 256-bit collision resistance...",
+    "usage": "Used in security protocols requiring long hash lengths."
+  }
+}

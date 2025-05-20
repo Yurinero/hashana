@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="400.0" prefWidth="795.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.FileCheck">
+    <AnchorPane layoutX="14.0" layoutY="41.0" prefHeight="281.0" prefWidth="402.0" styleClass="filePickerAnchor">
+        <children>
+            <Label fx:id="progressLabel" alignment="CENTER" layoutX="10.0" layoutY="217.0" prefHeight="17.0" prefWidth="303.0" text="Progress" />
+            <ChoiceBox fx:id="fileHashChoice" layoutX="157.0" layoutY="43.0" />
+            <TextField fx:id="filePathField" editable="false" layoutX="115.0" layoutY="88.0" />
+            <Button fx:id="calculateHashButton" alignment="CENTER" layoutX="225.0" layoutY="44.0" onAction="#handleCalculateHash" text="Calculate Hash" />
+            <Label layoutX="87.0" layoutY="48.0" text="Algorithm:" />
+            <Label layoutX="47.0" layoutY="92.0" text="Select File:" />
+            <Label layoutX="27.0" layoutY="123.0" text="Expected Hash:" />
+            <Label fx:id="verificationStatus" alignment="CENTER" layoutX="75.0" layoutY="151.0" prefHeight="17.0" prefWidth="229.0" text="Match?" />
+            <TextField fx:id="expectedHashField" layoutX="115.0" layoutY="119.0" />
+            <TextField fx:id="computedHashField" editable="false" layoutX="115.0" layoutY="172.0" />
+            <Label layoutX="23.0" layoutY="176.0" text="Computed Hash:" />
+            <Button fx:id="browseButton" layoutX="271.0" layoutY="88.0" onAction="#handleFileBrowse" text="Browse..." />
+            <Button fx:id="verifyButton" layoutX="271.0" layoutY="172.0" onAction="#handleVerify" text="Verify" />
+            <Button layoutX="324.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+            <ProgressBar fx:id="hashProgress" layoutX="14.0" layoutY="239.0" prefHeight="18.0" prefWidth="303.0" progress="0.0" />
+        </children>
+    </AnchorPane>
+    <Text layoutX="425.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Hey there! This feature is experimental, so proceed at your own risk." wrappingWidth="382.0" />
+
+</AnchorPane>
