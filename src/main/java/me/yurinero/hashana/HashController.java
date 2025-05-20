@@ -20,9 +20,12 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
 
+/* This is the controller for the Hash tab.
+*  We can expand it by adding further algo's to the hashes string and HashUtil's class.
+*/
+
+
 public class HashController implements Initializable {
-	@FXML
-	public Button hashConfirmButton;
 	@FXML
 	public TextArea hashOutputField;
 	@FXML
@@ -70,7 +73,7 @@ public class HashController implements Initializable {
 				(obs, oldVal, newVal) -> updateAlgorithmInfo(newVal)
 		);
 	}
-
+   //Loads .json file used to parse information about the subject algorithm
 	private void loadAlgorithmInfo() {
 		try {
 			// Use class loader for reliable resource access
@@ -90,7 +93,7 @@ public class HashController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
+    //Parses the information contained within the .json file to @hashInfoField. Can be expanded by adding further fields into @AlgorithmInfo and then joining them here.
 	private void updateAlgorithmInfo(String algorithm) {
 		AlgorithmInfo info = algorithmInfoMap.getOrDefault(algorithm, new AlgorithmInfo());
 
@@ -105,7 +108,6 @@ public class HashController implements Initializable {
 		hashInfoField.setText(sj.toString());
 	}
 
-	// Simplified data class with Jackson annotations
 	private static class AlgorithmInfo {
 		public String name;
 		public Integer year;

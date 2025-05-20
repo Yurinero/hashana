@@ -16,6 +16,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 
+/* This class handles the File Hash Check tab.
+* In short, it is absolute fucking voodoo.
+*/
+
+
 public class FileCheck {
 	public TextField filePathField;
 	public Button browseButton;
@@ -87,11 +92,12 @@ public class FileCheck {
 		resetProgress();
 		cancelRequested = false;
 		HashFunction hashFunction = HashUtils.getHashFunction(fileHashChoice.getValue());
-
+        //Handles the actual logic of getting the file hash on a new thread. The Guava methods used are labeled experimental and should be treated as such.
 		new Thread(() -> {
 			try (InputStream is = new FileInputStream(selectedFile)) {
 				long fileSize = selectedFile.length();
 				Hasher hasher = hashFunction.newHasher();
+				// Size of the buffer used during the calculation. Loads the file in chunks.
 				byte[] buffer = new byte[64 * 1024]; // 64KB buffer
 				long bytesRead = 0;
 				int read;

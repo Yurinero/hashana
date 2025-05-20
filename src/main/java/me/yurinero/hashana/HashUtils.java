@@ -3,6 +3,10 @@ package me.yurinero.hashana;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 
+/*
+* Utility class implementing the Google Guava hashing functions so we may re-use them in the controllers.
+ */
+
 public final class HashUtils {
 	private HashUtils() {} // Prevent instantiation
 

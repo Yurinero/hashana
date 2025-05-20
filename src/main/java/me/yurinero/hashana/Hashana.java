@@ -12,7 +12,7 @@ public class Hashana extends Application {
 	public void start(Stage stage) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(Hashana.class.getResource("mainview.fxml"));
 		Scene scene = new Scene(fxmlLoader.load());
-		stage.setTitle("Hello!");
+		stage.setTitle("Hashana");
 		stage.setScene(scene);
 		stage.show();
 	}
