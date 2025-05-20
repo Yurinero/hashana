@@ -95,6 +95,7 @@ public class FileCheck {
 		}
 		//Enable the cancel button when operation starts
 		cancelButton.setDisable(false);
+		//Resets the progress bar
 		resetProgress();
 		cancelRequested = false;
 		HashFunction hashFunction = HashUtils.getHashFunction(fileHashChoice.getValue());
@@ -127,6 +128,8 @@ public class FileCheck {
 						computedHashField.setText(hashCode.toString());
 						autoVerifyIfNeeded();
 						hashProgress.setProgress(1.0);
+						//Disable cancel button if operation completed successfully
+						cancelButton.setDisable(true);
 						progressLabel.setText("Complete! (" + formatBytes(fileSize) + ")");
 					});
 				}

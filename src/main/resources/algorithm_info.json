@@ -2,21 +2,29 @@
   "SHA256": {
     "name": "SHA-256",
     "year": 2001,
-    "history": "Part of the SHA-2 family designed by the NSA...",
-    "security": "Considered secure against preimage attacks...",
-    "usage": "Used in Bitcoin, TLS certificates, and many security applications."
+    "history": "Developed by the NSA as part of the SHA-2 family to address vulnerabilities in SHA-1. Published as a NIST standard in FIPS 180-4.",
+    "security": "Provides 128-bit collision resistance and 256-bit preimage resistance. Considered secure for cryptographic use as of 2023, though transitioning to SHA-3 is recommended for future-proofing.",
+    "usage": "Widely used in Bitcoin's blockchain, TLS/SSL certificates, software integrity verification (e.g., package managers), and password hashing in combination with HMAC."
   },
   "SHA384": {
     "name": "SHA-384",
     "year": 2001,
-    "history": "A truncated version of SHA-512...",
-    "security": "Provides 192-bit security against collision attacks...",
-    "usage": "Commonly used in government systems and digital signatures."
+    "history": "Truncated variant of SHA-512 from the SHA-2 family. Designed specifically to match the security level required for certain government applications.",
+    "security": "Offers 192-bit collision resistance. Uses 1024-bit block size with different initial values from SHA-512. Considered secure but less commonly implemented than SHA-256.",
+    "usage": "Used in TLS 1.2 ephemeral key exchange, NSA Suite B cryptography standards, and high-security PKI implementations requiring FIPS 140-2 compliance."
   },
   "SHA512": {
     "name": "SHA-512",
-    "history": "Part of the SHA-2 family...",
-    "security": "Offers 256-bit collision resistance...",
-    "usage": "Used in security protocols requiring long hash lengths."
+    "year": 2001,
+    "history": "Largest digest size in the SHA-2 family, designed for systems requiring extended security margins. Shares core algorithm with SHA-256 but operates with 64-bit words.",
+    "security": "Provides 256-bit collision resistance. While theoretically stronger than SHA-256, its practical security advantage is minimal for most applications. Vulnerable to length extension attacks without proper HMAC implementation.",
+    "usage": "Common in cryptographic protocols requiring long hash lengths like OpenPGP, disk encryption systems, and blockchain implementations prioritizing future resistance to quantum computing threats."
+  },
+  "MD5": {
+    "name": "MD5",
+    "year": 1992,
+    "history": "Created by Ronald Rivest as a strengthened replacement for MD4. Once widely adopted for cryptographic use until serious vulnerabilities were discovered.",
+    "security": "Completely broken for collision resistance (demonstrated in 2004 with Flame malware). Still provides 128-bit preimage resistance but considered cryptographically obsolete. Deprecated in all security-sensitive contexts.",
+    "usage": "Legacy use for non-security file integrity checks, basic checksums in network protocols, and some database partitioning schemes. Still found in older systems for error checking during file transfers."
   }
 }

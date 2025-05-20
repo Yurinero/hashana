@@ -15,6 +15,7 @@ public class Hashana extends Application {
 		stage.setTitle("Hashana");
 		stage.setScene(scene);
 		stage.show();
+
 	}
 
 }
