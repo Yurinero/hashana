@@ -10,14 +10,17 @@ import java.util.*;
 public class PasswordGenerator {
 	public TextField passwordOutput;
 	public Button generateButton;
-	public CheckBox letterCheckbox;
-	public CheckBox symbolCheckbox;
+	public CheckBox usualSymbols;
+	public CheckBox unusualSymbols;
 	public CheckBox numberCheckbox;
 	public Slider lengthSlider;
 	public TextField lengthDisplay;
 	public Button copyButton;
-
+	public CheckBox upperCaseCheckbox;
+	public CheckBox lowerCaseCheckbox;
 	private final SecureRandom randomizer = new SecureRandom();
+
+
 
 	@FXML
 	public void initialize() {
@@ -64,16 +67,16 @@ public class PasswordGenerator {
 	}
 
 	private boolean anyCheckboxSelected() {
-		return letterCheckbox.isSelected() || numberCheckbox.isSelected() || symbolCheckbox.isSelected();
+		return usualSymbols.isSelected() || numberCheckbox.isSelected() || unusualSymbols.isSelected() || upperCaseCheckbox.isSelected() || lowerCaseCheckbox.isSelected ();
 	}
 
 	private String generatePassword(int length) {
 		// Character pools
 		StringBuilder pool = new StringBuilder();
 		List<String> categories = new ArrayList<>();
-
-		if (letterCheckbox.isSelected()) {
-			String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		// 10 generation re-union of if statements because fuck me
+		if (usualSymbols.isSelected()) {
+			String letters = "!@#$%^&*()-_=+";
 			pool.append(letters);
 			categories.add(letters);
 		}
@@ -82,10 +85,20 @@ public class PasswordGenerator {
 			pool.append(numbers);
 			categories.add(numbers);
 		}
-		if (symbolCheckbox.isSelected()) {
-			String symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>/?";
+		if (unusualSymbols.isSelected()) {
+			String symbols = "[]{}|;:'\",.<>/?";
 			pool.append(symbols);
 			categories.add(symbols);
+		}
+		if (upperCaseCheckbox.isSelected()) {
+			String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			pool.append(upperCase);
+			categories.add(upperCase);
+		}
+		if (lowerCaseCheckbox.isSelected()) {
+			String lowerCase = "abcdefghijklmnopqrstuvwxyz";
+			pool.append(lowerCase);
+			categories.add(lowerCase);
 		}
 
 		// Build password with at least one from each category
