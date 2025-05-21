@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+
 <AnchorPane maxHeight="417.0" maxWidth="845.0" minHeight="417.0" minWidth="845.0" prefHeight="417.0" prefWidth="845.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.HashController">
     <children>
         <TabPane prefHeight="552.0" prefWidth="845.0" tabClosingPolicy="UNAVAILABLE">
@@ -26,6 +31,11 @@
                         <fx:include source="file-check.fxml" />
                     </content>
                 </Tab>
+            <Tab text="Password Generator">
+              <content>
+               <fx:include source="passwordgen.fxml" />
+              </content>
+            </Tab>
                 <Tab text="About">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
