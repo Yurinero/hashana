@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 public class Hashana extends Application {
 	@Override
 	public void start(Stage stage) throws IOException {
@@ -16,6 +17,12 @@ public class Hashana extends Application {
 		stage.setScene(scene);
 		stage.show();
 
+
+
+	}
+	// Calls the shutdown method from the ThreadPoolService to shut down any tasks running on background threads.
+	public void stop(){
+		ThreadPoolService.getInstance().shutdown();
 	}
 
 }

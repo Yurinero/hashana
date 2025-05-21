@@ -26,5 +26,13 @@
     "history": "Created by Ronald Rivest as a strengthened replacement for MD4. Once widely adopted for cryptographic use until serious vulnerabilities were discovered.",
     "security": "Completely broken for collision resistance (demonstrated in 2004 with Flame malware). Still provides 128-bit preimage resistance but considered cryptographically obsolete. Deprecated in all security-sensitive contexts.",
     "usage": "Legacy use for non-security file integrity checks, basic checksums in network protocols, and some database partitioning schemes. Still found in older systems for error checking during file transfers."
+  },
+  "SIPHASH24": {
+    "name": "SipHash-2-4",
+    "year": 2012,
+    "history": "Developed by Jean-Philippe Aumasson and Daniel J. Bernstein as a fast, secure keyed hash function.",
+    "security": "Designed to be cryptographically strong against hash-flooding DoS attacks while maintaining high performance.",
+    "usage": "Used in hash table implementations (Python, Ruby, Rust) and as a MAC for network protocols requiring high-speed verification.",
+    "logic": "Uses a combination of ARX (add-rotate-xor) operations with 2 compression rounds and 4 finalization rounds."
   }
 }

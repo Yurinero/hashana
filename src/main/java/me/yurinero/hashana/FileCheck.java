@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+
 
 /* This class handles the File Hash Check tab.
 * In short, it is absolute fucking voodoo.
@@ -59,7 +61,8 @@ public class FileCheck {
 
 		if (selectedFile != null) {
 			filePathField.setText(selectedFile.getAbsolutePath());
-			autoDetectChecksumFile();  // Optional: Auto-detect checksum files
+			// Optional: Auto-detect checksum files
+			autoDetectChecksumFile();
 		}
 	}
 
@@ -87,12 +90,15 @@ public class FileCheck {
 			showError("Error reading checksum file: " + e.getMessage());
 		}
 	}
+
+
 	@FXML
 	private void handleCalculateHash(ActionEvent event) {
 		if (selectedFile == null) {
 			showError("Please select a file first!");
 			return;
 		}
+		ExecutorService executor = ThreadPoolService.getInstance().getExecutorService();
 		//Enable the cancel button when operation starts
 		cancelButton.setDisable(false);
 		//Resets the progress bar
@@ -100,7 +106,7 @@ public class FileCheck {
 		cancelRequested = false;
 		HashFunction hashFunction = HashUtils.getHashFunction(fileHashChoice.getValue());
         //Handles the actual logic of getting the file hash on a new thread. The Guava methods used are labeled experimental and should be treated as such.
-		new Thread(() -> {
+		executor.submit(() ->{
 			try (InputStream is = new FileInputStream(selectedFile)) {
 				long fileSize = selectedFile.length();
 				Hasher hasher = hashFunction.newHasher();
@@ -142,8 +148,9 @@ public class FileCheck {
 					Platform.runLater(this::resetProgress);
 				}
 			}
-		}).start();
+		});
 	}
+
 	private void updateProgress(long bytesRead, long totalBytes) {
 		Platform.runLater(() -> {
 			double progress = (double) bytesRead / totalBytes;
