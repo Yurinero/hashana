@@ -111,3 +111,9 @@
     -fx-border-width: 2px;
     -fx-padding: 4px;
 }
+.passwordPaneAnchor {
+    -fx-background-color: #45475a;
+    -fx-border-color: #585b70;
+    -fx-border-width: 2px;
+    -fx-padding: 4px;
+}

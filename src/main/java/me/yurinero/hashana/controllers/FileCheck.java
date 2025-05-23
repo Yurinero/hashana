@@ -1,4 +1,4 @@
-package me.yurinero.hashana;
+package me.yurinero.hashana.controllers;
 
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import me.yurinero.hashana.utils.HashUtils;
+import me.yurinero.hashana.utils.ThreadPoolService;
 
 import java.io.File;
 import java.io.FileInputStream;

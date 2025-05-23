@@ -6,9 +6,14 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="795.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.FileCheck">
+<AnchorPane prefHeight="400.0" prefWidth="795.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.FileCheck">
     <AnchorPane layoutX="14.0" layoutY="41.0" prefHeight="281.0" prefWidth="402.0" styleClass="filePickerAnchor">
         <children>
             <Label fx:id="progressLabel" alignment="CENTER" layoutX="10.0" layoutY="217.0" prefHeight="17.0" prefWidth="303.0" text="Progress" />
@@ -28,6 +33,26 @@
             <ProgressBar fx:id="hashProgress" layoutX="14.0" layoutY="239.0" prefHeight="18.0" prefWidth="303.0" progress="0.0" />
         </children>
     </AnchorPane>
-    <Text layoutX="425.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Hey there! This feature is experimental, so proceed at your own risk." wrappingWidth="382.0" />
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3e4886" height="281.0" layoutX="443.0" layoutY="42.0" stroke="#aeaeae" width="337.0" />
+    <Text layoutX="436.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Experimental! Proceed at your own risk." textAlignment="CENTER" underline="true" wrappingWidth="382.0">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+      <fill>
+         <LinearGradient endX="1.0" endY="1.0">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color red="1.0" />
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color red="0.5394737124443054" green="0.09740497171878815" blue="0.09740497171878815" />
+                  </color>
+               </Stop>
+            </stops>
+         </LinearGradient>
+      </fill></Text>
 
 </AnchorPane>

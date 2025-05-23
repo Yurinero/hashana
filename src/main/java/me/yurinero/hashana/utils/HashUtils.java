@@ -1,4 +1,4 @@
-package me.yurinero.hashana;
+package me.yurinero.hashana.utils;
 
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;

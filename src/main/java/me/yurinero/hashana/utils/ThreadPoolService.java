@@ -1,4 +1,4 @@
-package me.yurinero.hashana;
+package me.yurinero.hashana.utils;
 
 import java.util.List;
 import java.util.concurrent.*;

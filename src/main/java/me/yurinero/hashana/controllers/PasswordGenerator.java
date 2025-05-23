@@ -1,4 +1,4 @@
-package me.yurinero.hashana;
+package me.yurinero.hashana.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

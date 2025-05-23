@@ -1,4 +1,4 @@
-package me.yurinero.hashana;
+package me.yurinero.hashana.controllers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,9 +7,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import me.yurinero.hashana.utils.HashUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
