@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="795.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.FileCheck">
+<AnchorPane fx:id="rootAnchor" prefHeight="400.0" prefWidth="795.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.FileCheck">
     <AnchorPane layoutX="14.0" layoutY="41.0" prefHeight="281.0" prefWidth="402.0" styleClass="filePickerAnchor">
         <children>
             <Label fx:id="progressLabel" alignment="CENTER" layoutX="10.0" layoutY="217.0" prefHeight="17.0" prefWidth="303.0" text="Progress" />
@@ -27,7 +28,10 @@
             <TextField fx:id="expectedHashField" layoutX="115.0" layoutY="119.0" />
             <TextField fx:id="computedHashField" editable="false" layoutX="115.0" layoutY="172.0" />
             <Label layoutX="23.0" layoutY="176.0" text="Computed Hash:" />
-            <Button fx:id="browseButton" layoutX="271.0" layoutY="88.0" onAction="#handleFileBrowse" text="Browse..." />
+            <Button fx:id="browseButton" layoutX="271.0" layoutY="88.0" onAction="#handleFileBrowse" text="Browse...">
+            <tooltip>
+               <Tooltip text="CTRL + O" />
+            </tooltip></Button>
             <Button fx:id="verifyButton" layoutX="271.0" layoutY="172.0" onAction="#handleVerify" text="Verify" />
             <Button fx:id="cancelButton" layoutX="324.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
             <ProgressBar fx:id="hashProgress" layoutX="14.0" layoutY="239.0" prefHeight="18.0" prefWidth="303.0" progress="0.0" />

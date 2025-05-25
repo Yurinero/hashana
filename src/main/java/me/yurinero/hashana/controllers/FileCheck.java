@@ -7,6 +7,10 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import me.yurinero.hashana.utils.HashUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
@@ -37,7 +41,10 @@ public class FileCheck {
 	public ProgressBar hashProgress;
 	public Label progressLabel;
 	public Button cancelButton;
+	public AnchorPane rootAnchor;
 	private File selectedFile;
+
+
 
 	private final String[] fileHashAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
 
@@ -53,6 +60,7 @@ public class FileCheck {
 		fileHashChoice.setValue(fileHashAlgorithms[0]);
 		//Disable the cancel button, so it cannot be spammed
 		cancelButton.setDisable(true);
+		browseAccelerator();
 	}
 
 	@FXML
@@ -67,6 +75,20 @@ public class FileCheck {
 			autoDetectChecksumFile();
 		}
 	}
+	// Accelerator to add CTRL + O shortcut for the file browse function
+	public void browseAccelerator(){
+		KeyCombination browseShortcut = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN);
+		rootAnchor.sceneProperty().addListener((observable, oldScene, newScene) -> {
+			if (newScene != null) {
+				newScene.getAccelerators().put(browseShortcut, () -> {
+					browseButton.fire();
+				});
+			}
+		});
+	}
+
+
+
 
 	private void autoDetectChecksumFile() {
 		// Look for common checksum file extensions
