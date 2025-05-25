@@ -12,17 +12,17 @@
             <tabs>
                 <Tab text="Hash">
                     <content>
-                        <fx:include source="hashview.fxml" />
+                        <fx:include source="hash-view.fxml" />
                     </content>
                 </Tab>
                 <Tab text="File Hash Check">
                     <content>
-                        <fx:include source="file-check.fxml" />
+                        <fx:include source="file-check-view.fxml" />
                     </content>
                 </Tab>
             <Tab text="Password Generator">
               <content>
-               <fx:include source="passwordgen.fxml" />
+               <fx:include source="password-gen-view.fxml" />
               </content>
             </Tab>
                 <Tab text="About">

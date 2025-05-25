@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutorService;
 */
 
 
-public class FileCheck {
+public class FIleCheckController {
 	public TextField filePathField;
 	public Button browseButton;
 	public ChoiceBox<String> fileHashChoice;

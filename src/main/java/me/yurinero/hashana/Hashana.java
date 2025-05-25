@@ -21,7 +21,7 @@ public class Hashana extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
-		FXMLLoader fxmlLoader = new FXMLLoader(Hashana.class.getResource("mainview.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(Hashana.class.getResource("main-view.fxml"));
 		Scene scene = new Scene(fxmlLoader.load());
 		stage.setTitle("Hashana");
 		stage.setScene(scene);

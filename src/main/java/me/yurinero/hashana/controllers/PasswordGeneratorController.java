@@ -7,7 +7,7 @@ import javafx.scene.input.ClipboardContent;
 import java.security.SecureRandom;
 import java.util.*;
 
-public class PasswordGenerator {
+public class PasswordGeneratorController {
 	public TextField passwordOutput;
 	public Button generateButton;
 	public CheckBox usualSymbols;
