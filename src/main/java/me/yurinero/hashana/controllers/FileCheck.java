@@ -60,7 +60,9 @@ public class FileCheck {
 		fileHashChoice.setValue(fileHashAlgorithms[0]);
 		//Disable the cancel button, so it cannot be spammed
 		cancelButton.setDisable(true);
+		//Add Accelerator aka Shortcut for File Browsing and Cancellation of ongoing File Hash Check
 		browseAccelerator();
+		cancelAccelerator();
 	}
 
 	@FXML
@@ -82,6 +84,17 @@ public class FileCheck {
 			if (newScene != null) {
 				newScene.getAccelerators().put(browseShortcut, () -> {
 					browseButton.fire();
+				});
+			}
+		});
+	}
+	// Accelerator to add CTRL + X shortcut for the cancel function
+	public void cancelAccelerator(){
+		KeyCombination browseShortcut = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN);
+		rootAnchor.sceneProperty().addListener((observable, oldScene, newScene) -> {
+			if (newScene != null) {
+				newScene.getAccelerators().put(browseShortcut, () -> {
+					cancelButton.fire();
 				});
 			}
 		});
