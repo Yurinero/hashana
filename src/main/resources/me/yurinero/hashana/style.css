@@ -114,7 +114,34 @@
     -fx-padding: 5px;
 }
 
+/* Custom Title Bar */
+#titleBar {
+    -fx-background-color: #11111b; /* Darker than base for distinction */
+    -fx-border-color: #6c7086;
+    -fx-border-width: 0 0 1 0; /* Bottom border only */
+}
 
+#titleBarContent {
+    -fx-padding: 5 10;
+    -fx-background-color: #11111b;
+}
+
+/* Window Control Buttons */
+#minimizeButton, #maximizeButton, #closeButton, #settingsButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #89b4fa;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+#minimizeButton:hover, #maximizeButton:hover, #settingsButton:hover {
+    -fx-background-color: #45475a;
+}
+
+#closeButton:hover {
+    -fx-background-color: #f38ba8; /* Red for close */
+    -fx-text-fill: #1e1e2e;
+}
 .filePickerAnchor {
     -fx-background-color: #45475a;
     -fx-border-color: #585b70;

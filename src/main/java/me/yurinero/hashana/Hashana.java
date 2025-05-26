@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import me.yurinero.hashana.controllers.MainViewController;
 import me.yurinero.hashana.utils.SplashScreen;
 import me.yurinero.hashana.utils.ThreadPoolService;
 
@@ -23,6 +25,11 @@ public class Hashana extends Application {
 	public void start(Stage stage) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(Hashana.class.getResource("main-view.fxml"));
 		Scene scene = new Scene(fxmlLoader.load());
+		// Needed to pass the stage to the MainViewController
+		MainViewController controller = fxmlLoader.getController();
+		controller.setStage(stage);
+
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setTitle("Hashana");
 		stage.setScene(scene);
 		stage.show();
