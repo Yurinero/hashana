@@ -26,7 +26,7 @@ public class SplashScreen extends Preloader {
 
 
 		// Load the image to be displayed on the splash screen
-		Image image = new Image("HASHANA.png");
+		Image image = new Image("hashana-splash.png");
 
 		// Create an ImageView to display the image
 		ImageView imageView = new ImageView(image);

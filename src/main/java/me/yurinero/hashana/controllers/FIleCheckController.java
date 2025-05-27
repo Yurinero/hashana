@@ -61,8 +61,8 @@ public class FIleCheckController {
 		//Disable the cancel button, so it cannot be spammed
 		cancelButton.setDisable(true);
 		//Add Accelerator aka Shortcut for File Browsing and Cancellation of ongoing File Hash Check
-		browseAccelerator();
-		cancelAccelerator();
+		addAccelerator(KeyCode.O, KeyCombination.CONTROL_DOWN,() -> browseButton.fire());
+		addAccelerator(KeyCode.X, KeyCombination.CONTROL_DOWN,() -> cancelButton.fire());
 	}
 
 	@FXML
@@ -77,25 +77,19 @@ public class FIleCheckController {
 			autoDetectChecksumFile();
 		}
 	}
-	// Accelerator to add CTRL + O shortcut for the file browse function
-	public void browseAccelerator(){
-		KeyCombination browseShortcut = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN);
+
+	/** Generic method to add Accelerator's, effectively keyboard shortcuts.
+	 *  Requires 3 values. The key to be hit, the control modifier and what action to trigger when conditions met.
+	 * @param keyCode
+	 * @param modifier
+	 * @param action
+	 */
+
+	public void addAccelerator(KeyCode keyCode,KeyCombination.Modifier modifier, Runnable action ) {
+		KeyCombination keyCombination = new KeyCodeCombination(keyCode, modifier);
 		rootAnchor.sceneProperty().addListener((observable, oldScene, newScene) -> {
 			if (newScene != null) {
-				newScene.getAccelerators().put(browseShortcut, () -> {
-					browseButton.fire();
-				});
-			}
-		});
-	}
-	// Accelerator to add CTRL + X shortcut for the cancel function
-	public void cancelAccelerator(){
-		KeyCombination browseShortcut = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN);
-		rootAnchor.sceneProperty().addListener((observable, oldScene, newScene) -> {
-			if (newScene != null) {
-				newScene.getAccelerators().put(browseShortcut, () -> {
-					cancelButton.fire();
-				});
+				newScene.getAccelerators().put(keyCombination, action);
 			}
 		});
 	}
