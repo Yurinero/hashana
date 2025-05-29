@@ -15,11 +15,11 @@
    <children>
       <AnchorPane prefHeight="37.0" prefWidth="432.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="432.0">
+            <HBox fx:id="settingsTitle" alignment="CENTER" prefHeight="43.0" prefWidth="432.0">
                <children>
-                  <Button mnemonicParsing="false" text="Apply" />
-                  <Button mnemonicParsing="false" text="Save" />
-                  <Button mnemonicParsing="false" text="Close" />
+                  <Button fx:id="settingsApply" mnemonicParsing="false" text="Apply" />
+                  <Button fx:id="settingsSave" mnemonicParsing="false" text="Save" />
+                  <Button fx:id="settingsClose" mnemonicParsing="false" text="Close" />
                </children>
             </HBox>
          </children>
