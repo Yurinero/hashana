@@ -50,6 +50,6 @@
             <Label text="Styling" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Label fx:id="statusLabel" layoutX="202.0" layoutY="268.0" />
+      <Label fx:id="statusLabel" alignment="CENTER" layoutX="208.0" layoutY="270.0" prefHeight="17.0" prefWidth="16.0" />
    </children>
 </AnchorPane>

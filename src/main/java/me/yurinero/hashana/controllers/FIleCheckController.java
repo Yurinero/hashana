@@ -12,8 +12,10 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.HashUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
+import me.yurinero.hashana.utils.UserSettings;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,8 +50,8 @@ public class FIleCheckController {
 
 	private final String[] fileHashAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
 	private volatile boolean cancelRequested = false;
-	private static final int UPDATE_INTERVAL_MS = 100;
 	private long lastUpdateTime = 0;
+	private UserSettings.SettingsData appSettings;
 
 	@FXML
 	public void initialize() {
@@ -62,26 +64,52 @@ public class FIleCheckController {
 		//Add Accelerator aka Shortcut for File Browsing and Cancellation of ongoing File Hash Check
 		addAccelerator(KeyCode.O, KeyCombination.CONTROL_DOWN,() -> browseButton.fire());
 		addAccelerator(KeyCode.X, KeyCombination.CONTROL_DOWN,() -> cancelButton.fire());
+		//Load default/user settings
+		appSettings = UserSettings.getInstance().getSettings();
 	}
 
 	@FXML
 	private void handleFileBrowse(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select File for Hashing");
-		selectedFile = fileChooser.showOpenDialog(filePathField.getScene().getWindow());
+		// Open file browser to choose file
+		File tempSelectedFile = fileChooser.showOpenDialog(filePathField.getScene().getWindow());
 
-		if (selectedFile != null) {
+		if (tempSelectedFile != null) {
+			// Max acceptable file size bytes converted to MB
+			long maxFileSizeBytes = appSettings.maxFileSize * 1024 * 1024;
+
+		if (tempSelectedFile.length() > maxFileSizeBytes) {
+			// If file is too large, show alert window
+			String readableFileSize = String.format("%.2f MB", (double)maxFileSizeBytes / (1024 * 1024));
+			String readableSelectedFileSize = String.format("%.2f MB", (double)tempSelectedFile.length() / (1024 * 1024));
+
+			Alert alert = DialogUtils.createStyledAlert(
+					Alert.AlertType.WARNING,
+					"File Too Large",
+					"The selected file exceeds the maximum allowed size.",
+					"Selected file " + readableSelectedFileSize + "\nMaximum allowed: " + readableFileSize
+			);
+
+			alert.showAndWait();
+			// Clear File Path and set file selection back to null
+			filePathField.clear();
+			this.selectedFile = null;
+		} else {
+			// If file size is acceptable, proceed
+			this.selectedFile = tempSelectedFile;
 			filePathField.setText(selectedFile.getAbsolutePath());
-			// Optional: Auto-detect checksum files
 			autoDetectChecksumFile();
+		}
 		}
 	}
 
+
 	/** Generic method to add Accelerator's, effectively keyboard shortcuts.
-	 *  Requires 3 values. The key to be hit, the control modifier and what action to trigger when conditions met.
-	 * @param keyCode
-	 * @param modifier
-	 * @param action
+	 *  Requires 3 values.
+	 * @param keyCode  Key to be hit
+	 * @param modifier  Modifier to be used, such as CTRL_DOWN
+	 * @param action  Action to take upon completion
 	 */
 
 	public void addAccelerator(KeyCode keyCode,KeyCombination.Modifier modifier, Runnable action ) {
@@ -141,7 +169,7 @@ public class FIleCheckController {
 				long fileSize = selectedFile.length();
 				Hasher hasher = hashFunction.newHasher();
 				// Size of the buffer used during the calculation. Loads the file in chunks.
-				byte[] buffer = new byte[64 * 1024]; // 64KB buffer default
+				byte[] buffer = new byte[appSettings.bufferSize * 1024]; // 64KB buffer default
 				long bytesRead = 0;
 				int read;
 
@@ -152,7 +180,7 @@ public class FIleCheckController {
 					bytesRead += read;
 
 					long now = System.currentTimeMillis();
-					if (now - lastUpdateTime > UPDATE_INTERVAL_MS || bytesRead == fileSize) {
+					if (now - lastUpdateTime > appSettings.progressIntervalMS || bytesRead == fileSize) {
 						updateProgress(bytesRead, fileSize);
 						lastUpdateTime = now;
 					}

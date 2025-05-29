@@ -8,17 +8,20 @@ import javafx.stage.StageStyle;
 import me.yurinero.hashana.controllers.MainViewController;
 import me.yurinero.hashana.utils.SplashScreen;
 import me.yurinero.hashana.utils.ThreadPoolService;
+import me.yurinero.hashana.utils.UserSettings;
 
 import java.io.IOException;
 
 
 public class Hashana extends Application {
-
 	@Override
 	public void init() throws Exception {
 		/* Sleeping the thread on purpose upon initialization of the application to display the splash screen.
 		* This is absolutely fucking stupid and only done for aesthetics.*/
-		Thread.sleep(2000);
+		UserSettings.SettingsData appSettings = UserSettings.getInstance().getSettings();
+		if (appSettings.splashScreenEnabled) {
+			Thread.sleep(2000);
+		}
 	}
 
 	@Override
@@ -43,7 +46,11 @@ public class Hashana extends Application {
 		ThreadPoolService.getInstance().shutdown();
 	}
 	public static void main(String[] args) {
-		System.setProperty("javafx.preloader", SplashScreen.class.getName());
+		UserSettings.SettingsData appSettings = UserSettings.getInstance().getSettings();
+		if (appSettings.splashScreenEnabled) {
+			System.setProperty("javafx.preloader", SplashScreen.class.getName());
+		}
+
 		Application.launch(Hashana.class, args);
 	}
 }
