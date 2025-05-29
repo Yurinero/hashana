@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 
 public class UserSettings {
 
+	private static final UserSettings instance = new UserSettings();
+
 	public static class SettingsData {
 		public long maxFileSize = 1024;
 		public int bufferSize = 64;
@@ -22,7 +24,7 @@ public class UserSettings {
 	private SettingsData currentSettingsData;
 	private ObjectMapper objectMapper;
 
-	public UserSettings() {
+	private UserSettings() {
 		String userHome = System.getProperty("user.home");
 		this.settingsFilePath = Paths.get(userHome,".hashana", SETTINGS_FILE);
 
@@ -30,6 +32,9 @@ public class UserSettings {
 		this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
 		loadSettings();
+	}
+	public static UserSettings getInstance() {
+		return instance;
 	}
 
 	public void loadSettings() {
@@ -46,7 +51,7 @@ public class UserSettings {
 		}
 	}
 
-	private void saveSettings() {
+	public void saveSettings() {
 		try {
 			File parentDir = settingsFilePath.getParent().toFile();
 			if (!parentDir.exists()) {

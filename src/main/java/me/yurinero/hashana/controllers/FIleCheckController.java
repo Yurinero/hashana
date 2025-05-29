@@ -47,7 +47,6 @@ public class FIleCheckController {
 
 
 	private final String[] fileHashAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
-
 	private volatile boolean cancelRequested = false;
 	private static final int UPDATE_INTERVAL_MS = 100;
 	private long lastUpdateTime = 0;
@@ -142,7 +141,7 @@ public class FIleCheckController {
 				long fileSize = selectedFile.length();
 				Hasher hasher = hashFunction.newHasher();
 				// Size of the buffer used during the calculation. Loads the file in chunks.
-				byte[] buffer = new byte[64 * 1024]; // 64KB buffer
+				byte[] buffer = new byte[64 * 1024]; // 64KB buffer default
 				long bytesRead = 0;
 				int read;
 
