@@ -78,5 +78,6 @@ public class Hashana extends Application {
 		}
 
 		Application.launch(Hashana.class, args);
+		logger.info("Hashana started");
 	}
 }
