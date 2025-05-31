@@ -31,11 +31,11 @@ jobs:
     - name: Download JavaFX Controls JMOD
       shell: pwsh
       # Uses the JavaFX version from your pom.xml (21.0.5) and assumes 'win' classifier
-      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -Dartifact=org.openjfx:javafx-controls:21.0.5:jmod:win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
+      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -DgroupId=org.openjfx -DartifactId=javafx-controls -Dversion=21.0.5 -Dtype=jmod -Dclassifier=win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
 
     - name: Download JavaFX FXML JMOD
       shell: pwsh
-      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -Dartifact=org.openjfx:javafx-fxml:21.0.5:jmod:win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
+      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -DgroupId=org.openjfx -DartifactId=javafx-fxml -Dversion=21.0.5 -Dtype=jmod -Dclassifier=win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
       # Add more steps like these if you need other JavaFX JMODs (e.g., graphics, base, media)
 
     - name: Prepare for jpackage (Copy FAT JAR)
