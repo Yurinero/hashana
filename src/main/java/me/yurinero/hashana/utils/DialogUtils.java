@@ -23,7 +23,7 @@ public class DialogUtils {
 		alert.setContentText(content);
 
 		DialogPane dialogPane = alert.getDialogPane();
-		String cssPath = DialogUtils.class.getResource("/me/yurinero/hashana/style.css").toExternalForm();
+		String cssPath = DialogUtils.class.getResource("/me/yurinero/hashana/dark-theme.css").toExternalForm();
 		if (cssPath != null) {
 			dialogPane.getStylesheets().add(cssPath);
 		} else {

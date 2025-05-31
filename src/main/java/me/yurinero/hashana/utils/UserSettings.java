@@ -17,6 +17,7 @@ public class UserSettings {
 		public int bufferSize = 64;
 		public int progressIntervalMS = 100;
 		public boolean splashScreenEnabled = true;
+		public String activeTheme = "Dark";
 	}
 
 	private static final String SETTINGS_FILE = "hashana_settings.json";
@@ -42,8 +43,12 @@ public class UserSettings {
 		if (settingsFile.exists()) {
 			try {
 				currentSettingsData = objectMapper.readValue(settingsFile, SettingsData.class);
+				if (currentSettingsData.activeTheme == null) {
+					currentSettingsData.activeTheme = "Dark";
+				}
 			} catch (IOException e) {
 				System.err.println("Error loading settings, using defaults: " + e.getMessage());
+				currentSettingsData = new SettingsData();
 			}
 		} else {
 			currentSettingsData = new SettingsData();

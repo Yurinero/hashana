@@ -1,0 +1,250 @@
+/* Base colors - WCAG 2.1 Compliant */
+.root {
+    -fx-base: #fafafa; /* Lightened base for better contrast */
+    -fx-background: #fafafa;
+}
+
+/* TabPane styling */
+.tab-pane {
+    -fx-tab-min-width: 120px;
+    -fx-tab-max-width: 120px;
+    -fx-background-color: #e0e0e0; /* Lightened mantle */
+}
+
+.tab {
+    -fx-background-color: #e0e0e0;
+    -fx-background-insets: 0 1 0 0, 1;
+}
+
+.tab:selected {
+    -fx-background-color: #1a56db; /* Darker blue for contrast */
+}
+
+.tab-label {
+    -fx-text-fill: #333333 !important; /* Higher contrast text */
+    -fx-font-weight: bold; /* Improve readability */
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #ffffff; /* White text for selected tab */
+    -fx-font-weight: bold;
+}
+
+/* TextAreas */
+.text-area {
+    -fx-background-color: #ffffff; /* Pure white background */
+    -fx-text-fill: #222222; /* Near-black text */
+    -fx-prompt-text-fill: #666666; /* Medium gray */
+    -fx-border-color: #888888; /* Medium-dark border */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-font-size: 14px; /* Larger font size */
+}
+
+.text-area .content {
+    -fx-background-color: #ffffff;
+}
+
+/* Hash ChoiceBox */
+.choice-box {
+    -fx-background-color: #ffffff;
+    -fx-mark-color: #1a56db; /* Darker blue */
+    -fx-text-fill: #222222; /* Near-black text */
+    -fx-border-color: #888888;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #1a56db;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #222222;
+}
+
+.choice-box .menu-item .label {
+    -fx-text-fill: #222222;
+}
+
+.choice-box .menu-item:focused .label {
+    -fx-text-fill: #ffffff;
+}
+
+/* Hash Button */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #1a56db 0%, #0d47a1 100%);
+    -fx-text-fill: #ffffff; /* White text */
+    -fx-background-radius: 5px; /* Larger radius */
+    -fx-padding: 6px 12px; /* More padding */
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
+.button .text {
+    -fx-fill: #ffffff !important;
+    -fx-font-weight: bold;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #0d47a1 0%, #0b3d91 100%);
+    -fx-text-fill: #ffffff;
+}
+
+/* Hash Info Field */
+#hashInfoField {
+    -fx-background-color: #e8eaf6; /* Light blue-gray */
+    -fx-border-color: #888888;
+    -fx-font-size: 14px;
+}
+
+/* About Section */
+#aboutPane {
+    -fx-background-color: #fafafa;
+}
+
+#aboutText {
+    -fx-fill: #1a56db; /* Darker blue */
+    -fx-font-size: 38px;
+    -fx-font-weight: bold;
+}
+
+/* General text styling */
+.text {
+    -fx-fill: #222222; /* Near-black */
+    -fx-font-size: 14px;
+}
+
+/* Focus highlighting - Enhanced visibility */
+.text-area:focused, .choice-box:focused {
+    -fx-border-color: #1a56db;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 86, 219, 0.4), 5, 0, 0, 0);
+}
+
+/* Tooltips with higher contrast */
+.tooltip {
+    -fx-background-color: #1a56db; /* Solid color instead of gradient */
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #0d47a1;
+    -fx-border-width: 2px;
+    -fx-font-size: 14px;
+    -fx-padding: 8px;
+}
+
+/* Dialogs with better contrast */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #888888;
+    -fx-border-width: 2px; /* Thicker border */
+    -fx-padding: 20px; /* More padding */
+}
+
+.dialog-pane .label {
+    -fx-text-fill: #222222;
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 15px;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-size: 18px; /* Larger header */
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a56db;
+}
+
+.dialog-pane .button {
+    -fx-background-color: #1a56db;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px 20px; /* Larger click area */
+    -fx-min-width: 80px; /* Consistent button size */
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: #0d47a1;
+}
+
+/* Custom Title Bar */
+#titleBar {
+    -fx-background-color: #1a56db; /* Dark blue */
+    -fx-border-color: #0d47a1;
+}
+
+#titleBarContent {
+    -fx-padding: 10px 15px; /* More padding */
+}
+
+/* Window Control Buttons */
+#minimizeButton, #maximizeButton, #closeButton, #settingsButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-padding: 8px; /* Larger click area */
+}
+
+#minimizeButton:hover, #maximizeButton:hover, #settingsButton:hover {
+    -fx-background-color: rgba(255,255,255,0.2);
+}
+
+#closeButton:hover {
+    -fx-background-color: #d32f2f; /* Standard red */
+    -fx-text-fill: #ffffff;
+}
+
+/* Settings Title */
+#settingsTitle {
+    -fx-background-color: #1a56db;
+    -fx-border-color: #0d47a1;
+    -fx-text-fill: #ffffff;
+}
+
+/* Help icons with better contrast */
+.help-icon-label {
+    -fx-font-weight: bold;
+    -fx-border-color: #1a56db;
+    -fx-background-color: #1a56db;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 4px 8px;
+}
+
+.help-icon-label:hover {
+    -fx-background-color: #0d47a1;
+}
+
+.help-tooltip {
+    -fx-background-color: #1a56db;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #0d47a1;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+/* Additional accessibility features */
+* {
+    -fx-font-family: "Segoe UI", "Open Sans", sans-serif;
+}
+
+.label {
+    -fx-font-size: 14px;
+}
+
+/* Focus indicators for keyboard navigation */
+:focused {
+    -fx-border-color: #1a56db;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+
+/* High contrast mode alternative */
+.high-contrast {
+    -fx-base: #ffffff;
+    -fx-background: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-control-inner-background: #ffffff;
+}

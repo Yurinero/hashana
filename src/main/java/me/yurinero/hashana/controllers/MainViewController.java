@@ -13,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.Scene;
+import me.yurinero.hashana.utils.UserSettings;
 
 import java.io.IOException;
 import java.net.URL;
@@ -84,12 +86,25 @@ public class MainViewController implements Initializable {
 
 			// Create new stage for settings window
 			Stage settingsStage = new Stage();
+			Scene settingsScene = new Scene(root);
 			// Load the relevant controller
 			SettingsController controller = loader.getController();
 			// Pass the stage to the controller
 			controller.setStage(settingsStage);
+			if (this.stage != null) { // 'this.stage' is the main application stage
+				controller.setMainScene(this.stage.getScene());
+			}
 			settingsStage.setTitle("Settings");
-			settingsStage.setScene(new Scene(root));
+			settingsStage.setScene(settingsScene);
+
+			String currentTheme = UserSettings.getInstance().getSettings().activeTheme;
+			String cssPath = getCssPathForTheme(currentTheme);
+			try {
+				String fullCssPath = getClass().getResource(cssPath).toExternalForm();
+				settingsScene.getStylesheets().add(fullCssPath);
+			} catch (NullPointerException e) {
+				System.err.println("Error: Could not find CSS file for settings window: " + cssPath);
+			}
 
 			// Set modality to block main window interaction
 			settingsStage.initModality(Modality.APPLICATION_MODAL);
@@ -105,6 +120,14 @@ public class MainViewController implements Initializable {
 			e.printStackTrace();
 
 		}
+	}
+	private String getCssPathForTheme(String themeName) {
+		return switch (themeName) {
+			case "Light" -> "/me/yurinero/hashana/light-theme.css";
+			case "Accessible" -> "/me/yurinero/hashana/accessible-theme.css";
+			case "Dark" -> "/me/yurinero/hashana/dark-theme.css";
+			default -> "/me/yurinero/hashana/dark-theme.css"; // Fallback
+		};
 	}
 
 	// Setup for window maximization, currently unused  but here if needed to be implemented.
