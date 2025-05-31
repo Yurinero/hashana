@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.yurinero.hashana.controllers.MainViewController;
 import me.yurinero.hashana.utils.SplashScreen;
+import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
 import me.yurinero.hashana.utils.UserSettings;
 
@@ -32,7 +33,7 @@ public class Hashana extends Application {
 
 		UserSettings.SettingsData appSettings = UserSettings.getInstance().getSettings();
 		String activeTheme = appSettings.activeTheme;
-		String cssPath = getCssPathForTheme(activeTheme);
+		String cssPath = ThemeUtils.getCssPathForTheme(activeTheme);
 
 		try {
 			URL cssURL = getClass().getResource(cssPath);
@@ -40,7 +41,7 @@ public class Hashana extends Application {
 				scene.getStylesheets().add(cssURL.toExternalForm());
 			} else {
 				System.err.println("Couldn't find css path: " + cssPath);
-				URL fallBackCssURL = Hashana.class.getResource(getCssPathForTheme("Dark"));
+				URL fallBackCssURL = Hashana.class.getResource(ThemeUtils.getCssPathForTheme("Dark"));
 				if (fallBackCssURL != null)scene.getStylesheets().add(fallBackCssURL.toExternalForm());
 			}
 		} catch (Exception e) {
@@ -60,17 +61,7 @@ public class Hashana extends Application {
 
 
 	}
-	private String getCssPathForTheme(String themeName) {
-		return switch (themeName) {
-			case "Light" -> "/me/yurinero/hashana/light-theme.css";
-			case "Accessible" -> "/me/yurinero/hashana/accessible-theme.css";
-			case "Dark" -> "/me/yurinero/hashana/dark-theme.css"; // Default/fallback
-			default -> {
-				System.err.println("Unknown theme name: " + themeName + ". Defaulting to Dark.");
-				yield "/me/yurinero/hashana/dark-theme.css";
-			}
-		};
-	}
+
 
 	// Calls the shutdown method from the ThreadPoolService to shut down any tasks running on background threads.
 	public void stop(){

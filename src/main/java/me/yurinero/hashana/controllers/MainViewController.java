@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Scene;
+import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
 
 import java.io.IOException;
@@ -98,7 +99,7 @@ public class MainViewController implements Initializable {
 			settingsStage.setScene(settingsScene);
 
 			String currentTheme = UserSettings.getInstance().getSettings().activeTheme;
-			String cssPath = getCssPathForTheme(currentTheme);
+			String cssPath = ThemeUtils.getCssPathForTheme(currentTheme);
 			try {
 				String fullCssPath = getClass().getResource(cssPath).toExternalForm();
 				settingsScene.getStylesheets().add(fullCssPath);
@@ -121,14 +122,7 @@ public class MainViewController implements Initializable {
 
 		}
 	}
-	private String getCssPathForTheme(String themeName) {
-		return switch (themeName) {
-			case "Light" -> "/me/yurinero/hashana/light-theme.css";
-			case "Accessible" -> "/me/yurinero/hashana/accessible-theme.css";
-			case "Dark" -> "/me/yurinero/hashana/dark-theme.css";
-			default -> "/me/yurinero/hashana/dark-theme.css"; // Fallback
-		};
-	}
+
 
 	// Setup for window maximization, currently unused  but here if needed to be implemented.
 	/*

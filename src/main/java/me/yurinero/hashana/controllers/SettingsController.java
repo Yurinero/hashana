@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import me.yurinero.hashana.utils.DialogUtils;
+import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
 
 public class SettingsController {
@@ -21,7 +22,7 @@ public class SettingsController {
 	public Label statusLabel;
 	public ChoiceBox<String> themeChoiceBox;
 
-
+	private final UserSettings userSettings = UserSettings.getInstance();
 	private Stage stage;
 	private Scene mainScene;
 	private double xOffset = 0;
@@ -35,7 +36,6 @@ public class SettingsController {
 	}
 
 	private void loadCurrentSettings() {
-		UserSettings userSettings = UserSettings.getInstance();
 		UserSettings.SettingsData currentSettings = userSettings.getSettings();
 		bufferSize.setText(String.valueOf(currentSettings.bufferSize));
 		maxFileSize.setText(String.valueOf(currentSettings.maxFileSize));
@@ -60,26 +60,14 @@ public class SettingsController {
 		});
 	}
 
-	private String getCssPathForTheme(String themeName) {
-		return switch (themeName) {
-			case "Light" -> "/me/yurinero/hashana/light-theme.css";
-			case "Accessible" -> "/me/yurinero/hashana/accessible-theme.css";
-			case "Dark" -> "/me/yurinero/hashana/dark-theme.css"; // Default/fallback
-			default -> {
-				System.err.println("Unknown theme name: " + themeName + ". Defaulting to Dark.");
-				yield "/me/yurinero/hashana/dark-theme.css";
-			}
-		};
-	}
 
 	private void applyThemeToScene(String themeName, Scene sceneToUpdate) {
-		if (sceneToUpdate != null) return;
-		String cssPath = getCssPathForTheme(themeName);
+		if (sceneToUpdate == null) return;
+		String cssPath = ThemeUtils.getCssPathForTheme(themeName);
 		try {
 			String fullCssPath = getClass().getResource(cssPath).toExternalForm();
 			sceneToUpdate.getStylesheets().clear();
 			sceneToUpdate.getStylesheets().add(fullCssPath);
-			System.out.println("Scene stylesheets NOW: " + sceneToUpdate.getStylesheets());
 		} catch (NullPointerException e) {
 			System.err.println("Could not find CSS file: " + cssPath);
 		}
@@ -89,7 +77,6 @@ public class SettingsController {
 	@FXML
 	private void handleSettingsSave() {
 		try {
-			UserSettings userSettings = UserSettings.getInstance();
 			UserSettings.SettingsData newSettings = userSettings.getSettings();
 			newSettings.bufferSize = Integer.parseInt(bufferSize.getText());
 			newSettings.maxFileSize = Long.parseLong(maxFileSize.getText());
@@ -99,10 +86,6 @@ public class SettingsController {
 
 			userSettings.saveSettings();
 
-			applyThemeToScene(newSettings.activeTheme, this.stage.getScene());
-			if (mainScene !=null) {
-				applyThemeToScene(newSettings.activeTheme, mainScene);
-			}
 
 			stage.close();
 		} catch (NumberFormatException e) {
@@ -118,7 +101,6 @@ public class SettingsController {
 	@FXML
 	private void handleSettingsApply() {
 		try {
-			UserSettings userSettings = UserSettings.getInstance();
 			UserSettings.SettingsData newSettings = userSettings.getSettings();
 			newSettings.bufferSize = Integer.parseInt(bufferSize.getText());
 			newSettings.maxFileSize = Long.parseLong(maxFileSize.getText());
@@ -127,10 +109,6 @@ public class SettingsController {
 			newSettings.activeTheme = themeChoiceBox.getValue();
 			userSettings.saveSettings();
 
-			applyThemeToScene(newSettings.activeTheme, this.stage.getScene());
-			if (mainScene !=null) {
-				applyThemeToScene(newSettings.activeTheme, mainScene);
-			}
 
 			statusLabel.setText("Settings applied!");
 		} catch (NumberFormatException e) {
