@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="307.0" prefWidth="432.0"  xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.SettingsController">
+<AnchorPane prefHeight="307.0" prefWidth="432.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.SettingsController">
    <children>
       <AnchorPane prefHeight="37.0" prefWidth="432.0">
          <children>
@@ -61,6 +61,6 @@
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Label fx:id="statusLabel" alignment="CENTER" layoutX="208.0" layoutY="270.0" prefHeight="17.0" prefWidth="16.0" />
+      <Label fx:id="statusLabel" alignment="CENTER" layoutX="3.0" layoutY="270.0" prefHeight="17.0" prefWidth="426.0" />
    </children>
 </AnchorPane>
