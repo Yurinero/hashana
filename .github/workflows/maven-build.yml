@@ -1,0 +1,61 @@
+name: Java CI with Maven and jpackage (Windows)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Build with Maven (jlink phase)
+      run: mvn -B clean install javafx:jlink --file pom.xml
+
+    - name: Create directory for JavaFX JMODs
+      shell: pwsh
+      run: New-Item -ItemType Directory -Force -Path "target/javafx-jmods"
+
+    - name: Download JavaFX Controls JMOD
+      shell: pwsh
+      # Uses the JavaFX version from your pom.xml (21.0.5) and assumes 'win' classifier
+      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -Dartifact=org.openjfx:javafx-controls:21.0.5:jmod:win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
+
+    - name: Download JavaFX FXML JMOD
+      shell: pwsh
+      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -Dartifact=org.openjfx:javafx-fxml:21.0.5:jmod:win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
+      # Add more steps like these if you need other JavaFX JMODs (e.g., graphics, base, media)
+
+    - name: Prepare for jpackage (Copy FAT JAR)
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force -Path "target/hashana-runtime/lib"
+        Copy-Item -Path "target/hashana-1.0-SNAPSHOT.jar" -Destination "target/hashana-runtime/lib/"
+
+    - name: Run jpackage
+      shell: pwsh
+      run: |
+        jpackage --type "app-image" --input "target/hashana-runtime/lib" --main-jar "hashana-1.0-SNAPSHOT.jar" --main-class "me.yurinero.hashana.Hashana" --name "Hashana" --dest "target/installer" --module-path "target/javafx-jmods" --add-modules "javafx.controls,javafx.fxml"
+        # If jpackage also needs system JMODs explicitly and doesn't find them:
+        # You might need to add $env:JAVA_HOME\jmods if the above fails to find JDK modules,
+        # e.g., --module-path "target/javafx-jmods;$env:JAVA_HOME\jmods"
+        # However, jpackage from the JDK usually finds its own jmods automatically.
+
+    - name: Archive application image
+      uses: actions/upload-artifact@v4
+      with:
+        name: Hashana-Windows-AppImage
+        path: target/installer/Hashana/
+        if-no-files-found: error
