@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.Scene;
 import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
 

@@ -16,26 +16,24 @@
 
 <AnchorPane fx:id="rootAnchor" prefHeight="400.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.FIleCheckController">
     <AnchorPane layoutX="14.0" layoutY="41.0" prefHeight="281.0" prefWidth="402.0" styleClass="filePickerAnchor">
-        <children>
-            <Label fx:id="progressLabel" alignment="CENTER" layoutX="10.0" layoutY="217.0" prefHeight="17.0" prefWidth="303.0" text="Progress" />
-            <ChoiceBox fx:id="fileHashChoice" accessibleHelp="Choose the relevant hashing algorhitm" accessibleText="Hash Allgorhitm Choice Box" layoutX="157.0" layoutY="43.0" />
-            <TextField fx:id="filePathField" editable="false" layoutX="115.0" layoutY="88.0" />
-            <Button fx:id="calculateHashButton" accessibleHelp="Initiate the hash calculation after selecting a file." accessibleText="Calculate hash" alignment="CENTER" layoutX="225.0" layoutY="44.0" onAction="#handleCalculateHash" text="Calculate Hash" />
-            <Label layoutX="87.0" layoutY="48.0" text="Algorithm:" />
-            <Label layoutX="47.0" layoutY="92.0" text="Select File:" />
-            <Label layoutX="27.0" layoutY="123.0" text="Expected Hash:" />
-            <Label fx:id="verificationStatus" accessibleHelp="Result of the hash comparison will be displayed here." alignment="CENTER" layoutX="75.0" layoutY="151.0" prefHeight="17.0" prefWidth="229.0" text="Match?" />
-            <TextField fx:id="expectedHashField" accessibleHelp="Input the expected hash given  by the file provider." accessibleText="Expected hash text field" layoutX="115.0" layoutY="119.0" />
-            <TextField fx:id="computedHashField" accessibleHelp="The computed hash from the file will appear here." accessibleText="Computed hash field" editable="false" layoutX="115.0" layoutY="172.0" />
-            <Label layoutX="23.0" layoutY="176.0" text="Computed Hash:" />
-            <Button fx:id="browseButton" accessibleHelp="Browse for files on your computer to check the hash." accessibleText="Browse button" layoutX="271.0" layoutY="88.0" onAction="#handleFileBrowse" text="Browse...">
+        <Label fx:id="progressLabel" alignment="CENTER" layoutX="10.0" layoutY="217.0" prefHeight="17.0" prefWidth="303.0" text="Progress" />
+        <ChoiceBox fx:id="fileHashChoice" accessibleHelp="Choose the relevant hashing algorhitm" accessibleText="Hash Allgorhitm Choice Box" layoutX="157.0" layoutY="43.0" />
+        <TextField fx:id="filePathField" editable="false" layoutX="115.0" layoutY="88.0" />
+        <Button fx:id="calculateHashButton" accessibleHelp="Initiate the hash calculation after selecting a file." accessibleText="Calculate hash" alignment="CENTER" layoutX="225.0" layoutY="44.0" onAction="#handleCalculateHash" text="Calculate Hash" />
+        <Label layoutX="87.0" layoutY="48.0" text="Algorithm:" />
+        <Label layoutX="47.0" layoutY="92.0" text="Select File:" />
+        <Label layoutX="27.0" layoutY="123.0" text="Expected Hash:" />
+        <Label fx:id="verificationStatus" accessibleHelp="Result of the hash comparison will be displayed here." alignment="CENTER" layoutX="75.0" layoutY="151.0" prefHeight="17.0" prefWidth="229.0" text="Match?" />
+        <TextField fx:id="expectedHashField" accessibleHelp="Input the expected hash given  by the file provider." accessibleText="Expected hash text field" layoutX="115.0" layoutY="119.0" />
+        <TextField fx:id="computedHashField" accessibleHelp="The computed hash from the file will appear here." accessibleText="Computed hash field" editable="false" layoutX="115.0" layoutY="172.0" />
+        <Label layoutX="23.0" layoutY="176.0" text="Computed Hash:" />
+        <Button fx:id="browseButton" accessibleHelp="Browse for files on your computer to check the hash." accessibleText="Browse button" layoutX="271.0" layoutY="88.0" onAction="#handleFileBrowse" text="Browse...">
             <tooltip>
-               <Tooltip fx:id="cancelTooltip" text="CTRL + O" textAlignment="CENTER" wrapText="true" />
+                <Tooltip fx:id="cancelTooltip" text="CTRL + O" textAlignment="CENTER" wrapText="true" />
             </tooltip></Button>
-            <Button fx:id="verifyButton" layoutX="271.0" layoutY="172.0" onAction="#handleVerify" text="Verify" />
-            <Button fx:id="cancelButton" accessibleHelp="This button will cancel the file check operation, use CTRL + X as a shortcut." accessibleText="File Hash Cancel Button" layoutX="324.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-            <ProgressBar fx:id="hashProgress" layoutX="14.0" layoutY="239.0" prefHeight="18.0" prefWidth="303.0" progress="0.0" />
-        </children>
+        <Button fx:id="verifyButton" layoutX="271.0" layoutY="172.0" onAction="#handleVerify" text="Verify" />
+        <Button fx:id="cancelButton" accessibleHelp="This button will cancel the file check operation, use CTRL + X as a shortcut." accessibleText="File Hash Cancel Button" layoutX="324.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+        <ProgressBar fx:id="hashProgress" layoutX="14.0" layoutY="239.0" prefHeight="18.0" prefWidth="303.0" progress="0.0" />
     </AnchorPane>
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3e4886" height="281.0" layoutX="443.0" layoutY="42.0" stroke="#aeaeae" width="337.0" />
     <Text layoutX="436.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Experimental! Proceed at your own risk." textAlignment="CENTER" underline="true" wrappingWidth="382.0">
@@ -43,7 +41,7 @@
          <Font name="System Bold" size="12.0" />
       </font>
       <fill>
-         <LinearGradient endX="1.0" endY="1.0">
+         <LinearGradient>
             <stops>
                <Stop>
                   <color>

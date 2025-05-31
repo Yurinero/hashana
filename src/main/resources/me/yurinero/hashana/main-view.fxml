@@ -9,53 +9,32 @@
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane maxHeight="470.0" maxWidth="845.0" minHeight="417.0" minWidth="845.0" prefHeight="470.0" prefWidth="845.0"  xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.MainViewController">
-    <children>
-      <AnchorPane prefHeight="34.0" prefWidth="845.0">
-         <children>
-            <HBox fx:id="titleBar" alignment="TOP_RIGHT" layoutY="3.0" prefHeight="34.0" prefWidth="845.0">
-               <children>
-                  <Button fx:id="settingsButton" mnemonicParsing="false" text="⚙" />
-                  <Button fx:id="minimizeButton" mnemonicParsing="false" text="─" />
-                  <Button fx:id="closeButton" alignment="CENTER" mnemonicParsing="false" text="✕" />
-               </children>
-            </HBox>
-            <ImageView fitHeight="37.0" fitWidth="41.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../HASHANA.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-        <TabPane layoutY="31.0" prefHeight="439.0" prefWidth="845.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Hash">
-                    <content>
-                        <fx:include source="hash-view.fxml" />
-                    </content>
-                </Tab>
-                <Tab text="File Hash Check">
-                    <content>
-                        <fx:include source="file-check-view.fxml" />
-                    </content>
-                </Tab>
-            <Tab text="Password Generator">
-              <content>
-               <fx:include source="password-gen-view.fxml" />
-              </content>
-            </Tab>
-                <Tab text="About">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="73.0" fitWidth="350.0" layoutX="248.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../HASHANA.png" />
-                           </image>
-                        </ImageView>
-                     </children></AnchorPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-    </children>
+    <AnchorPane prefHeight="34.0" prefWidth="845.0">
+        <HBox fx:id="titleBar" alignment="TOP_RIGHT" layoutY="3.0" prefHeight="34.0" prefWidth="845.0">
+            <Button fx:id="settingsButton" mnemonicParsing="false" text="⚙" />
+            <Button fx:id="minimizeButton" mnemonicParsing="false" text="─" />
+            <Button fx:id="closeButton" alignment="CENTER" mnemonicParsing="false" text="✕" />
+        </HBox>
+        <ImageView fitHeight="37.0" fitWidth="41.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../../../HASHANA.png" />
+        </ImageView>
+    </AnchorPane>
+    <TabPane layoutY="31.0" prefHeight="439.0" prefWidth="845.0" tabClosingPolicy="UNAVAILABLE">
+        <Tab text="Hash">
+            <fx:include source="hash-view.fxml" />
+        </Tab>
+        <Tab text="File Hash Check">
+            <fx:include source="file-check-view.fxml" />
+        </Tab>
+        <Tab text="Password Generator">
+            <fx:include source="password-gen-view.fxml" />
+        </Tab>
+        <Tab text="About">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <ImageView fitHeight="73.0" fitWidth="350.0" layoutX="248.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../../../HASHANA.png" />
+                </ImageView>
+            </AnchorPane>
+        </Tab>
+    </TabPane>
 </AnchorPane>
