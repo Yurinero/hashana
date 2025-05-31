@@ -2,7 +2,7 @@ name: Simple Trigger Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   test_job:
