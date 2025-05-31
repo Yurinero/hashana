@@ -5,6 +5,7 @@ module me.yurinero.hashana {
 	requires com.google.common;
 	requires com.fasterxml.jackson.databind;
 	requires java.desktop;
+	requires org.slf4j;
 
 
 	opens me.yurinero.hashana to

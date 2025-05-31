@@ -4,12 +4,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 
 // Helper utility class for custom styled Alert dialogs.
 public class DialogUtils {
-
+	private static final Logger logger = LoggerFactory.getLogger(DialogUtils.class);
 	/**
 	 * Creates a styled alert dialog that respects the application's current theme.
 	 *
@@ -20,6 +22,7 @@ public class DialogUtils {
 	 * @return The configured Alert object.
 	 */
 	public static Alert createStyledAlert(Alert.AlertType alertType, String title, String header, String content) {
+		logger.info("Creating styled alert: Title='{}', Header='{}', Type='{}'", title, header, alertType);
 		Alert alert = new Alert(alertType);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
@@ -32,41 +35,49 @@ public class DialogUtils {
 		if (userSettings.getSettings() != null && userSettings.getSettings().activeTheme != null) {
 			activeTheme = userSettings.getSettings().activeTheme;
 		} else {
-			System.err.println("DialogUtils: UserSettings or activeTheme is null, defaulting to Dark theme for dialog.");
+			logger.warn("UserSettings or activeTheme is null, defaulting to Dark theme for dialog.");
 		}
 		String cssPath = ThemeUtils.getCssPathForTheme(activeTheme);
 		try {
 			URL cssURL = DialogUtils.class.getResource(cssPath);
 			if (cssURL != null) {
 				dialogPane.getStylesheets().add(cssURL.toExternalForm());
+				logger.debug("Successfully applied theme CSS: {}", cssPath);
 			} else {
-				System.err.println("DialogUtils: CSS file path not found: " + cssPath);
+				logger.warn("DialogUtils: CSS file path not found: {}", cssPath);
 				URL fallBackCssURL = DialogUtils.class.getResource(ThemeUtils.getCssPathForTheme("Dark"));
 				if (fallBackCssURL != null) {
 					dialogPane.getStylesheets().add(fallBackCssURL.toExternalForm());
-					System.err.println("DialogUtils: Applied fallback Dark theme to dialog.");
+					logger.info("DialogUtils: Applied fallback Dark theme to dialog.");
 				} else {
-					System.err.println("DialogUtils: Fallback Dark theme also not found.");
+					logger.error("DialogUtils: Fallback Dark theme also not found.");
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("DialogUtils: Error applying theme CSS " + cssPath + "to dialog: " + e.getMessage());
-			e.printStackTrace();
+			logger.error("DialogUtils: Error applying theme CSS {} to dialog: {}", cssPath, e.getMessage(), e);
 		}
 
 		Stage dialogStage = (Stage) dialogPane.getScene().getWindow();
 		if (dialogStage != null) {
-			dialogStage.initStyle(StageStyle.UNDECORATED);
+			try {
+				dialogStage.initStyle(StageStyle.UNDECORATED);
+			} catch (IllegalStateException e) {
+				logger.warn("Could not set undecorated style, stage might be already showing or managed: {}", e.getMessage());
+			}
 		} else {
+			logger.debug("DialogPane scene or window not yet available for undecorated style. Adding listener.");
 			dialogPane.sceneProperty().addListener((observable, oldScene, newScene) -> {
 				if (newScene != null) {
 					Stage stage = (Stage) newScene.getWindow();
 					if (stage != null && !stage.isShowing()) {
 						try {
 							stage.initStyle(StageStyle.UNDECORATED);
+							logger.debug("Applied undecorated style via listener.");
 						} catch (IllegalStateException e) {
-							System.err.println("Could not set undecorated style, stage might be already managed: " + e.getMessage());
+							logger.warn("Could not set undecorated style via listener, stage might be already managed: {}", e.getMessage());
 						}
+					} else if (stage != null && stage.isShowing()) {
+						logger.debug("Stage is already showing, undecorated style cannot be applied via listener.");
 					}
 				}
 			});

@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SettingsController {
 	public TextField bufferSize;
@@ -22,6 +24,7 @@ public class SettingsController {
 	public Label statusLabel;
 	public ChoiceBox<String> themeChoiceBox;
 
+	private static final Logger logger = LoggerFactory.getLogger(SettingsController.class);
 	private final UserSettings userSettings = UserSettings.getInstance();
 	private Stage stage;
 	private Scene mainScene;
@@ -41,6 +44,7 @@ public class SettingsController {
 		maxFileSize.setText(String.valueOf(currentSettings.maxFileSize));
 		progressIntervalMS.setText(String.valueOf(currentSettings.progressIntervalMS));
 		splashScreenEnabled.setSelected(currentSettings.splashScreenEnabled);
+		logger.info("Loaded settings from {}", currentSettings.toString());
 	}
 
 	private void setupThemeSelector() {
@@ -57,6 +61,7 @@ public class SettingsController {
 			}
 			UserSettings.getInstance().getSettings().activeTheme = newTheme;
 			statusLabel.setText("Theme changed. Apply or Save to keep.");
+			logger.info("Changed theme to {}", newTheme);
 		});
 	}
 
@@ -69,7 +74,7 @@ public class SettingsController {
 			sceneToUpdate.getStylesheets().clear();
 			sceneToUpdate.getStylesheets().add(fullCssPath);
 		} catch (NullPointerException e) {
-			System.err.println("Could not find CSS file: " + cssPath);
+			logger.error("Could not find CSS file:{}", cssPath, e);
 		}
 	}
 
@@ -85,7 +90,7 @@ public class SettingsController {
 			newSettings.activeTheme = themeChoiceBox.getValue();
 
 			userSettings.saveSettings();
-
+			logger.info("Saved settings to {}", userSettings.getSettings().toString());
 
 			stage.close();
 		} catch (NumberFormatException e) {
@@ -108,7 +113,7 @@ public class SettingsController {
 			newSettings.splashScreenEnabled = splashScreenEnabled.isSelected();
 			newSettings.activeTheme = themeChoiceBox.getValue();
 			userSettings.saveSettings();
-
+			logger.info("Applied & Saved new settings: {}", userSettings.getSettings().toString());
 
 			statusLabel.setText("Settings applied!");
 		} catch (NumberFormatException e) {

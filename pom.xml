@@ -116,7 +116,6 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>me.yurinero.hashana.Hashana</mainClass> <!-- Fixed -->
-                            <jlinkZipPath>C:\javafx-jmods-21.0.7</jlinkZipPath>
                             <jlinkImageName>hashana-runtime</jlinkImageName>
                             <modules>
                                 <module>javafx.controls</module>

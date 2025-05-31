@@ -1,6 +1,11 @@
 package me.yurinero.hashana.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ThemeUtils {
+	private static final Logger logger = LoggerFactory.getLogger(ThemeUtils.class);
+
 	private ThemeUtils() {
 
 	}
@@ -10,7 +15,7 @@ public class ThemeUtils {
 			case "Accessible" -> "/me/yurinero/hashana/accessible-theme.css";
 			case "Dark" -> "/me/yurinero/hashana/dark-theme.css"; // Default/fallback
 			default -> {
-				System.err.println("Unknown theme name: " + themeName + ". Defaulting to Dark.");
+				logger.error("Theme could not be found, defaulting to theme Dark: {}", themeName);
 				yield "/me/yurinero/hashana/dark-theme.css";
 			}
 		};

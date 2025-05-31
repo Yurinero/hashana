@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +37,7 @@ public class MainViewController implements Initializable {
 	private Stage stage;
 	private double xOffset = 0;
 	private double yOffset = 0;
+	private  static final Logger logger = LoggerFactory.getLogger(MainViewController.class);
 	// private boolean maximized = false;
 	// private double originalWidth, originalHeight, originalX, originalY;
 
@@ -60,7 +63,7 @@ public class MainViewController implements Initializable {
 			Platform.exit();
 			System.exit(0);
 		});
-
+		logger.debug("Setting up window controls");
 	}
 
 	private void setupDragging(){
@@ -76,6 +79,7 @@ public class MainViewController implements Initializable {
 			stage.setX(event.getScreenX() - xOffset);
 			stage.setY(event.getScreenY() - yOffset);
 		});
+		logger.debug("Setting up window dragging");
 	}
 	@FXML
 	private void openSettings(ActionEvent event) {
@@ -103,7 +107,7 @@ public class MainViewController implements Initializable {
 				String fullCssPath = getClass().getResource(cssPath).toExternalForm();
 				settingsScene.getStylesheets().add(fullCssPath);
 			} catch (NullPointerException e) {
-				System.err.println("Error: Could not find CSS file for settings window: " + cssPath);
+				logger.error("Error: Could not find CSS file for settings window: {}", cssPath);
 			}
 
 			// Set modality to block main window interaction
@@ -116,8 +120,7 @@ public class MainViewController implements Initializable {
 			// Show the result
 			settingsStage.show();
 		} catch (IOException e) {
-			System.err.println("Error loading settings window:");
-			e.printStackTrace();
+			logger.error("Error: Could not open settings window: {}", e.getMessage());
 
 		}
 	}

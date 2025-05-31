@@ -2,6 +2,8 @@ package me.yurinero.hashana.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class UserSettings {
+	private final Logger logger = LoggerFactory.getLogger(UserSettings.class);
 
 	private static final UserSettings instance = new UserSettings();
 
@@ -47,7 +50,7 @@ public class UserSettings {
 					currentSettingsData.activeTheme = "Dark";
 				}
 			} catch (IOException e) {
-				System.err.println("Error loading settings, using defaults: " + e.getMessage());
+				logger.error("Error while loading settings, going back to Default. Error: {}", e.getMessage());
 				currentSettingsData = new SettingsData();
 			}
 		} else {
@@ -64,7 +67,7 @@ public class UserSettings {
 			}
 			objectMapper.writeValue(settingsFilePath.toFile(), currentSettingsData);
 		} catch (IOException e) {
-			System.err.println("Error saving settings, using defaults: " + e.getMessage());
+			logger.error("Error while saving settings, going back to Default. Error: {}", e.getMessage());
 		}
 	}
 	public SettingsData getSettings() {
