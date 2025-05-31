@@ -115,12 +115,11 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>me.yurinero.hashana.Hashana</mainClass> <!-- Fixed -->
+                            <mainClass>me.yurinero.hashana.Hashana</mainClass>
                             <jlinkImageName>hashana-runtime</jlinkImageName>
-                            <modules>
-                                <module>javafx.controls</module>
-                                <module>javafx.fxml</module> <!-- Only if using FXML -->
-                            </modules>
+                            <addModules> <module>javafx.controls</module>
+                                <module>javafx.fxml</module>
+                            </addModules>
                             <launcher>app</launcher>
                         </configuration>
                     </execution>

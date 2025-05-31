@@ -20,38 +20,14 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: 'maven'
-
-    - name: Build with Maven (jlink phase)
-      run: mvn -B clean install javafx:jlink --file pom.xml
-
-    - name: Create directory for JavaFX JMODs
-      shell: pwsh
-      run: New-Item -ItemType Directory -Force -Path "target/javafx-jmods"
-
-    - name: Download JavaFX Controls JMOD
-      shell: pwsh
-      # Uses the JavaFX version from your pom.xml (21.0.5) and assumes 'win' classifier
-      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -DgroupId=org.openjfx -DartifactId=javafx-controls -Dversion=21.0.5 -Dtype=jmod -Dclassifier=win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
-
-    - name: Download JavaFX FXML JMOD
-      shell: pwsh
-      run: mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy -DgroupId=org.openjfx -DartifactId=javafx-fxml -Dversion=21.0.5 -Dtype=jmod -Dclassifier=win -DoutputDirectory=target/javafx-jmods -DstripVersion=true
-      # Add more steps like these if you need other JavaFX JMODs (e.g., graphics, base, media)
-
-    - name: Prepare for jpackage (Copy FAT JAR)
-      shell: pwsh
-      run: |
-        New-Item -ItemType Directory -Force -Path "target/hashana-runtime/lib"
-        Copy-Item -Path "target/hashana-1.0-SNAPSHOT.jar" -Destination "target/hashana-runtime/lib/"
-
     - name: Run jpackage
       shell: pwsh
       run: |
-        jpackage --type "app-image" --input "target/hashana-runtime/lib" --main-jar "hashana-1.0-SNAPSHOT.jar" --main-class "me.yurinero.hashana.Hashana" --name "Hashana" --dest "target/installer" --module-path "target/javafx-jmods" --add-modules "javafx.controls,javafx.fxml"
-        # If jpackage also needs system JMODs explicitly and doesn't find them:
-        # You might need to add $env:JAVA_HOME\jmods if the above fails to find JDK modules,
-        # e.g., --module-path "target/javafx-jmods;$env:JAVA_HOME\jmods"
-        # However, jpackage from the JDK usually finds its own jmods automatically.
+        jpackage --type "app-image" \
+           --name "Hashana" \
+           --dest "target/installer" \
+           --runtime-image "target/hashana-runtime" \
+           --module me.yurinero.hashana/me.yurinero.hashana.Hashana
 
     - name: Archive application image
       uses: actions/upload-artifact@v4
