@@ -10,12 +10,16 @@ import me.yurinero.hashana.utils.SplashScreen;
 import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
 import me.yurinero.hashana.utils.UserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
 
 
 public class Hashana extends Application {
+	private static final Logger logger = LoggerFactory.getLogger(Hashana.class);
+
 	@Override
 	public void init() throws Exception {
 		/* Sleeping the thread on purpose upon initialization of the application to display the splash screen.
