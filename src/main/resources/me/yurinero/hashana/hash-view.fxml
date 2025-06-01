@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="me.yurinero.hashana.controllers.HashController" prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.HashController">
     <TextArea fx:id="textInputArea" layoutX="382.0" layoutY="26.0" prefHeight="155.0" prefWidth="450.0" promptText="Input your text to be hashed here. Be aware of whitespace and newlines!" wrapText="true" />
     <ChoiceBox fx:id="hashChoice" layoutX="494.0" layoutY="193.0" prefHeight="25.0" prefWidth="87.0" />
     <TextArea fx:id="hashOutputField" editable="false" layoutX="383.0" layoutY="230.0" prefHeight="153.0" prefWidth="448.0" promptText="Your hash will appear here." wrapText="true" />
-    <Button fx:id="hashConffirmButton" layoutX="591.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleHashButtonClick" text="Hash it!" />
+    <Button fx:id="hashConffirmButton" layoutX="591.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleHashButtonClick" styleClass="hashConfirmButton" text="Hash it!" />
     <TextArea fx:id="hashInfoField" editable="false" layoutX="14.0" layoutY="26.0" prefHeight="361.0" prefWidth="353.0" promptText="Information about your chosen method." wrapText="true" />
 </AnchorPane>

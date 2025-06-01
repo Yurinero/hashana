@@ -21,11 +21,12 @@
 }
 
 .tab-label {
-    -fx-text-fill: black !important; /* Overlay2 */
+    -fx-text-fill: #cdd6f4 !important; /* Overlay2 */
 }
 
 .tab:selected .tab-label {
-    -fx-text-fill: #1e1e2e; /* Base */
+    -fx-text-fill: #1e1e2e !important; /* Base */
+    -fx-font-weight: bold;
 }
 
 /* TextAreas */
@@ -71,13 +72,14 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 .button .text {
-    -fx-fill: #1e1e2e !important;
+    -fx-fill: #1e1e2e;
     -fx-font-weight: bold;
 }
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #a5aed8 0%, #74a7f3 100%);
     -fx-text-fill: #1e1e2e;
 }
+
 /* Hash Info Field */
 #hashInfoField {
     -fx-background-color: #45475a; /* Surface1 */
@@ -95,10 +97,6 @@
     -fx-font-weight: bold;
 }
 
-/* General text styling */
-.text {
-    -fx-fill: #cdd6f4; /* Text */
-}
 
 /* Focus highlighting */
 .text-area:focused, .choice-box:focused {
@@ -171,40 +169,72 @@
     -fx-background-color: #11111b;
 }
 
-/* Window Control Buttons */
-#minimizeButton, #maximizeButton, #closeButton, #settingsButton {
-    -fx-background-color: transparent;
-    -fx-text-fill: #89b4fa;
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
+/* Default state for title bar buttons */
+#minimizeButton,
+#closeButton,
+#settingsButton {
+    -fx-background-color: transparent; /* Remove general button background */
+    -fx-text-fill: #89b4fa;          /* Light blue text directly on button (fallback) */
+    -fx-padding: 5px 10px;           /* Adjust padding as needed for title bar */
+    -fx-effect: none;                /* Remove general button dropshadow */
+
 }
 
-#minimizeButton:hover, #maximizeButton:hover, #settingsButton:hover {
-    -fx-background-color: #45475a;
+/* Specifically style the inner text node for title bar buttons */
+#minimizeButton .text,
+#closeButton .text,
+#settingsButton .text {
+    -fx-fill: #89b4fa !important;
 }
+
+/* Hover states for title bar buttons */
+#minimizeButton:hover,
+#settingsButton:hover {
+    -fx-background-color: #45475a; /* Surface1 */
+}
+#minimizeButton:hover .text,
+#settingsButton:hover .text {
+    -fx-fill: #89b4fa !important; /* Keep text light blue on hover, or change as needed */
+}
+
 
 #closeButton:hover {
-    -fx-background-color: #f38ba8; /* Red for close */
-    -fx-text-fill: #1e1e2e;
+    -fx-background-color: #f38ba8; /* Red background for close button hover */
+}
+#closeButton:hover .text {
+    -fx-fill: #1e1e2e !important; /* Dark text on red background for close button hover */
 }
 #settingsTitle {
     -fx-background-color: #11111b; /* Darker than base for distinction */
     -fx-border-color: #6c7086;
     -fx-border-width: 0 0 1 0;
 }
+#fileCheckAnchor {
+    -fx-background-color: #313244;
+    -fx-border-color: #6c7086; /* Overlay0 */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
+#passwordGenAnchor {
+    -fx-background-color: #313244 !important;
+    -fx-border-color: #6c7086; /* Overlay0 */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
+#infoAnchor {
+    -fx-background-color: #313244 !important;
+    -fx-border-color: #6c7086; /* Overlay0 */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
 
-.filePickerAnchor {
-    -fx-background-color: #45475a;
-    -fx-border-color: #585b70;
-    -fx-border-width: 2px;
-    -fx-padding: 4px;
-}
-.passwordPaneAnchor {
-    -fx-background-color: #45475a;
-    -fx-border-color: #585b70;
-    -fx-border-width: 2px;
-    -fx-padding: 4px;
-}
+
 .help-icon-label {
     -fx-font-weight: bold;
     -fx-border-color: #89b4fa; /* Blue */
@@ -224,3 +254,4 @@
     -fx-font-size: 12px;
     -fx-padding: 5px;
 }
+
