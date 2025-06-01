@@ -44,6 +44,7 @@ public class FIleCheckController {
 	public Label progressLabel;
 	public Button cancelButton;
 	public AnchorPane rootAnchor;
+	public TextArea helpTextArea;
 	private File selectedFile;
 
 
@@ -52,6 +53,23 @@ public class FIleCheckController {
 	private volatile boolean cancelRequested = false;
 	private long lastUpdateTime = 0;
 	private UserSettings.SettingsData appSettings;
+	private static final String HELP_TEXT_CONTENT =
+			"""
+					How to Use File Hash Check:
+					
+					1. Browse: Click 'Browse' or use Ctrl+O to select a file.
+					2. Select Algorithm: Choose a hashing algorithm (SHA256 is default).
+					3. Calculate: Click 'Calculate Hash' to compute the file's hash.
+					   - The progress bar will show the status.
+					   - You can cancel the operation using 'Cancel' or Ctrl+X.
+					4. Expected Hash (Optional): If you have an expected hash value, paste it into the 'Expected Hash' field.
+					   - The application will try to auto-detect checksum files (e.g., .sha256) in the same directory.
+					5. Verify: Click 'Verify' to compare the computed and expected hashes.
+					   - The status will indicate if they match.
+					
+					Important Warning:
+					This functionality uses hashing methods from Google Guava's library. Some of these methods might be labeled as experimental or beta by Guava. \
+					Please be mindful of this when using the file hashing features for critical applications.""";
 
 	@FXML
 	public void initialize() {
@@ -66,7 +84,18 @@ public class FIleCheckController {
 		addAccelerator(KeyCode.X, KeyCombination.CONTROL_DOWN,() -> cancelButton.fire());
 		//Load default/user settings
 		appSettings = UserSettings.getInstance().getSettings();
+		//
+		loadHelpText();
 	}
+	private void loadHelpText() {
+		if (helpTextArea != null) {
+			helpTextArea.setText(HELP_TEXT_CONTENT);
+			// Optionally, set a specific style or make it non-focusable if purely for display
+			// helpInfoArea.setFocusTraversable(false);
+			// helpInfoArea.setStyle("-fx-control-inner-background:#f0f0f0; -fx-text-fill: #333333;"); // Example style
+		}
+	}
+
 
 	@FXML
 	private void handleFileBrowse(ActionEvent event) {
