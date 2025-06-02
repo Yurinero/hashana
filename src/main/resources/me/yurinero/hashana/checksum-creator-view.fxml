@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.ChecksumCreatorController">
+    <AnchorPane fx:id="createChecksumAnchor" layoutX="26.0" layoutY="31.0" prefHeight="339.0" prefWidth="454.0">
+        <HBox alignment="CENTER" layoutX="28.0" layoutY="44.0" prefHeight="32.0" prefWidth="399.0" spacing="10.0">
+         <Label text="Select File:" />
+            <TextField fx:id="filePathField" editable="false" />
+            <Button fx:id="browseButton" mnemonicParsing="false" onAction="#handleFileBrowse" text="Browse" />
+        </HBox>
+        <HBox alignment="CENTER" layoutX="56.0" layoutY="94.0" prefHeight="25.0" prefWidth="365.0" spacing="9.0">
+         <Label text="Algorithm" />
+            <ChoiceBox fx:id="algorithmChoiceBox" prefHeight="25.0" prefWidth="96.0" />
+            <Button fx:id="createChecksumButton" mnemonicParsing="false" onAction="#handleCreateChecksum" text="Create Checksum" />
+        </HBox>
+        <TextArea fx:id="statusArea" editable="false" focusTraversable="false" layoutX="34.0" layoutY="140.0" prefHeight="125.0" prefWidth="387.0" promptText="Progress updates" wrapText="true" />
+        <ProgressBar fx:id="hashProgress" layoutX="64.0" layoutY="296.0" prefHeight="18.0" prefWidth="279.0" progress="0.0" />
+        <Button fx:id="cancelButton" layoutX="355.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+        <Label fx:id="progressLabel" alignment="CENTER" layoutX="64.0" layoutY="275.0" prefHeight="17.0" prefWidth="279.0" text="Label" textAlignment="CENTER" />
+    </AnchorPane>
+</AnchorPane>

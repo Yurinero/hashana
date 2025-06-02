@@ -23,9 +23,12 @@
         <Tab text="Hash">
             <fx:include source="hash-view.fxml" />
         </Tab>
-        <Tab text="File Hash Check">
+        <Tab text="Verify Checksum">
             <fx:include source="file-check-view.fxml" />
         </Tab>
+      <Tab text="Create Checksum">
+          <fx:include source="checksum-creator-view.fxml" />
+      </Tab>
         <Tab text="Password Generator">
             <fx:include source="password-gen-view.fxml" />
         </Tab>

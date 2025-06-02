@@ -55,7 +55,7 @@ public class FIleCheckController {
 	private UserSettings.SettingsData appSettings;
 	private static final String HELP_TEXT_CONTENT =
 			"""
-					How to Use File Hash Check:
+					How to Use:
 					
 					1. Browse: Click 'Browse' or use Ctrl+O to select a file.
 					2. Select Algorithm: Choose a hashing algorithm (SHA256 is default).

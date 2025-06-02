@@ -225,7 +225,7 @@
     -fx-padding: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
-#infoAnchor {
+#createChecksumAnchor {
     -fx-background-color: #313244 !important;
     -fx-border-color: #6c7086; /* Overlay0 */
     -fx-border-radius: 5px;
