@@ -141,33 +141,15 @@ public class FIleCheckController extends FileOperationController {
 
 		executor.submit(() -> {
 			try (InputStream is = new FileInputStream(selectedFile)) {
-				long fileSize = selectedFile.length();
-				Hasher hasher = hashFunction.newHasher();
-				byte[] buffer = new byte[appSettings.bufferSize * 1024];
-				long bytesRead = 0;
-				int read;
+				final HashCode hashCode = hashStream(is, hashFunction);
 
-				updateProgress(0, fileSize);
-
-				while ((read = is.read(buffer)) != -1 && !cancelRequested) {
-					hasher.putBytes(buffer, 0, read);
-					bytesRead += read;
-
-					long now = System.currentTimeMillis();
-					if (now - lastUpdateTime > appSettings.progressIntervalMS || bytesRead == fileSize) {
-						updateProgress(bytesRead, fileSize);
-						lastUpdateTime = now;
-					}
-				}
-
-				if (!cancelRequested) {
-					HashCode hashCode = hasher.hash();
+				if (hashCode != null) {
 					Platform.runLater(() -> {
 						computedHashField.setText(hashCode.toString());
 						autoVerifyIfNeeded();
 						getProgressBar().setProgress(1.0);
 						getCancelButton().setDisable(true);
-						getProgressLabel().setText("Complete! (" + formatBytes(fileSize) + ")");
+						getProgressLabel().setText("Complete! (" + formatBytes(selectedFile.length()) + ")");
 					});
 				}
 			} catch (IOException e) {

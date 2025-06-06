@@ -2,11 +2,12 @@ package me.yurinero.hashana.controllers;
 
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
-import com.google.common.hash.Hasher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.HashUtils;
@@ -15,7 +16,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -32,6 +32,7 @@ public class ChecksumCreatorController extends FileOperationController {
 	public ProgressBar hashProgress;
 	public Button cancelButton;
 	public Label progressLabel;
+	public AnchorPane rootAnchor;
 	// Controller specific fields
 	private final String[] supportedAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
 
@@ -41,6 +42,9 @@ public class ChecksumCreatorController extends FileOperationController {
 		super.initialize();
 		//Populate list with hashing algorithms from fileHashAlgorithms
 		algorithmChoiceBox.getItems().addAll(supportedAlgorithms);
+		//Add Accelerator aka Shortcut for File Browsing and Cancellation of ongoing File Hash Check
+		addAccelerator(KeyCode.O, KeyCombination.CONTROL_DOWN,() -> browseButton.fire());
+		addAccelerator(KeyCode.X, KeyCombination.CONTROL_DOWN,() -> getCancelButton().fire());
 		//Set default SHA256 algorithm
 		algorithmChoiceBox.setValue(supportedAlgorithms[0]);
 	}
@@ -60,7 +64,7 @@ public class ChecksumCreatorController extends FileOperationController {
 	@Override protected ProgressBar getProgressBar() { return hashProgress; }
 	@Override protected Label getProgressLabel() { return progressLabel; }
 	@Override protected Button getCancelButton() { return cancelButton; }
-	@Override protected AnchorPane getRootPane() { return (AnchorPane) filePathField.getParent(); }
+	@Override protected AnchorPane getRootPane() { return rootAnchor; }
 
 	// Controller specific methods
 
@@ -88,54 +92,34 @@ public class ChecksumCreatorController extends FileOperationController {
 
 		statusArea.setText("Calculating " + algorithm + " hash for " + selectedFile.getName() + "...");
 
-		ExecutorService executor = ThreadPoolService.getInstance().getExecutorService(); //
-		executor.submit(() -> {
-			try (InputStream is = new FileInputStream(selectedFile)) {
-				long fileSize = selectedFile.length();
-				Hasher hasher = hashFunction.newHasher();
-				byte[] buffer = new byte[appSettings.bufferSize * 1024]; // Use buffer size from settings
-				long bytesRead = 0;
-				int readCount;
+		ExecutorService executor = ThreadPoolService.getInstance().getExecutorService();
+		executor.submit(() -> createHashInBackground(hashFunction,algorithm));
+	}
 
-				updateProgress(0, fileSize);
+	private void createHashInBackground(HashFunction hashFunction, String algorithm) {
+		try (InputStream is = new FileInputStream(selectedFile)) {
+			HashCode hashCode = hashStream(is, hashFunction);
 
-				while ((readCount = is.read(buffer)) != -1 && !cancelRequested) {
-					hasher.putBytes(buffer, 0, readCount);
-					bytesRead += readCount;
-					long now = System.currentTimeMillis();
-					if (now - lastUpdateTime > appSettings.progressIntervalMS || bytesRead == fileSize) { // Use progress interval from settings
-						updateProgress(bytesRead, fileSize);
-						lastUpdateTime = now;
-					}
-				}
-
-				if (cancelRequested) {
-					Platform.runLater(() -> {
-						statusArea.appendText("\nHash calculation cancelled by user.");
-						resetUIState();
-					});
-					return;
-				}
-
-				HashCode hashCode = hasher.hash();
-				String hashString = hashCode.toString();
-
+			if (hashCode != null) {
 				Platform.runLater(() -> {
+					String hashString = hashCode.toString();
 					statusArea.appendText("\nHash calculated: " + hashString);
 					saveChecksumFile(hashString, algorithm);
-					resetUIState();
 				});
 
-			} catch (IOException e) {
-				Platform.runLater(() -> {
-					statusArea.appendText("\nError reading file: " + e.getMessage());
-					DialogUtils.createStyledAlert(Alert.AlertType.ERROR, "File Error", "Error Reading File", "Could not read the selected file: " + e.getMessage()).showAndWait();
-					resetUIState();
-				});
-			} finally {
-				Platform.runLater(this::resetUIState);
+			} else {
+				Platform.runLater(() -> statusArea.appendText("\nHash calculation cancelled by user."));
 			}
-		});
+
+		} catch (IOException e) {
+			Platform.runLater(() -> {
+				statusArea.appendText("\nError reading file: " + e.getMessage());
+				DialogUtils.createStyledAlert(Alert.AlertType.ERROR, "File Error", "Error Reading File", "Could not read the selected file: " + e.getMessage()).showAndWait();
+				resetUIState();
+			});
+		} finally {
+			Platform.runLater(this::resetUIState);
+		}
 	}
 
 	private void saveChecksumFile(String hashString, String algorithm) {
@@ -149,8 +133,8 @@ public class ChecksumCreatorController extends FileOperationController {
 
 
 		try {
-			Files.write(checksumFilePath, content.getBytes(StandardCharsets.UTF_8));
-			statusArea.appendText("\nChecksum file saved: " + checksumFilePath.toString());
+			Files.writeString(checksumFilePath, content);
+			statusArea.appendText("\nChecksum file saved: " + checksumFilePath);
 			DialogUtils.createStyledAlert(Alert.AlertType.INFORMATION, "Success", "Checksum File Created", "Checksum file saved successfully at:\n" + checksumFilePath).showAndWait();
 		} catch (IOException e) {
 			statusArea.appendText("\nError saving checksum file: " + e.getMessage());

@@ -1,5 +1,8 @@
 package me.yurinero.hashana.controllers;
 
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hasher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +16,9 @@ import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.UserSettings;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * An abstract base controller for views that perform hashing operations on files.
  * It handles common UI logic for file Browse, size validation, and progress updates.
@@ -121,6 +127,38 @@ public abstract class FileOperationController {
 			getProgressBar().setStyle("");
 			getProgressLabel().setText("0%");
 		});
+	}
+
+	/** Reads an InputStream, computes its hash using the provided HashFunction, and updates the UI progress along the way.
+	 *
+	 * @param stream The InputStream of the file to hash.
+	 * @param hashFunction The Guava hash function to use.
+	 * @return The resulting HashCode, or null if the operation was cancelled.
+	 * @throws IOException if there is an error reading the stream
+	 */
+	protected HashCode hashStream (InputStream stream, HashFunction hashFunction) throws IOException {
+		long fileSize = selectedFile.length();
+		Hasher hasher = hashFunction.newHasher();
+		byte[] buffer = new byte[appSettings.bufferSize * 1024];
+		long bytesRead = 0;
+		int read;
+
+		updateProgress(0, fileSize);
+
+		while ((read = stream.read(buffer)) != -1 && !cancelRequested) {
+			hasher.putBytes(buffer, 0, read);
+			bytesRead += read;
+
+			long now = System.currentTimeMillis();
+			if (now - lastUpdateTime > appSettings.progressIntervalMS || bytesRead == fileSize) {
+				updateProgress(bytesRead, fileSize);
+				lastUpdateTime = now;
+			}
+		}
+		if (cancelRequested) {
+			return null;
+		}
+		return hasher.hash();
 	}
 
 	protected String formatBytes(long bytes) {
