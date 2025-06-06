@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.HashUtils;
@@ -24,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 
-public class ChecksumCreatorController {
+public class ChecksumCreatorController extends FileOperationController {
 
 	public TextField filePathField;
 	public Button browseButton;
@@ -39,50 +40,15 @@ public class ChecksumCreatorController {
 	private volatile boolean cancelRequested = false;
 	private long lastUpdateTime = 0;
 	private UserSettings.SettingsData appSettings;
-	private File selectedFile;
 
 	@FXML
-	private void initialize() {
+	public void initialize() {
+		super.initialize();
 		algorithmChoiceBox.getItems().addAll(supportedAlgorithms);
 		algorithmChoiceBox.setValue(supportedAlgorithms[0]);
 		cancelButton.setDisable(true);
 		appSettings = UserSettings.getInstance().getSettings();
 		resetProgress();
-	}
-	@FXML
-	private void handleFileBrowse(ActionEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Select File to Create Checksum");
-		// Open file browser to choose file
-		File tempSelectedFile = fileChooser.showOpenDialog(filePathField.getScene().getWindow());
-
-		if (tempSelectedFile != null) {
-			// Max acceptable file size bytes converted to MB
-			long maxFileSizeBytes = appSettings.maxFileSize * 1024 * 1024;
-
-			if (tempSelectedFile.length() > maxFileSizeBytes) {
-				// If file is too large, show alert window
-				String readableFileSize = String.format("%.2f MB", (double)maxFileSizeBytes / (1024 * 1024));
-				String readableSelectedFileSize = String.format("%.2f MB", (double)tempSelectedFile.length() / (1024 * 1024));
-
-				Alert alert = DialogUtils.createStyledAlert(
-						Alert.AlertType.WARNING,
-						"File Too Large",
-						"The selected file exceeds the maximum allowed size.",
-						"Selected file " + readableSelectedFileSize + "\nMaximum allowed: " + readableFileSize
-				);
-
-				alert.showAndWait();
-				// Clear File Path and set file selection back to null
-				filePathField.clear();
-				this.selectedFile = null;
-			} else {
-				// If file size is acceptable, proceed
-				this.selectedFile = tempSelectedFile;
-				filePathField.setText(selectedFile.getAbsolutePath());
-				statusArea.setText("File Selected: " + selectedFile.getName());
-			}
-		}
 	}
 
 	@FXML
@@ -102,7 +68,7 @@ public class ChecksumCreatorController {
 		}
 
 		resetProgress();
-		cancelButton.setDisable(false);
+		getCancelButton().setDisable(false);
 		createChecksumButton.setDisable(true);
 		browseButton.setDisable(true);
 		cancelRequested = false;
@@ -158,6 +124,23 @@ public class ChecksumCreatorController {
 			}
 		});
 	}
+	@Override
+	protected void onFileSelected(File file) {
+		statusArea.setText("File Selected: " + file.getName());
+	}
+
+	@Override
+	protected void onFileSelectionCancelled() {
+		statusArea.setText("File selection cancelled or file was too large.");
+	}
+
+	@Override protected TextField getFilePathField() { return filePathField; }
+	@Override protected ProgressBar getProgressBar() { return hashProgress; }
+	@Override protected Label getProgressLabel() { return progressLabel; }
+	@Override protected Button getCancelButton() { return cancelButton; }
+	@Override protected AnchorPane getRootPane() { return (AnchorPane) filePathField.getParent(); }
+
+
 	private void saveChecksumFile(String hashString, String algorithm) {
 		Path originalFilePath = selectedFile.toPath();
 		String checksumFileName = selectedFile.getName() + "." + algorithm.toLowerCase();
@@ -181,38 +164,6 @@ public class ChecksumCreatorController {
 	}
 
 
-
-	@FXML
-	private void handleCancel(ActionEvent event) {
-		cancelRequested = true;
-		statusArea.appendText("\nCancellation requested...");
-		cancelButton.setDisable(true);
-	}
-
-	private void updateProgress(long bytesRead, long totalBytes) {
-		Platform.runLater(() -> {
-			double progress = (double) bytesRead / totalBytes;
-			hashProgress.setProgress(progress);
-			progressLabel.setText(String.format("%s / %s (%.1f%%)",
-					formatBytes(bytesRead),
-					formatBytes(totalBytes),
-					progress * 100
-			));
-		});
-	}
-	private String formatBytes(long bytes) {
-		if (bytes < 1024) return bytes + " B";
-		int exp = (int) (Math.log(bytes) / Math.log(1024));
-		String pre = "KMGTPE".charAt(exp-1) + "i";
-		return String.format("%.1f %sB", bytes / Math.pow(1024, exp), pre);
-	}
-
-	private void resetProgress() {
-		Platform.runLater(() -> {
-			hashProgress.setProgress(0);
-			progressLabel.setText("0%");
-		});
-	}
 	private void resetUIState() {
 		cancelButton.setDisable(true);
 		createChecksumButton.setDisable(false);

@@ -8,11 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
-import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.HashUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
 import me.yurinero.hashana.utils.UserSettings;
@@ -31,7 +28,7 @@ import java.util.concurrent.ExecutorService;
 */
 
 
-public class FIleCheckController {
+public class FIleCheckController extends FileOperationController {
 	public TextField filePathField;
 	public Button browseButton;
 	public ChoiceBox<String> fileHashChoice;
@@ -45,7 +42,6 @@ public class FIleCheckController {
 	public Button cancelButton;
 	public AnchorPane rootAnchor;
 	public TextArea helpTextArea;
-	private File selectedFile;
 
 
 
@@ -73,6 +69,8 @@ public class FIleCheckController {
 
 	@FXML
 	public void initialize() {
+
+		super.initialize();
 		//Populate list with hashing algorithms from fileHashAlgorithms
 		fileHashChoice.getItems().addAll(fileHashAlgorithms);
 		//Set default SHA256 algorithm
@@ -90,68 +88,8 @@ public class FIleCheckController {
 	private void loadHelpText() {
 		if (helpTextArea != null) {
 			helpTextArea.setText(HELP_TEXT_CONTENT);
-			// Optionally, set a specific style or make it non-focusable if purely for display
-			// helpInfoArea.setFocusTraversable(false);
-			// helpInfoArea.setStyle("-fx-control-inner-background:#f0f0f0; -fx-text-fill: #333333;"); // Example style
 		}
 	}
-
-
-	@FXML
-	private void handleFileBrowse(ActionEvent event) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Select File for Hashing");
-		// Open file browser to choose file
-		File tempSelectedFile = fileChooser.showOpenDialog(filePathField.getScene().getWindow());
-
-		if (tempSelectedFile != null) {
-			// Max acceptable file size bytes converted to MB
-			long maxFileSizeBytes = appSettings.maxFileSize * 1024 * 1024;
-
-		if (tempSelectedFile.length() > maxFileSizeBytes) {
-			// If file is too large, show alert window
-			String readableFileSize = String.format("%.2f MB", (double)maxFileSizeBytes / (1024 * 1024));
-			String readableSelectedFileSize = String.format("%.2f MB", (double)tempSelectedFile.length() / (1024 * 1024));
-
-			Alert alert = DialogUtils.createStyledAlert(
-					Alert.AlertType.WARNING,
-					"File Too Large",
-					"The selected file exceeds the maximum allowed size.",
-					"Selected file " + readableSelectedFileSize + "\nMaximum allowed: " + readableFileSize
-			);
-
-			alert.showAndWait();
-			// Clear File Path and set file selection back to null
-			filePathField.clear();
-			this.selectedFile = null;
-		} else {
-			// If file size is acceptable, proceed
-			this.selectedFile = tempSelectedFile;
-			filePathField.setText(selectedFile.getAbsolutePath());
-			autoDetectChecksumFile();
-		}
-		}
-	}
-
-
-	/** Generic method to add Accelerator's, effectively keyboard shortcuts.
-	 *  Requires 3 values.
-	 * @param keyCode  Key to be hit
-	 * @param modifier  Modifier to be used, such as CTRL_DOWN
-	 * @param action  Action to take upon completion
-	 */
-
-	public void addAccelerator(KeyCode keyCode,KeyCombination.Modifier modifier, Runnable action ) {
-		KeyCombination keyCombination = new KeyCodeCombination(keyCode, modifier);
-		rootAnchor.sceneProperty().addListener((observable, oldScene, newScene) -> {
-			if (newScene != null) {
-				newScene.getAccelerators().put(keyCombination, action);
-			}
-		});
-	}
-
-
-
 
 	private void autoDetectChecksumFile() {
 		// Look for common checksum file extensions
@@ -185,20 +123,19 @@ public class FIleCheckController {
 			showError("Please select a file first!");
 			return;
 		}
+
 		ExecutorService executor = ThreadPoolService.getInstance().getExecutorService();
-		//Enable the cancel button when operation starts
-		cancelButton.setDisable(false);
-		//Resets the progress bar
+		getCancelButton().setDisable(false);
 		resetProgress();
 		cancelRequested = false;
+
 		HashFunction hashFunction = HashUtils.getHashFunction(fileHashChoice.getValue());
-        //Handles the actual logic of getting the file hash on a new thread. The Guava methods used are labeled experimental and should be treated as such.
-		executor.submit(() ->{
+
+		executor.submit(() -> {
 			try (InputStream is = new FileInputStream(selectedFile)) {
 				long fileSize = selectedFile.length();
 				Hasher hasher = hashFunction.newHasher();
-				// Size of the buffer used during the calculation. Loads the file in chunks.
-				byte[] buffer = new byte[appSettings.bufferSize * 1024]; // 64KB buffer default
+				byte[] buffer = new byte[appSettings.bufferSize * 1024];
 				long bytesRead = 0;
 				int read;
 
@@ -220,54 +157,36 @@ public class FIleCheckController {
 					Platform.runLater(() -> {
 						computedHashField.setText(hashCode.toString());
 						autoVerifyIfNeeded();
-						hashProgress.setProgress(1.0);
-						//Disable cancel button if operation completed successfully
-						cancelButton.setDisable(true);
-						progressLabel.setText("Complete! (" + formatBytes(fileSize) + ")");
+						getProgressBar().setProgress(1.0);
+						getCancelButton().setDisable(true);
+						getProgressLabel().setText("Complete! (" + formatBytes(fileSize) + ")");
 					});
 				}
 			} catch (IOException e) {
 				Platform.runLater(() -> showError("Error reading file: " + e.getMessage()));
 			} finally {
 				if (cancelRequested) {
-					//Disable cancel button if cancel action is requested
-					cancelButton.setDisable(true);
 					Platform.runLater(this::resetProgress);
 				}
+				Platform.runLater(() -> getCancelButton().setDisable(true));
 			}
 		});
 	}
-
-	private void updateProgress(long bytesRead, long totalBytes) {
-		Platform.runLater(() -> {
-			double progress = (double) bytesRead / totalBytes;
-			hashProgress.setProgress(progress);
-			progressLabel.setText(String.format("%s / %s (%.1f%%)",
-					formatBytes(bytesRead),
-					formatBytes(totalBytes),
-					progress * 100
-			));
-		});
-	}
-	private void resetProgress() {
-		hashProgress.setProgress(0);
-		progressLabel.setText("0 B / 0 B (0.0%)");
-		hashProgress.setStyle("");
-	}
-	@FXML
-	private void handleCancel(ActionEvent event) {
-		cancelRequested = true;
-		cancelButton.setDisable(true);
-		progressLabel.setText("Cancelled - " + progressLabel.getText());
-		hashProgress.setStyle("-fx-accent: #ff4444;");
+	@Override
+	protected void onFileSelected(File file) {
+		autoDetectChecksumFile();
 	}
 
-	private String formatBytes(long bytes) {
-		if (bytes < 1024) return bytes + " B";
-		int exp = (int) (Math.log(bytes) / Math.log(1024));
-		String pre = "KMGTPE".charAt(exp-1) + "i";
-		return String.format("%.1f %sB", bytes / Math.pow(1024, exp), pre);
+	@Override
+	protected void onFileSelectionCancelled() {
 	}
+
+	@Override protected TextField getFilePathField() { return filePathField; }
+	@Override protected ProgressBar getProgressBar() { return hashProgress; }
+	@Override protected Label getProgressLabel() { return progressLabel; }
+	@Override protected Button getCancelButton() { return cancelButton; }
+	@Override protected AnchorPane getRootPane() { return rootAnchor; }
+
 
 
 	private void autoVerifyIfNeeded() {
