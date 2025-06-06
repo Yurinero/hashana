@@ -13,24 +13,41 @@ import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.UserSettings;
 
 import java.io.File;
-
+/**
+ * An abstract base controller for views that perform hashing operations on files.
+ * It handles common UI logic for file Browse, size validation, and progress updates.
+ */
 public abstract class FileOperationController {
 
+	// Shared state
 	protected File selectedFile;
 	protected UserSettings.SettingsData appSettings;
 	protected volatile boolean cancelRequested = false;
 	protected long lastUpdateTime = 0;
 
+	// Abstract methods for Subclass UI components
 	protected abstract TextField getFilePathField();
 	protected abstract ProgressBar getProgressBar();
 	protected abstract Label getProgressLabel();
 	protected abstract Button getCancelButton();
 	protected abstract AnchorPane getRootPane();
 
+	// Abstract hooks for subclass specific logic
+
+	/**
+	 * Called after a file has been successfully selected and validated.
+	 * @param file The selected file.
+	 */
 	protected abstract void onFileSelected(File file);
 
+	/**
+	 * Called when the file selection is cleared or fails validation.
+	 */
 	protected abstract void onFileSelectionCancelled();
 
+	/**
+	 * Base initialization logic. Subclasses should call this from their own initialize methods using super.initialize()
+	 */
 	@FXML
 	public void initialize() {
 		this.appSettings = UserSettings.getInstance().getSettings();
@@ -46,6 +63,10 @@ public abstract class FileOperationController {
 		getProgressBar().setStyle("-fx-accent: red;");
 	}
 
+	/**
+	 * Handles the "Browse" button click. Shows a FileChooser, validates the
+	 * selected file's size, and then calls the appropriate hook.
+	 */
 	@FXML
 	protected void handleFileBrowse(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();

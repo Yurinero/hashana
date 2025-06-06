@@ -12,8 +12,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import me.yurinero.hashana.utils.HashUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
-import me.yurinero.hashana.utils.UserSettings;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,9 +24,8 @@ import java.util.concurrent.ExecutorService;
 /* This class handles the File Hash Check tab.
 * In short, it is absolute fucking voodoo.
 */
-
-
 public class FIleCheckController extends FileOperationController {
+	// UI Components
 	public TextField filePathField;
 	public Button browseButton;
 	public ChoiceBox<String> fileHashChoice;
@@ -42,13 +39,8 @@ public class FIleCheckController extends FileOperationController {
 	public Button cancelButton;
 	public AnchorPane rootAnchor;
 	public TextArea helpTextArea;
-
-
-
+	// Controller specific Fields
 	private final String[] fileHashAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
-	private volatile boolean cancelRequested = false;
-	private long lastUpdateTime = 0;
-	private UserSettings.SettingsData appSettings;
 	private static final String HELP_TEXT_CONTENT =
 			"""
 					How to Use:
@@ -69,28 +61,45 @@ public class FIleCheckController extends FileOperationController {
 
 	@FXML
 	public void initialize() {
-
+		// Initialize abstract base controller
 		super.initialize();
 		//Populate list with hashing algorithms from fileHashAlgorithms
 		fileHashChoice.getItems().addAll(fileHashAlgorithms);
 		//Set default SHA256 algorithm
 		fileHashChoice.setValue(fileHashAlgorithms[0]);
-		//Disable the cancel button, so it cannot be spammed
-		cancelButton.setDisable(true);
 		//Add Accelerator aka Shortcut for File Browsing and Cancellation of ongoing File Hash Check
 		addAccelerator(KeyCode.O, KeyCombination.CONTROL_DOWN,() -> browseButton.fire());
 		addAccelerator(KeyCode.X, KeyCombination.CONTROL_DOWN,() -> cancelButton.fire());
-		//Load default/user settings
-		appSettings = UserSettings.getInstance().getSettings();
-		//
+		//Initialize the help text
 		loadHelpText();
 	}
+
+	// Implementation of Abstract methods
+	@Override
+	protected void onFileSelected(File file) {
+		autoDetectChecksumFile();
+	}
+
+	@Override
+	protected void onFileSelectionCancelled() {
+	}
+
+	@Override protected TextField getFilePathField() { return filePathField; }
+	@Override protected ProgressBar getProgressBar() { return hashProgress; }
+	@Override protected Label getProgressLabel() { return progressLabel; }
+	@Override protected Button getCancelButton() { return cancelButton; }
+	@Override protected AnchorPane getRootPane() { return rootAnchor; }
+
+	// Controller Specific methods
+
+	// Load the HELP_TEXT_CONTENT into the Text Area
 	private void loadHelpText() {
 		if (helpTextArea != null) {
 			helpTextArea.setText(HELP_TEXT_CONTENT);
 		}
 	}
 
+	// Look for presence of checksum file
 	private void autoDetectChecksumFile() {
 		// Look for common checksum file extensions
 		String[] extensions = {".md5", ".sha256", ".sha384", ".sha512"};
@@ -107,7 +116,6 @@ public class FIleCheckController extends FileOperationController {
 		try {
 			List<String> lines = Files.readAllLines(checksumFile.toPath());
 			if (!lines.isEmpty()) {
-				// Typical format: "CHECKSUM  FILENAME"
 				String[] parts = lines.get(0).split("\\s+");
 				expectedHashField.setText(parts[0]);
 			}
@@ -116,7 +124,7 @@ public class FIleCheckController extends FileOperationController {
 		}
 	}
 
-
+	// Calculate the hash of the file by loading it into memory in chunks based on the selected algorithm.
 	@FXML
 	private void handleCalculateHash(ActionEvent event) {
 		if (selectedFile == null) {
@@ -172,28 +180,15 @@ public class FIleCheckController extends FileOperationController {
 			}
 		});
 	}
-	@Override
-	protected void onFileSelected(File file) {
-		autoDetectChecksumFile();
-	}
 
-	@Override
-	protected void onFileSelectionCancelled() {
-	}
-
-	@Override protected TextField getFilePathField() { return filePathField; }
-	@Override protected ProgressBar getProgressBar() { return hashProgress; }
-	@Override protected Label getProgressLabel() { return progressLabel; }
-	@Override protected Button getCancelButton() { return cancelButton; }
-	@Override protected AnchorPane getRootPane() { return rootAnchor; }
-
-
-
+	// If Expected Hash field has been entered before starting the operation, automatically compare to the result.
 	private void autoVerifyIfNeeded() {
 		if (!expectedHashField.getText().isEmpty()) {
 			handleVerify(null);
 		}
 	}
+
+	// Compare the two hashes
 	@FXML
 	private void handleVerify(ActionEvent event) {
 		String computed = computedHashField.getText().trim().toLowerCase();
