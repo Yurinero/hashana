@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
+import me.yurinero.hashana.utils.WindowUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,29 +36,22 @@ public class MainViewController implements Initializable {
 	public Button closeButton;
 
 	private Stage stage;
-	private double xOffset = 0;
-	private double yOffset = 0;
 	private  static final Logger logger = LoggerFactory.getLogger(MainViewController.class);
-	// private boolean maximized = false;
-	// private double originalWidth, originalHeight, originalX, originalY;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-	setupWindowControls();
-	setupDragging();
 	settingsButton.setOnAction(this::openSettings);
 	}
 
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
-	}
 
-	private void setupWindowControls(){
-		// Minimize button action
-		minimizeButton.setOnAction(event -> stage.setIconified(true));
+		// Setup window controls using WindowUtils class.
+		WindowUtils.setupDragging(this.stage, titleBar);
+		WindowUtils.setupMinimizeButton(this.stage, minimizeButton);
 
-		// Close button action
+		// Since the main window also exists the application, it needs specific logic for it, as such the WindowUtils class isn't relevant.
 		closeButton.setOnAction(event -> {
 			Platform.exit();
 			System.exit(0);
@@ -65,21 +59,6 @@ public class MainViewController implements Initializable {
 		logger.debug("Setting up window controls");
 	}
 
-	private void setupDragging(){
-		// Capture initial mouse position relative to the stage
-		titleBar.setOnMousePressed(event -> {
-
-			xOffset = event.getSceneX();
-			yOffset = event.getSceneY();
-		});
-		// Move the stage using the initial offsets
-		titleBar.setOnMouseDragged(event -> {
-
-			stage.setX(event.getScreenX() - xOffset);
-			stage.setY(event.getScreenY() - yOffset);
-		});
-		logger.debug("Setting up window dragging");
-	}
 	@FXML
 	private void openSettings(ActionEvent event) {
 		try {
@@ -123,38 +102,4 @@ public class MainViewController implements Initializable {
 
 		}
 	}
-
-
-	// Setup for window maximization, currently unused  but here if needed to be implemented.
-	/*
-	private void maximizeWindow(){
-		if (stage == null) return;
-
-		originalWidth = stage.getWidth();
-		originalHeight = stage.getHeight();
-		originalX = stage.getX();
-		originalY = stage.getY();
-
-		stage.setX(0);
-		stage.setY(0);
-		stage.setWidth(stage.getOwner() == null ? 0 : stage.getOwner().getWidth());
-		stage.setHeight(stage.getOwner() == null ? 0 : stage.getOwner().getHeight());
-
-		maximized = true;
-
-	}
-
-
-	private void restoreWindow(){
-		if (stage == null) return;
-
-		stage.setX(originalX);
-		stage.setY(originalY);
-		stage.setWidth(originalWidth);
-		stage.setHeight(originalHeight);
-
-		maximized = false;
-	}
-	*/
-
 }

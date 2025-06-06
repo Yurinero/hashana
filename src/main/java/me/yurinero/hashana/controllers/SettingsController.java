@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
+import me.yurinero.hashana.utils.WindowUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,14 +29,21 @@ public class SettingsController {
 	private final UserSettings userSettings = UserSettings.getInstance();
 	private Stage stage;
 	private Scene mainScene;
-	private double xOffset = 0;
-	private double yOffset = 0;
 
 	public void initialize() {
-	setupDragging();
-	setupWindowControls();
 	loadCurrentSettings();
 	setupThemeSelector();
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+
+		WindowUtils.setupDragging(this.stage,settingsTitle);
+		WindowUtils.setupCloseButton(this.stage,settingsClose);
+
+	}
+	public void setMainScene(Scene mainScene) {
+		this.mainScene = mainScene;
 	}
 
 	private void loadCurrentSettings() {
@@ -126,37 +134,4 @@ public class SettingsController {
 		}
 	}
 
-
-
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-	public void setMainScene(Scene mainScene) {
-		this.mainScene = mainScene;
-	}
-
-	private void setupWindowControls(){
-		// Close button action
-		settingsClose.setOnAction(event -> {
-			stage.close();
-		});
-
-	}
-
-	// Re-using code, might move into util class at some point.
-	private void setupDragging() {
-		// Capture initial mouse position relative to the stage
-		settingsTitle.setOnMousePressed(event -> {
-
-			xOffset = event.getSceneX();
-			yOffset = event.getSceneY();
-		});
-		// Move the stage using the initial offsets
-		settingsTitle.setOnMouseDragged(event -> {
-
-			stage.setX(event.getScreenX() - xOffset);
-			stage.setY(event.getScreenY() - yOffset);
-		});
-	}
 }
