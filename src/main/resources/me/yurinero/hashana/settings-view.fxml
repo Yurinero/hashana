@@ -39,39 +39,44 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <TextField fx:id="bufferSize" GridPane.columnIndex="1" />
-            <TextField fx:id="maxFileSize" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="progressIntervalMS" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <CheckBox fx:id="splashScreenEnabled" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Enabled" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Buffer Size" />
-            <Label text="Max. File Size" GridPane.rowIndex="1" />
-            <Label text="Progress Interval" GridPane.rowIndex="2" />
-            <Label text="Splashscreen" GridPane.rowIndex="4" />
-            <ChoiceBox fx:id="themeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label text="Styling" GridPane.rowIndex="5" />
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2">
-               <tooltip>
+          <TextField fx:id="bufferSize" GridPane.columnIndex="1" />
+          <TextField fx:id="maxFileSize" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+          <TextField fx:id="progressIntervalMS" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+          <CheckBox fx:id="splashScreenEnabled" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Enabled" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+          <Label text="Buffer Size" />
+          <Label text="Max. File Size" GridPane.rowIndex="1" />
+          <Label text="Progress Interval" GridPane.rowIndex="2" />
+          <Label text="Splashscreen" GridPane.rowIndex="4" />
+          <ChoiceBox fx:id="themeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+          <Label text="Styling" GridPane.rowIndex="5" />
+          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2">
+              <tooltip>
                   <Tooltip styleClass="help-tooltip" text="Size of the buffer in Kilobytes (KB) used for file hashing operations. Larger values may speed up hashing for large files but consume more memory." textAlignment="CENTER" wrapText="true" />
-               </tooltip>
-            </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <tooltip>
+              </tooltip>
+          </Label>
+          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="1">
+              <tooltip>
                   <Tooltip text="Maximum allowed file size in Megabytes (MB) for hashing. Files larger than this will be rejected." />
-               </tooltip></Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <tooltip>
+              </tooltip></Label>
+          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="2">
+              <tooltip>
                   <Tooltip text="Update interval in Milliseconds (ms) for the progress bar during file hashing. Lower values provide more frequent updates but may have a slight performance overhead." />
-               </tooltip></Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <tooltip>
+              </tooltip></Label>
+          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="4">
+              <tooltip>
                   <Tooltip text="Controls whether the splashscreen should be shown during launch of the application.." />
-               </tooltip></Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="5">
-               <tooltip>
+              </tooltip></Label>
+          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="5">
+              <tooltip>
                   <Tooltip text="Different styling options for the application." />
-               </tooltip></Label>
-         </children>
+              </tooltip></Label>
+          <Label text="Entropy Pool" GridPane.rowIndex="3" />
+          <TextField fx:id="maxEntropyPool" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <tooltip>
+               <Tooltip text="Size of the pool of random mouse movement to be captured into memory before being converted into 32 byte SHA256 string. " />
+            </tooltip>
+         </Label>
       </GridPane>
       <Label fx:id="statusLabel" alignment="CENTER" layoutX="3.0" layoutY="270.0" prefHeight="17.0" prefWidth="426.0" />
    </children>

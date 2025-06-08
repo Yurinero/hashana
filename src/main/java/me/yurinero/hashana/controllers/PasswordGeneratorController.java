@@ -8,6 +8,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import me.yurinero.hashana.utils.HashUtils;
+import me.yurinero.hashana.utils.UserSettings;
 
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
@@ -33,10 +34,9 @@ public class PasswordGeneratorController {
 	// Controller specific fields
 	private final SecureRandom randomizer = new SecureRandom();
 	private final StringBuilder entropyCollector = new StringBuilder();
-	private static final int MAX_ENTROPY_LENGTH = 4096;
 	private final Color startColor = Color.web("#e8f4ff");
 	private final Color endColor = Color.web("#aaccff");
-
+	private final UserSettings.SettingsData appSettings = UserSettings.getInstance().getSettings();
 
 	@FXML
 	public void initialize() {
@@ -98,8 +98,8 @@ public class PasswordGeneratorController {
 			// Only collect data if the feature is enabled.
 			if (useEntropyCheckbox.isSelected()) {
 				// Stop collecting if the entropy cap is reached
-				if (entropyCollector.length() >= MAX_ENTROPY_LENGTH) {
-					passwordInfoLabel.setText("Ready to generate. Maximum entropy reached: " + MAX_ENTROPY_LENGTH);
+				if (entropyCollector.length() >= appSettings.maxEntropyLength) {
+					passwordInfoLabel.setText("Ready to generate. Maximum entropy reached: " + appSettings.maxEntropyLength);
 					return;
 				}
 				// High-precision timer for more randomness
@@ -112,7 +112,7 @@ public class PasswordGeneratorController {
 				// Append the coordinates and timestamp to our collector.
 				entropyCollector.append(x).append(y).append(time);
 				// Update the visual feedback based on how full the collector is
-				double progress = (double) entropyCollector.length() / MAX_ENTROPY_LENGTH;
+				double progress = (double) entropyCollector.length() / appSettings.maxEntropyLength;
 				updateEntropyPadColor(progress);
 			}
 		});

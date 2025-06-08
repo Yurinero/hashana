@@ -24,6 +24,7 @@ public class SettingsController {
 	public Button settingsClose;
 	public Label statusLabel;
 	public ChoiceBox<String> themeChoiceBox;
+	public TextField maxEntropyPool;
 
 	private static final Logger logger = LoggerFactory.getLogger(SettingsController.class);
 	private final UserSettings userSettings = UserSettings.getInstance();
@@ -52,6 +53,7 @@ public class SettingsController {
 		maxFileSize.setText(String.valueOf(currentSettings.maxFileSize));
 		progressIntervalMS.setText(String.valueOf(currentSettings.progressIntervalMS));
 		splashScreenEnabled.setSelected(currentSettings.splashScreenEnabled);
+		maxEntropyPool.setText(String.valueOf(currentSettings.maxEntropyLength));
 		logger.info("Loaded settings from {}", currentSettings.toString());
 	}
 
@@ -95,6 +97,7 @@ public class SettingsController {
 			newSettings.maxFileSize = Long.parseLong(maxFileSize.getText());
 			newSettings.progressIntervalMS = Integer.parseInt(progressIntervalMS.getText());
 			newSettings.splashScreenEnabled = splashScreenEnabled.isSelected();
+			newSettings.maxEntropyLength = Integer.parseInt(maxEntropyPool.getText());
 			newSettings.activeTheme = themeChoiceBox.getValue();
 
 			userSettings.saveSettings();
@@ -119,6 +122,7 @@ public class SettingsController {
 			newSettings.maxFileSize = Long.parseLong(maxFileSize.getText());
 			newSettings.progressIntervalMS = Integer.parseInt(progressIntervalMS.getText());
 			newSettings.splashScreenEnabled = splashScreenEnabled.isSelected();
+			newSettings.maxEntropyLength = Integer.parseInt(maxEntropyPool.getText());
 			newSettings.activeTheme = themeChoiceBox.getValue();
 			userSettings.saveSettings();
 			logger.info("Applied & Saved new settings: {}", userSettings.getSettings().toString());

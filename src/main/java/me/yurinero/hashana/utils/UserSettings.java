@@ -21,6 +21,7 @@ public class UserSettings {
 		public int progressIntervalMS = 100;
 		public boolean splashScreenEnabled = true;
 		public String activeTheme = "Dark";
+		public int maxEntropyLength = 4096;
 	}
 
 	private static final String SETTINGS_FILE = "hashana_settings.json";
