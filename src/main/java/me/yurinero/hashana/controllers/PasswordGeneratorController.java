@@ -28,6 +28,7 @@ public class PasswordGeneratorController {
 	public Region entropyPad;
 	public CheckBox useEntropyCheckbox;
 	public Label passwordInfoLabel;
+	public CheckBox guaranteeCheckbox;
 
 	// Controller specific fields
 	private final SecureRandom randomizer = new SecureRandom();
@@ -37,13 +38,13 @@ public class PasswordGeneratorController {
 	private final Color endColor = Color.web("#aaccff");
 
 
-
 	@FXML
 	public void initialize() {
 		// Set up slider constraints
 		lengthSlider.setMin(6);
 		lengthSlider.setMax(32);
 		lengthSlider.setBlockIncrement(1);
+
 
 		// Bind slider and text field
 		lengthSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -59,8 +60,12 @@ public class PasswordGeneratorController {
 				lengthDisplay.setText(oldVal);
 			}
 		});
+		// Password length value is 16 by default
+		lengthSlider.setValue(16);
 		// Set up the entropy collection functionality
 		setupEntropyCollector();
+		// Choice for one of each category is enabled by default
+		guaranteeCheckbox.setSelected(true);
 	}
 
 	/**
@@ -213,23 +218,33 @@ public class PasswordGeneratorController {
 			categories.add(lowerCase);
 		}
 
-		// Build password with at least one from each category
-		List<Character> password = new ArrayList<>();
+		// Build password with at least one from each category if checkbox is selected
+		if (guaranteeCheckbox.isSelected()) {
+				List<Character> passwordChars = new ArrayList<>();
 
-		// Add mandatory characters
-		for (String category : categories) {
-			password.add(category.charAt(randomizer.nextInt(category.length())));
+			// Add mandatory characters
+			for (String category : categories) {
+				passwordChars.add(category.charAt(randomizer.nextInt(category.length())));
+			}
+			// Fill remaining characters
+			for (int i = passwordChars.size(); i < length; i++) {
+				passwordChars.add(pool.charAt(randomizer.nextInt(pool.length())));
+			}
+			// Shuffle and convert to string
+			Collections.shuffle(passwordChars, randomizer);
+			StringBuilder result = new StringBuilder();
+			for (char c : passwordChars) {
+				result.append(c);
+			}
+
+			return result.toString();
+		} else {
+			// Generate from the pool without guarantee
+			StringBuilder password = new StringBuilder(length);
+			for (int i = 0;i < length; i++){
+				password.append(pool.charAt(randomizer.nextInt(pool.length())));
+			}
+			return password.toString();
 		}
-
-		// Fill remaining characters
-		for (int i = password.size(); i < length; i++) {
-			password.add(pool.charAt(randomizer.nextInt(pool.length())));
-		}
-
-		// Shuffle and convert to string
-		Collections.shuffle(password, randomizer);
-		StringBuilder result = new StringBuilder();
-		for (char c : password) result.append(c);
-		return result.toString();
 	}
 }

@@ -127,7 +127,7 @@ public class ChecksumCreatorController extends FileOperationController {
 		String checksumFileName = selectedFile.getName() + "." + algorithm.toLowerCase();
 		Path checksumFilePath = originalFilePath.resolveSibling(checksumFileName);
 
-		String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date());
+		String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ").format(new Date());
 		String content = String.format("%s  %s\n# Algorithm: %s\n# Created: %s\n# Generated using: Hashana",
 				hashString, selectedFile.getName(), algorithm, timestamp);
 
