@@ -13,6 +13,9 @@ import me.yurinero.hashana.utils.WindowUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SettingsController {
 	public TextField bufferSize;
 	public TextField maxFileSize;
@@ -54,7 +57,7 @@ public class SettingsController {
 		progressIntervalMS.setText(String.valueOf(currentSettings.progressIntervalMS));
 		splashScreenEnabled.setSelected(currentSettings.splashScreenEnabled);
 		maxEntropyPool.setText(String.valueOf(currentSettings.maxEntropyLength));
-		logger.info("Loaded settings from {}", currentSettings.toString());
+		logger.info("Loaded settings from {}", currentSettings);
 	}
 
 	private void setupThemeSelector() {
@@ -88,53 +91,81 @@ public class SettingsController {
 		}
 	}
 
+	/**
+	 * A helper method to display a styled error alert with a given message.
+	 */
+	private void showErrorAlert(String content) {
+		Alert alert = DialogUtils.createStyledAlert(
+				Alert.AlertType.ERROR,
+				"Invalid Input",
+				"Error in Settings Value",
+				content);
+		alert.showAndWait();
+	}
+
+	/**
+	 * Validates all numeric settings fields and saves them if they are valid.
+	 * @return true if settings were successfully validated and saved, false otherwise.
+	 */
+	private boolean validateAndSaveSettings() {
+		List<String> errors = new ArrayList<>();
+		try {
+			int newBufferSize = Integer.parseInt(bufferSize.getText());
+			long newMaxFileSize = Long.parseLong(maxFileSize.getText());
+			int newProgressInterval = Integer.parseInt(progressIntervalMS.getText());
+			int newMaxEntropy = Integer.parseInt(maxEntropyPool.getText());
+
+			//  Validation Pass
+			if (newBufferSize <= 0) {
+				errors.add("• Buffer Size must be a positive number.");
+			}
+			if (newMaxFileSize <= 0) {
+				errors.add("• Max File Size must be a positive number.");
+			}
+			if (newProgressInterval <= 0) {
+				errors.add("• Progress Interval must be a positive number.");
+			}
+			if (newMaxEntropy < 128) {
+				errors.add("• Max Entropy Length must be at least 128 for security.");
+			}
+
+			// --- Error Reporting ---
+			if (!errors.isEmpty()) {
+				showErrorAlert(String.join("\n", errors));
+				// Validation failed
+				return false;
+			}
+
+			//  Save upon successful validation ---
+			UserSettings.SettingsData settings = userSettings.getSettings();
+			settings.bufferSize = newBufferSize;
+			settings.maxFileSize = newMaxFileSize;
+			settings.progressIntervalMS = newProgressInterval;
+			settings.maxEntropyLength = newMaxEntropy;
+			settings.splashScreenEnabled = splashScreenEnabled.isSelected();
+			settings.activeTheme = themeChoiceBox.getValue();
+			userSettings.saveSettings();
+			// Success
+			logger.info("Applied & Saved new settings: {}", settings.toString());
+			return true;
+			// Validation failed
+		} catch (NumberFormatException e) {
+			showErrorAlert("All numeric fields must contain valid numbers.");
+			return false;
+		}
+	}
 
 	@FXML
 	private void handleSettingsSave() {
-		try {
-			UserSettings.SettingsData newSettings = userSettings.getSettings();
-			newSettings.bufferSize = Integer.parseInt(bufferSize.getText());
-			newSettings.maxFileSize = Long.parseLong(maxFileSize.getText());
-			newSettings.progressIntervalMS = Integer.parseInt(progressIntervalMS.getText());
-			newSettings.splashScreenEnabled = splashScreenEnabled.isSelected();
-			newSettings.maxEntropyLength = Integer.parseInt(maxEntropyPool.getText());
-			newSettings.activeTheme = themeChoiceBox.getValue();
-
-			userSettings.saveSettings();
-			logger.info("Saved settings to {}", userSettings.getSettings().toString());
-
+		if (validateAndSaveSettings()) {
 			stage.close();
-		} catch (NumberFormatException e) {
-			Alert alert = DialogUtils.createStyledAlert(
-					Alert.AlertType.ERROR,
-					"Invalid Input",
-					"Error in Settings Value",
-					"Please ensure all numeric fields (Buffer Size, Max File Size, Progress Interval) contain valid numbers.");
-			alert.showAndWait();
 		}
 	}
 
 	@FXML
 	private void handleSettingsApply() {
-		try {
-			UserSettings.SettingsData newSettings = userSettings.getSettings();
-			newSettings.bufferSize = Integer.parseInt(bufferSize.getText());
-			newSettings.maxFileSize = Long.parseLong(maxFileSize.getText());
-			newSettings.progressIntervalMS = Integer.parseInt(progressIntervalMS.getText());
-			newSettings.splashScreenEnabled = splashScreenEnabled.isSelected();
-			newSettings.maxEntropyLength = Integer.parseInt(maxEntropyPool.getText());
-			newSettings.activeTheme = themeChoiceBox.getValue();
-			userSettings.saveSettings();
-			logger.info("Applied & Saved new settings: {}", userSettings.getSettings().toString());
-
+		if (validateAndSaveSettings()) {
 			statusLabel.setText("Settings applied!");
-		} catch (NumberFormatException e) {
-			Alert alert = DialogUtils.createStyledAlert(
-					Alert.AlertType.ERROR,
-					"Invalid Input",
-					"Error in Settings Value",
-					"Please ensure all numeric fields (Buffer Size, Max File Size, Progress Interval) contain valid numbers.");
-			alert.showAndWait();
 		}
 	}
 
