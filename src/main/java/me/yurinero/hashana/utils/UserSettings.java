@@ -25,9 +25,9 @@ public class UserSettings {
 	}
 
 	private static final String SETTINGS_FILE = "hashana_settings.json";
-	private Path settingsFilePath;
+	private final Path settingsFilePath;
 	private SettingsData currentSettingsData;
-	private ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
 
 	private UserSettings() {
 		String userHome = System.getProperty("user.home");
@@ -63,8 +63,14 @@ public class UserSettings {
 	public void saveSettings() {
 		try {
 			File parentDir = settingsFilePath.getParent().toFile();
+			// If the settings directory doesn't exist, try to create it
 			if (!parentDir.exists()) {
-				parentDir.mkdirs();
+				boolean wasCreated = parentDir.mkdirs();
+				// If creation failed, log the error and abort
+				if (!wasCreated) {
+					logger.error("Failed to create parent directories for the settings. Error: {}", parentDir.getAbsolutePath());
+					return;
+				}
 			}
 			objectMapper.writeValue(settingsFilePath.toFile(), currentSettingsData);
 		} catch (IOException e) {

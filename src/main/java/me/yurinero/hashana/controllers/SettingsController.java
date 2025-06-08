@@ -93,6 +93,7 @@ public class SettingsController {
 
 	/**
 	 * A helper method to display a styled error alert with a given message.
+	 * @param content The description of the error(s), gathered in a single pass and added with String.join()
 	 */
 	private void showErrorAlert(String content) {
 		Alert alert = DialogUtils.createStyledAlert(
