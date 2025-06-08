@@ -33,8 +33,22 @@ public class ChecksumCreatorController extends FileOperationController {
 	public Button cancelButton;
 	public Label progressLabel;
 	public AnchorPane rootAnchor;
+	public TextArea helpTextArea;
 	// Controller specific fields
 	private final String[] supportedAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
+	private static final String HELP_TEXT_CONTENT =
+			"""
+			How to Use:
+		
+			1. Browse: Click 'Browse' or use Ctrl+O to select the file for which you want to create a checksum.
+			2. Select Algorithm: Choose your desired hashing algorithm from the dropdown menu. SHA256 is selected by default.
+			3. Create Checksum: Click the 'Create Checksum' button to begin.
+			   - The progress bar will show the status of the hashing operation.
+			   - You can cancel the process at any time using the 'Cancel' button or by pressing Ctrl+X.
+			4. Auto-Save: Upon completion, a new checksum file (e.g., 'yourfile.ext.sha256') containing the calculated hash will be automatically saved in the same directory as your original file.
+		
+			Important Warning:
+			This functionality uses hashing methods from Google Guava's library. Some of these methods might be labeled as experimental or beta by Guava. Please be mindful of this when using the file hashing features for critical applications.""";
 
 	@FXML
 	public void initialize() {
@@ -47,6 +61,7 @@ public class ChecksumCreatorController extends FileOperationController {
 		addAccelerator(KeyCode.X, KeyCombination.CONTROL_DOWN,() -> getCancelButton().fire());
 		//Set default SHA256 algorithm
 		algorithmChoiceBox.setValue(supportedAlgorithms[0]);
+		loadHelpText();
 	}
 
 	// Implementation of Abstract Methods
@@ -67,6 +82,12 @@ public class ChecksumCreatorController extends FileOperationController {
 	@Override protected AnchorPane getRootPane() { return rootAnchor; }
 
 	// Controller specific methods
+
+	private void loadHelpText() {
+		if (helpTextArea != null) {
+			helpTextArea.setText(HELP_TEXT_CONTENT);
+		}
+	}
 
 	@FXML
 	private void handleCreateChecksum(ActionEvent event) {
