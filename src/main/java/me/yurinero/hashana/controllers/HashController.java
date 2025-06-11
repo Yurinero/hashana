@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import me.yurinero.hashana.Hashana;
 import me.yurinero.hashana.utils.HashUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,17 +29,20 @@ import java.util.StringJoiner;
 
 
 public class HashController implements Initializable {
-	@FXML
+
+	// UI Components
 	public TextArea hashOutputField;
-	@FXML
 	public TextArea hashInfoField;
 	@FXML
 	private ChoiceBox<String> hashChoice; // Use generics for type safety
 	@FXML
 	private TextArea textInputArea;
 
+	// Controller specific fields
 	private final String[] hashes = {"SHA256", "SHA384", "SHA512","MD5","SIPHASH24"};
+	private  static final Logger logger = LoggerFactory.getLogger(HashController.class);
 
+	//
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		hashChoice.getItems().addAll(hashes);
@@ -45,6 +51,7 @@ public class HashController implements Initializable {
 		setupInfoListener();
 		updateAlgorithmInfo(hashes[0]);
 	}
+	// Controller specific methods
 
 	@FXML
 	private void handleHashButtonClick(ActionEvent event) {
@@ -54,6 +61,7 @@ public class HashController implements Initializable {
 		HashFunction hashFunction = getHashFunction(algorithm);
 		if (hashFunction == null) {
 			hashOutputField.setText("Error: Unsupported algorithm selected");
+			logger.error("Error: Unsupported algorithm selected");
 			return;
 		}
 
@@ -89,8 +97,9 @@ public class HashController implements Initializable {
 		} catch (IOException e) {
 			Platform.runLater(() ->
 					hashInfoField.setText("ERROR: Failed to load algorithm info\n" + e.getMessage())
+
 			);
-			e.printStackTrace();
+			logger.error("Failed to load algorithm info: {}", e.getMessage());
 		}
 	}
     //Parses the information contained within the .json file to @hashInfoField. Can be expanded by adding further fields into @AlgorithmInfo and then joining them here.

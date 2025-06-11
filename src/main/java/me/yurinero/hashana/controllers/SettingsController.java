@@ -102,6 +102,7 @@ public class SettingsController {
 				"Error in Settings Value",
 				content);
 		alert.showAndWait();
+		logger.error("Error in Settings Value: {}", content);
 	}
 
 	/**
@@ -152,6 +153,7 @@ public class SettingsController {
 			// Validation failed
 		} catch (NumberFormatException e) {
 			showErrorAlert("All numeric fields must contain valid numbers.");
+			logger.error("Invalid value provided: {}", e.getMessage());
 			return false;
 		}
 	}

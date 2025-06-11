@@ -12,6 +12,9 @@ import javafx.scene.layout.AnchorPane;
 import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.HashUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,6 +38,7 @@ public class ChecksumCreatorController extends FileOperationController {
 	public AnchorPane rootAnchor;
 	public TextArea helpTextArea;
 	// Controller specific fields
+	private  static final Logger logger = LoggerFactory.getLogger(ChecksumCreatorController.class);
 	private final String[] supportedAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
 	private static final String HELP_TEXT_CONTENT =
 			"""
@@ -94,6 +98,7 @@ public class ChecksumCreatorController extends FileOperationController {
 		if (selectedFile == null) {
 			statusArea.setText("Error: Please select a file first.");
 			DialogUtils.createStyledAlert(Alert.AlertType.ERROR, "No File Selected", "File Not Selected", "Please select a file before creating a checksum.").showAndWait();
+			logger.error("Create checksum failed due to no file selected.");
 			return;
 		}
 
@@ -102,6 +107,7 @@ public class ChecksumCreatorController extends FileOperationController {
 
 		if (hashFunction == null) {
 			statusArea.setText("Error: Invalid algorithm selected.");
+			logger.error("Create checksum failed due to unsupported hash function selected.");
 			return;
 		}
 
@@ -115,6 +121,7 @@ public class ChecksumCreatorController extends FileOperationController {
 
 		ExecutorService executor = ThreadPoolService.getInstance().getExecutorService();
 		executor.submit(() -> createHashInBackground(hashFunction,algorithm));
+		logger.debug("Attempting hash calculation for file:  {}.", selectedFile.getName());
 	}
 
 	private void createHashInBackground(HashFunction hashFunction, String algorithm) {
@@ -126,16 +133,19 @@ public class ChecksumCreatorController extends FileOperationController {
 					String hashString = hashCode.toString();
 					statusArea.appendText("\nHash calculated: " + hashString);
 					saveChecksumFile(hashString, algorithm);
+					logger.debug("Hash calculated: {}", hashString);
 				});
 
 			} else {
 				Platform.runLater(() -> statusArea.appendText("\nHash calculation cancelled by user."));
+				logger.info("Hash calculation cancelled by user.");
 			}
 
 		} catch (IOException e) {
 			Platform.runLater(() -> {
 				statusArea.appendText("\nError reading file: " + e.getMessage());
 				DialogUtils.createStyledAlert(Alert.AlertType.ERROR, "File Error", "Error Reading File", "Could not read the selected file: " + e.getMessage()).showAndWait();
+				logger.error("Error reading file: {}", e.getMessage());
 				resetUIState();
 			});
 		} finally {
@@ -157,9 +167,11 @@ public class ChecksumCreatorController extends FileOperationController {
 			Files.writeString(checksumFilePath, content);
 			statusArea.appendText("\nChecksum file saved: " + checksumFilePath);
 			DialogUtils.createStyledAlert(Alert.AlertType.INFORMATION, "Success", "Checksum File Created", "Checksum file saved successfully at:\n" + checksumFilePath).showAndWait();
+			logger.debug("Checksum file saved: {}", checksumFilePath);
 		} catch (IOException e) {
 			statusArea.appendText("\nError saving checksum file: " + e.getMessage());
 			DialogUtils.createStyledAlert(Alert.AlertType.ERROR, "Save Error", "Error Saving Checksum File", "Could not save the checksum file: " + e.getMessage()).showAndWait();
+			logger.debug("Error saving checksum file: {}", e.getMessage());
 		}
 	}
 
@@ -168,6 +180,7 @@ public class ChecksumCreatorController extends FileOperationController {
 		getCancelButton().setDisable(true);
 		createChecksumButton.setDisable(false);
 		browseButton.setDisable(false);
+		logger.info("Reset UI state.");
 	}
 
 }

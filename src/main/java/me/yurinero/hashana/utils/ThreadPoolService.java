@@ -1,5 +1,9 @@
 package me.yurinero.hashana.utils;
 
+import me.yurinero.hashana.controllers.PasswordGeneratorController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -8,6 +12,7 @@ import java.util.concurrent.*;
 */
 
 public class ThreadPoolService {
+	private  static final Logger logger = LoggerFactory.getLogger(ThreadPoolService.class);
 	//Singleton instance
 	private static final ThreadPoolService instance = new ThreadPoolService();
 
@@ -37,11 +42,12 @@ public class ThreadPoolService {
 		try {
 			if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
 				List<Runnable> pendingTasks = executorService.shutdownNow();
-				System.out.println("Forced shutdown of " + pendingTasks.size() + " tasks");
+				logger.info("Forced shutdown of {} tasks", pendingTasks.size());
 			}
 		}catch (InterruptedException e) {
 			executorService.shutdownNow();
 			Thread.currentThread().interrupt();
+			logger.error("Interrupted while shutting down", e);
 		}
 	}
 
@@ -51,7 +57,7 @@ public class ThreadPoolService {
 			try {
 				return task.call();
 			}catch (Exception e) {
-				System.out.println("Task execution failed" + e.getMessage());
+				logger.error("Task execution failed", e);
 				throw e;
 			}
 		});

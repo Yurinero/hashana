@@ -9,6 +9,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import me.yurinero.hashana.utils.HashUtils;
 import me.yurinero.hashana.utils.UserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
@@ -37,6 +39,7 @@ public class PasswordGeneratorController {
 	private final Color startColor = Color.web("#e8f4ff");
 	private final Color endColor = Color.web("#aaccff");
 	private final UserSettings.SettingsData appSettings = UserSettings.getInstance().getSettings();
+	private  static final Logger logger = LoggerFactory.getLogger(PasswordGeneratorController.class);
 
 	@FXML
 	public void initialize() {
@@ -81,14 +84,17 @@ public class PasswordGeneratorController {
 			entropyPad.setDisable(!isNowSelected);
 			// Clear any old data on toggle
 			entropyCollector.setLength(0);
+			logger.info("Purged old entropy data: {}", entropyCollector.length());
 
 			if (isNowSelected) {
 				// Reset to the starting color and provide instructions
 				updateEntropyPadColor(0.0);
 				passwordInfoLabel.setText("Move your mouse over the highlighted area to add randomness.");
+				logger.info("Entropy collection enabled");
 			} else {
 				// Revert to disabled style
 				entropyPad.setStyle("-fx-background-color: #cccccc; -fx-border-color: #aaaaaa; -fx-border-radius: 5;");
+				logger.info("Entropy collection disabled");
 			}
 		});
 
@@ -145,6 +151,7 @@ public class PasswordGeneratorController {
 			// Ensure the user has moved the mouse over the pad.
 			if (entropyCollector.isEmpty()) {
 				passwordInfoLabel.setText("Please move mouse over the entropy pod first!");
+				logger.error("Entropy pool is empty");
 				return;
 			}
 			// Get the collected data as a single string
@@ -163,6 +170,7 @@ public class PasswordGeneratorController {
 		// Validate at least one checkbox selected
 		if (!anyCheckboxSelected()) {
 			passwordInfoLabel.setText("Select at least one option!");
+			logger.error("No checkbox selected");
 			return;
 		}
 		// Gets the desired password length from the slider.
@@ -180,6 +188,7 @@ public class PasswordGeneratorController {
 		final ClipboardContent content = new ClipboardContent();
 		content.putString(passwordOutput.getText());
 		clipboard.setContent(content);
+		logger.info("Copied to clipboard");
 	}
 
 	// Check which checkboxes are ticked and therefore desired options are selected
@@ -225,14 +234,17 @@ public class PasswordGeneratorController {
 			// Add mandatory characters
 			for (String category : categories) {
 				passwordChars.add(category.charAt(randomizer.nextInt(category.length())));
+				logger.debug("Adding mandatory characters from category: {}", category);
 			}
 			// Fill remaining characters
+			logger.debug("Filling in remaining characters.");
 			for (int i = passwordChars.size(); i < length; i++) {
 				passwordChars.add(pool.charAt(randomizer.nextInt(pool.length())));
 			}
 			// Shuffle and convert to string
 			Collections.shuffle(passwordChars, randomizer);
 			StringBuilder result = new StringBuilder();
+			logger.debug("Shuffling character pool and creating result");
 			for (char c : passwordChars) {
 				result.append(c);
 			}
@@ -240,6 +252,7 @@ public class PasswordGeneratorController {
 			return result.toString();
 		} else {
 			// Generate from the pool without guarantee
+			logger.debug("No mandatory characters desired, creating result without mandatory characters from each category");
 			StringBuilder password = new StringBuilder(length);
 			for (int i = 0;i < length; i++){
 				password.append(pool.charAt(randomizer.nextInt(pool.length())));

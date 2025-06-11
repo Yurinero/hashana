@@ -62,6 +62,7 @@ public class MainViewController implements Initializable {
 	@FXML
 	private void openSettings(ActionEvent event) {
 		try {
+			logger.debug("Opening settings window");
 			// Load the settings FXML file
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/me/yurinero/hashana/settings-view.fxml"));
 			Parent root = loader.load();

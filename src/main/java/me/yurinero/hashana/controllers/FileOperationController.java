@@ -14,6 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.UserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +26,7 @@ import java.io.InputStream;
  * It handles common UI logic for file Browse, size validation, and progress updates.
  */
 public abstract class FileOperationController {
-
+	private  static final Logger logger = LoggerFactory.getLogger(FileOperationController.class);
 	// Shared state
 	protected File selectedFile;
 	protected UserSettings.SettingsData appSettings;
@@ -95,7 +97,7 @@ public abstract class FileOperationController {
 						"The selected file exceeds the maximum allowed size.",
 						"Selected file " + readableSelectedFileSize + "\nMaximum allowed: " + readableFileSize
 				);
-
+				logger.error("File: {} Size Too Large: {}",readableSelectedFileSize, readableFileSize);
 				alert.showAndWait();
 				// Clear File Path and set file selection back to null
 				getFilePathField().clear();
@@ -105,6 +107,7 @@ public abstract class FileOperationController {
 				this.selectedFile = tempSelectedFile;
 				getFilePathField().setText(selectedFile.getAbsolutePath());
 				onFileSelected(selectedFile);
+				logger.debug("File size OK, File selected: {}", selectedFile.getAbsolutePath());
 			}
 		}
 	}

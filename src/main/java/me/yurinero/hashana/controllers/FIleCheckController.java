@@ -12,6 +12,9 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import me.yurinero.hashana.utils.HashUtils;
 import me.yurinero.hashana.utils.ThreadPoolService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -41,6 +44,7 @@ public class FIleCheckController extends FileOperationController {
 	public TextArea helpTextArea;
 	// Controller specific Fields
 	private final String[] fileHashAlgorithms = {"SHA256", "SHA384", "SHA512", "MD5"};
+	private  static final Logger logger = LoggerFactory.getLogger(FIleCheckController.class);
 	private static final String HELP_TEXT_CONTENT =
 			"""
 					How to Use:
@@ -107,6 +111,7 @@ public class FIleCheckController extends FileOperationController {
 			File checksumFile = new File(selectedFile.getAbsolutePath() + ext);
 			if (checksumFile.exists()) {
 				loadChecksumFromFile(checksumFile);
+				logger.debug("Checksum file found: {}", checksumFile.getAbsolutePath());
 				break;
 			}
 		}
@@ -118,9 +123,11 @@ public class FIleCheckController extends FileOperationController {
 			if (!lines.isEmpty()) {
 				String[] parts = lines.get(0).split("\\s+");
 				expectedHashField.setText(parts[0]);
+				logger.debug("Loaded checksum from file: {}", checksumFile.getAbsolutePath());
 			}
 		} catch (IOException e) {
 			showError("Error reading checksum file: " + e.getMessage());
+			logger.error("Error reading checksum file: {}", e.getMessage());
 		}
 	}
 
@@ -150,10 +157,12 @@ public class FIleCheckController extends FileOperationController {
 						getProgressBar().setProgress(1.0);
 						getCancelButton().setDisable(true);
 						getProgressLabel().setText("Complete! (" + formatBytes(selectedFile.length()) + ")");
+						logger.debug("Calculated hash successfully");
 					});
 				}
 			} catch (IOException e) {
 				Platform.runLater(() -> showError("Error reading file: " + e.getMessage()));
+				logger.error("Error reading file: {}", e.getMessage());
 			} finally {
 				if (cancelRequested) {
 					Platform.runLater(this::resetProgress);
@@ -178,15 +187,18 @@ public class FIleCheckController extends FileOperationController {
 
 		if (computed.isEmpty() || expected.isEmpty()) {
 			verificationStatus.setText("Please provide both hashes for verification");
+			logger.debug("Hashes for verification are empty");
 			return;
 		}
 
 		if (computed.equals(expected)) {
 			verificationStatus.setText("✓ Hashes match!");
+			logger.debug("Hashes match.");
 			verificationStatus.setStyle("-fx-text-fill: green;");
 		} else {
 			verificationStatus.setText("✗ Hashes do not match!");
 			verificationStatus.setStyle("-fx-text-fill: red;");
+			logger.debug("Hashes do not match.");
 		}
 	}
 
