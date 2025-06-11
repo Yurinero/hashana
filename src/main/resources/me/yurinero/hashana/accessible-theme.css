@@ -234,40 +234,13 @@
     -fx-font-size: 14px;
     -fx-padding: 10px;
 }
-#fileCheckAnchor {
+.content-pane {
     -fx-background-color: #ffffff; /* Pure white background */
     -fx-text-fill: #222222; /* Near-black text */
     -fx-prompt-text-fill: #666666; /* Medium gray */
     -fx-border-color: #888888; /* Medium-dark border */
     -fx-background-radius: 5px;
-    -fx-padding: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
-}
-#passwordGenAnchor {
-    -fx-background-color: #ffffff; /* Pure white background */
-    -fx-text-fill: #222222; /* Near-black text */
-    -fx-prompt-text-fill: #666666; /* Medium gray */
-    -fx-border-color: #888888; /* Medium-dark border */
-    -fx-background-radius: 5px;
-    -fx-padding: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
-}
-#createChecksumAnchor {
-    -fx-background-color: #ffffff; /* Pure white background */
-    -fx-text-fill: #222222; /* Near-black text */
-    -fx-prompt-text-fill: #666666; /* Medium gray */
-    -fx-border-color: #888888; /* Medium-dark border */
-    -fx-background-radius: 5px;
-    -fx-padding: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
-}
-#entropyPoolBox {
-    -fx-background-color: #ffffff; /* Pure white background */
-    -fx-text-fill: #222222; /* Near-black text */
-    -fx-prompt-text-fill: #666666; /* Medium gray */
-    -fx-border-color: #888888; /* Medium-dark border */
-    -fx-background-radius: 5px;
-    -fx-padding: 8px;
+    -fx-border-radius: 5px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 

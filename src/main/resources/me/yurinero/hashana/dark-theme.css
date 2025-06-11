@@ -190,7 +190,6 @@
     -fx-fill: #89b4fa !important; /* Keep text light blue on hover, or change as needed */
 }
 
-
 #closeButton:hover {
     -fx-background-color: #f38ba8; /* Red background for close button hover */
 }
@@ -202,36 +201,11 @@
     -fx-border-color: #6c7086;
     -fx-border-width: 0 0 1 0;
 }
-#fileCheckAnchor {
+.content-pane {
     -fx-background-color: #313244;
     -fx-border-color: #6c7086; /* Overlay0 */
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-    -fx-padding: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
-}
-#passwordGenAnchor {
-    -fx-background-color: #313244 !important;
-    -fx-border-color: #6c7086; /* Overlay0 */
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
-}
-#createChecksumAnchor {
-    -fx-background-color: #313244 !important;
-    -fx-border-color: #6c7086; /* Overlay0 */
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
-}
-#entropyPoolBox {
-    -fx-background-color: #313244 !important;
-    -fx-border-color: #6c7086; /* Overlay0 */
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 

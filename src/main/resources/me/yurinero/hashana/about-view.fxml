@@ -14,6 +14,6 @@
     <ImageView depthTest="DISABLE" fitHeight="408.0" fitWidth="261.0" layoutX="72.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../hashana-about.PNG" />
     </ImageView>
-    <Label layoutX="190.0" layoutY="366.0" text="Version:" />
-    <Label fx:id="versionInfoLabel" layoutX="239.0" layoutY="366.0" prefHeight="17.0" prefWidth="369.0" text="Label" />
+    <Label layoutX="340.0" layoutY="363.0" text="Version:" />
+    <Label fx:id="versionInfoLabel" layoutX="389.0" layoutY="363.0" prefHeight="17.0" prefWidth="130.0" text="Label" />
 </AnchorPane>
