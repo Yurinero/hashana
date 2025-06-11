@@ -20,22 +20,16 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: 'maven'
-
-    - name: Extract project version
-      id: get_version
-      run: echo "project_version=$(mvn -DforceStdout help:evaluate -Dexpression=project.version)" >> $env:GITHUB_ENV
-      shell: pwsh
-
     - name: Build with Maven (jlink phase)
       run: mvn -B clean install javafx:jlink --file pom.xml
 
     - name: Run jpackage
       shell: pwsh
-      run: jpackage --type "app-image" --name "Hashana" --dest "target/installer" --runtime-image "target/hashana-runtime" --module me.yurinero.hashana/me.yurinero.hashana.Hashana --app-version ${{ env.project_version }}
+      run: jpackage --type "app-image" --name "Hashana" --dest "target/installer" --runtime-image "target/hashana-runtime" --module me.yurinero.hashana/me.yurinero.hashana.Hashana
 
     - name: Archive application image
       uses: actions/upload-artifact@v4
       with:
-        name: Hashana-Windows-AppImage-${{ env.project_version }}
+        name: Hashana-Windows-AppImage
         path: target/installer/Hashana/
         if-no-files-found: error
