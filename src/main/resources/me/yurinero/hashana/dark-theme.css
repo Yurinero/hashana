@@ -226,7 +226,14 @@
     -fx-padding: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
-
+#entropyPoolBox {
+    -fx-background-color: #313244 !important;
+    -fx-border-color: #6c7086; /* Overlay0 */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
 
 .help-icon-label {
     -fx-font-weight: bold;

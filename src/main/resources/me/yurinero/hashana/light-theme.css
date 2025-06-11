@@ -34,10 +34,11 @@
     -fx-background-color: #ccd0da; /* Surface0 */
     -fx-text-fill: #4c4f69; /* Text */
     -fx-prompt-text-fill: #6c6f85; /* Subtext0 */
-    -fx-border-color: #9ca0b0; /* Overlay0 */
+    -fx-border-color: #4c4f69; /* Overlay0 */
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 
 .text-area .content {
@@ -254,6 +255,23 @@
     -fx-padding: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
+#createChecksumAnchor {
+    -fx-background-color: #ccd0da;
+    -fx-border-color: #4c4f69; /* Overlay0 */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
+#entropyPoolBox {
+    -fx-background-color: #ccd0da;
+    -fx-border-color: #4c4f69; /* Overlay0 */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
+
 
 .help-icon-label:hover {
     -fx-background-color: #bcc0cc; /* Surface1 */

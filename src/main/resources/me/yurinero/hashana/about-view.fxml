@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="422.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.AboutController">
-   <TextArea fx:id="aboutText" editable="false" focusTraversable="false" layoutX="190.0" layoutY="93.0" prefHeight="264.0" prefWidth="422.0" wrapText="true" />
+   <TextArea fx:id="aboutText" editable="false" focusTraversable="false" layoutX="190.0" layoutY="93.0" prefHeight="264.0" prefWidth="457.0" wrapText="true" />
     <ImageView fitHeight="73.0" fitWidth="350.0" layoutX="248.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../../../HASHANA.png" />
     </ImageView>

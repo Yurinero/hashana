@@ -18,6 +18,7 @@
 
 .tab:selected {
     -fx-background-color: #1a56db; /* Darker blue for contrast */
+    -fx-text-fill: #ffffff;
 }
 
 .tab-label {
@@ -40,6 +41,7 @@
     -fx-background-radius: 5px;
     -fx-padding: 8px;
     -fx-font-size: 14px; /* Larger font size */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 
 .text-area .content {
@@ -233,17 +235,37 @@
     -fx-padding: 10px;
 }
 #fileCheckAnchor {
-    -fx-background-color: #313244;
-    -fx-border-color: #6c7086; /* Overlay0 */
-    -fx-border-radius: 5px;
+    -fx-background-color: #ffffff; /* Pure white background */
+    -fx-text-fill: #222222; /* Near-black text */
+    -fx-prompt-text-fill: #666666; /* Medium gray */
+    -fx-border-color: #888888; /* Medium-dark border */
     -fx-background-radius: 5px;
     -fx-padding: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 #passwordGenAnchor {
-    -fx-background-color: #313244 !important;
-    -fx-border-color: #6c7086; /* Overlay0 */
-    -fx-border-radius: 5px;
+    -fx-background-color: #ffffff; /* Pure white background */
+    -fx-text-fill: #222222; /* Near-black text */
+    -fx-prompt-text-fill: #666666; /* Medium gray */
+    -fx-border-color: #888888; /* Medium-dark border */
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
+#createChecksumAnchor {
+    -fx-background-color: #ffffff; /* Pure white background */
+    -fx-text-fill: #222222; /* Near-black text */
+    -fx-prompt-text-fill: #666666; /* Medium gray */
+    -fx-border-color: #888888; /* Medium-dark border */
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
+}
+#entropyPoolBox {
+    -fx-background-color: #ffffff; /* Pure white background */
+    -fx-text-fill: #222222; /* Near-black text */
+    -fx-prompt-text-fill: #666666; /* Medium gray */
+    -fx-border-color: #888888; /* Medium-dark border */
     -fx-background-radius: 5px;
     -fx-padding: 8px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
@@ -255,7 +277,7 @@
 }
 
 .label {
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
 }
 
 /* Focus indicators for keyboard navigation */

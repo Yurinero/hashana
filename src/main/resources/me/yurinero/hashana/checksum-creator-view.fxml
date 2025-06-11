@@ -10,8 +10,8 @@
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane fx:id="rootAnchor" prefHeight="402.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.ChecksumCreatorController">
-   <AnchorPane layoutX="499.0" layoutY="36.0" prefHeight="330.0" prefWidth="291.0">
-       <TextArea fx:id="helpTextArea" editable="false" focusTraversable="false" prefHeight="330.0" prefWidth="299.0" wrapText="true" />
+   <AnchorPane layoutX="499.0" layoutY="36.0" prefHeight="317.0" prefWidth="299.0">
+       <TextArea fx:id="helpTextArea" editable="false" focusTraversable="false" prefHeight="317.0" prefWidth="299.0" wrapText="true" />
    </AnchorPane>
     <AnchorPane fx:id="createChecksumAnchor" layoutX="26.0" layoutY="31.0" prefHeight="293.0" prefWidth="427.0">
         <HBox alignment="CENTER" layoutX="28.0" layoutY="44.0" prefHeight="32.0" prefWidth="399.0" spacing="10.0">
