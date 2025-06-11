@@ -16,7 +16,6 @@ import me.yurinero.hashana.utils.DialogUtils;
 import me.yurinero.hashana.utils.UserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

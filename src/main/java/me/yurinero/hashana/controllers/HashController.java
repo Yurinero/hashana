@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
-import me.yurinero.hashana.Hashana;
 import me.yurinero.hashana.utils.HashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

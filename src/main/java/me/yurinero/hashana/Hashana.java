@@ -3,7 +3,6 @@ package me.yurinero.hashana;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.yurinero.hashana.controllers.MainViewController;
@@ -13,7 +12,6 @@ import me.yurinero.hashana.utils.ThreadPoolService;
 import me.yurinero.hashana.utils.UserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.URL;
 
