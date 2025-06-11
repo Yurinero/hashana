@@ -105,12 +105,6 @@
     -fx-background-color: #fafafa;
 }
 
-#aboutText {
-    -fx-fill: #1a56db; /* Darker blue */
-    -fx-font-size: 38px;
-    -fx-font-weight: bold;
-}
-
 /* Focus highlighting - Enhanced visibility */
 .text-area:focused, .choice-box:focused {
     -fx-border-color: #1a56db;

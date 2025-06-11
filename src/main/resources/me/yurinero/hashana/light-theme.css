@@ -98,13 +98,6 @@
     -fx-background-color: #eff1f5; /* Base */
 }
 
-#aboutText {
-    -fx-fill: #1e66f5; /* Blue */
-    -fx-font-size: 38px;
-    -fx-font-weight: bold;
-}
-
-
 /* Focus highlighting */
 .text-area:focused, .choice-box:focused {
     -fx-border-color: #1e66f5; /* Blue */
