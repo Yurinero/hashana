@@ -6,6 +6,7 @@ module me.yurinero.hashana {
 	requires com.fasterxml.jackson.databind;
 	requires java.desktop;
 	requires org.slf4j;
+	requires static lombok;
 
 
 	opens me.yurinero.hashana to
