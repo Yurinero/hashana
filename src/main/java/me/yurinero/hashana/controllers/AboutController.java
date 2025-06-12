@@ -18,22 +18,9 @@
 
 package me.yurinero.hashana.controllers;
 
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import me.yurinero.hashana.utils.LicenseUtil;
-import me.yurinero.hashana.utils.ThemeUtils;
-import me.yurinero.hashana.utils.UserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +34,6 @@ public class AboutController implements Initializable {
 
 	public Label versionInfoLabel;
 	public TextArea aboutText;
-	public Button licenseButton;
-	private Stage stage;
 	private  static final Logger logger = LoggerFactory.getLogger(AboutController.class);
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,41 +75,6 @@ public class AboutController implements Initializable {
 						IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 						WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."""
 		);
-		licenseButton.setOnAction(this::showLicense);
 	}
-	public void showLicense(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/me/yurinero/hashana/license-view.fxml"));
-			Parent root = loader.load();
-			Stage licenseStage = new Stage();
-			Scene licenseScene = new Scene(root);
-			LicenseUtil controller = loader.getController();
-			licenseStage.setScene(licenseScene);
-			controller.setStage(licenseStage);
-			if (this.stage != null) { // 'this.stage' is the main application stage
-				controller.setMainScene(this.stage.getScene());
-			}
-			licenseStage.setTitle("Settings");
-			licenseStage.setScene(licenseScene);
-			String currentTheme = UserSettings.getInstance().getSettings().activeTheme;
-			String cssPath = ThemeUtils.getCssPathForTheme(currentTheme);
-			try {
-				String fullCssPath = getClass().getResource(cssPath).toExternalForm();
-				licenseScene.getStylesheets().add(fullCssPath);
-			} catch (NullPointerException e) {
-				logger.error("Error: Could not find CSS file for license window: {}", cssPath);
-			}
-			// Set modality to block main window interaction
-			licenseStage.initModality(Modality.APPLICATION_MODAL);
-			// Disable system default window styling
-			licenseStage.initStyle(StageStyle.UNDECORATED);
-			// Set owner to link windows
-			Stage mainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			licenseStage.initOwner(mainStage);
-			// Show the result
-			licenseStage.show();
-		} catch (IOException e) {
-			logger.error("Error: Could not open settings window: {}", e.getMessage());
-		}
-	}
+
 }

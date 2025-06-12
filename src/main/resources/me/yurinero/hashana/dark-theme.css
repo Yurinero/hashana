@@ -201,6 +201,7 @@
     -fx-border-color: #6c7086;
     -fx-border-width: 0 0 1 0;
 }
+
 .content-pane {
     -fx-background-color: #313244;
     -fx-border-color: #6c7086; /* Overlay0 */
@@ -216,6 +217,7 @@
     -fx-padding: 2px 6px; /* Adjust padding to make it look nice */
     -fx-cursor: hand; /* Indicate it's clickable/hoverable */
 }
+
 
 .help-icon-label:hover {
     -fx-background-color: #45475a; /* Surface1 on hover */

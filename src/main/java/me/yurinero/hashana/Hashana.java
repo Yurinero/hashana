@@ -20,15 +20,15 @@
 package me.yurinero.hashana;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.yurinero.hashana.controllers.MainViewController;
-import me.yurinero.hashana.utils.SplashScreen;
-import me.yurinero.hashana.utils.ThemeUtils;
-import me.yurinero.hashana.utils.ThreadPoolService;
-import me.yurinero.hashana.utils.UserSettings;
+import me.yurinero.hashana.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
@@ -50,9 +50,23 @@ public class Hashana extends Application {
 
 	@Override
 	public void start(Stage stage) throws IOException {
+		UserSettings.SettingsData appSettings = UserSettings.getInstance().getSettings();
+		// Checks if the license agreement has been accepted
+		if (!appSettings.acceptedLicense) {
+			// If not, show the license agreement window and wait for the user's action.
+			boolean licenseAccepted = showLicenseAgreement();
+
+			// If the license was not accepted (e.g., the method returns false), exit the application.
+			if (!licenseAccepted) {
+				Platform.exit();
+				System.exit(0);
+				// Stop further execution.
+				return;
+			}
+		}
+
 		FXMLLoader fxmlLoader = new FXMLLoader(Hashana.class.getResource("main-view.fxml"));
 		Scene scene = new Scene(fxmlLoader.load());
-		UserSettings.SettingsData appSettings = UserSettings.getInstance().getSettings();
 		String activeTheme = appSettings.activeTheme;
 		String cssPath = ThemeUtils.getCssPathForTheme(activeTheme);
 
@@ -81,6 +95,56 @@ public class Hashana extends Application {
 
 
 
+	}
+	/**
+	 * Loads and displays the license agreement window modally.
+	 * @return true if the license was accepted, false otherwise.
+	 */
+	private boolean showLicenseAgreement() {
+		try {
+			// First, check if the FXML file can be found.
+			URL fxmlUrl = getClass().getResource("/me/yurinero/hashana/license-view.fxml");
+			if (fxmlUrl == null) {
+				logger.error("FATAL: Could not find FXML resource: /me/yurinero/hashana/license-view.fxml");
+				return false;
+			}
+
+			// If found, try to load it. This is where a syntax error in the FXML would cause an exception.
+			FXMLLoader loader = new FXMLLoader(fxmlUrl);
+			Parent root = loader.load();
+
+			Stage licenseStage = new Stage();
+			licenseStage.setTitle("License Agreement");
+			licenseStage.initModality(Modality.APPLICATION_MODAL);
+			licenseStage.initStyle(StageStyle.UNDECORATED);
+
+			Scene licenseScene = new Scene(root);
+
+			// Apply theme to the license window
+			String currentTheme = UserSettings.getInstance().getSettings().activeTheme;
+			String cssPath = ThemeUtils.getCssPathForTheme(currentTheme);
+			URL cssUrl = getClass().getResource(cssPath);
+			if (cssUrl != null) {
+				licenseScene.getStylesheets().add(cssUrl.toExternalForm());
+			} else {
+				logger.warn("Could not find CSS for license window: {}", cssPath);
+			}
+
+			LicenseUtil controller = loader.getController();
+			controller.setStage(licenseStage);
+
+			licenseStage.setScene(licenseScene);
+			licenseStage.showAndWait();
+
+		} catch (Exception e) {
+			// This will catch ANY exception during the process (file not found, FXML error, etc.)
+			// and log it with a full stack trace.
+			logger.error("A critical exception occurred while loading the license screen.", e);
+			return false; // Ensure the app exits if the license screen fails to load.
+		}
+
+		// After the window is closed, check the flag to confirm acceptance.
+		return UserSettings.getInstance().getSettings().acceptedLicense;
 	}
 
 

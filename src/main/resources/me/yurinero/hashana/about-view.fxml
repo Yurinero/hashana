@@ -23,7 +23,6 @@
                        <Insets />
                    </VBox.margin>
                </TextArea>
-            <Button fx:id="licenseButton" mnemonicParsing="false" text="License" />
                <HBox alignment="CENTER" fillHeight="false" prefHeight="27.0" prefWidth="350.0">
                    <Label fx:id="versionInfoLabel" prefHeight="17.0" prefWidth="130.0" text="Label">
                        <graphic>

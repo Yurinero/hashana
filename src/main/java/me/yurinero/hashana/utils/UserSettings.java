@@ -40,6 +40,7 @@ public class UserSettings {
 		public boolean splashScreenEnabled = true;
 		public String activeTheme = "Dark";
 		public int maxEntropyLength = 4096;
+		public boolean acceptedLicense = false;
 	}
 
 	private static final String SETTINGS_FILE = "hashana_settings.json";
