@@ -71,8 +71,6 @@ public class LicenseUtil {
 
 	}
 
-
-
 	public void setMainScene(Scene mainScene) {
 		this.mainScene = mainScene;
 	}

@@ -22,10 +22,17 @@
 }
 
 .tab-label {
-    -fx-text-fill: #333333 !important; /* Higher contrast text */
     -fx-font-weight: bold; /* Improve readability */
 }
-
+/* Make the text labels pop a bit more in this theme  */
+.label {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+/* Same for check boxes */
+.check-box {
+    -fx-font-weight: bold;
+}
 .tab:selected .tab-label {
     -fx-text-fill: #ffffff; /* White text for selected tab */
     -fx-font-weight: bold;
@@ -74,8 +81,7 @@
 .choice-box .menu-item:focused .label {
     -fx-text-fill: #ffffff;
 }
-
-/* Hash Button */
+/* Button Styling */
 .button {
     -fx-background-color: linear-gradient(to bottom, #1a56db 0%, #0d47a1 100%);
     -fx-text-fill: #ffffff; /* White text */
