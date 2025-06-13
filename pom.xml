@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
-    </properties>
+        <javafx.version>21.0.5</javafx.version> </properties>
     <licenses>
         <license>
             <name>GNU General Public License v3.0</name>
@@ -20,20 +20,15 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <id>yurinero</id>
+            <name>Yurinero</name>
+            <url>https://github.com/Yurinero</url>
+        </developer>
+    </developers>
 
     <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>21.0.5</version>
-            <classifier>win</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>21.0.5</version>
-            <classifier>win</classifier>
-        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -49,15 +44,11 @@
             <artifactId>slf4j-api</artifactId>
             <version>2.0.17</version>
         </dependency>
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.5.18</version>
         </dependency>
-
-
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -78,6 +69,53 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>windows-profile</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-controls</artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>win</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-fxml</artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>win</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>linux-profile</id>
+            <activation>
+                <os>
+                    <family>unix</family> </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-controls</artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>linux</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-fxml</artifactId>
+                    <version>${javafx.version}</version>
+                    <classifier>linux</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <build>
         <resources>
             <resource>
@@ -91,10 +129,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <release>21</release> <!-- Modern Java version syntax -->
+                    <release>21</release>
                 </configuration>
             </plugin>
-            <!-- Shade Plugin with filters -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -111,7 +148,6 @@
                                     <mainClass>me.yurinero.hashana.Hashana</mainClass>
                                 </transformer>
                             </transformers>
-                            <!-- ADD FILTERS -->
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
@@ -125,7 +161,6 @@
                 </executions>
             </plugin>
 
-            <!-- Fixed javafx-maven-plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -136,7 +171,8 @@
                         <configuration>
                             <mainClass>me.yurinero.hashana.Hashana</mainClass>
                             <jlinkImageName>hashana-runtime</jlinkImageName>
-                            <addModules> <module>javafx.controls</module>
+                            <addModules>
+                                <module>javafx.controls</module>
                                 <module>javafx.fxml</module>
                             </addModules>
                             <launcher>app</launcher>
