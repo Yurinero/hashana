@@ -15,9 +15,9 @@
 <AnchorPane prefHeight="307.0" prefWidth="432.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.SettingsController">
     <AnchorPane prefHeight="37.0" prefWidth="432.0">
         <HBox fx:id="settingsTitle" alignment="CENTER" prefHeight="43.0" prefWidth="432.0" spacing="5.0">
-            <Button fx:id="settingsApply" mnemonicParsing="false" onAction="#handleSettingsApply" text="Apply" />
-            <Button fx:id="settingsSave" mnemonicParsing="false" onAction="#handleSettingsSave" text="Save" />
-            <Button fx:id="settingsClose" mnemonicParsing="false" text="Close" />
+            <Button fx:id="settingsApply" accessibleHelp="Apply your selected settings." accessibleText="Apply" mnemonicParsing="false" onAction="#handleSettingsApply" text="Apply" />
+            <Button fx:id="settingsSave" accessibleHelp="Save &amp; Apply your selected settings." accessibleText="Save" mnemonicParsing="false" onAction="#handleSettingsSave" text="Save" />
+            <Button fx:id="settingsClose" accessibleHelp="Close the Settings window" accessibleText="Close" mnemonicParsing="false" text="Close" />
         </HBox>
     </AnchorPane>
     <GridPane layoutX="116.0" layoutY="69.0" prefHeight="189.0" prefWidth="200.0">
@@ -34,15 +34,15 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <TextField fx:id="bufferSize" GridPane.columnIndex="1" />
-        <TextField fx:id="maxFileSize" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <TextField fx:id="progressIntervalMS" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <CheckBox fx:id="splashScreenEnabled" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Enabled" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <TextField fx:id="bufferSize" accessibleHelp="Size of the buffer in Kilobytes (KB) used for file hashing operations. Larger values may speed up hashing for large files but consume more memory." accessibleText="Buffer Size" GridPane.columnIndex="1" />
+        <TextField fx:id="maxFileSize" accessibleHelp="Maximum allowed file size in Megabytes (MB) for hashing. Files larger than this will be rejected." accessibleText="Maximum File Size" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="progressIntervalMS" accessibleHelp="Update interval in Milliseconds (ms) for the progress bar during file hashing. Lower values provide more frequent updates but may have a slight performance overhead." accessibleText="Progress Interval" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <CheckBox fx:id="splashScreenEnabled" accessibleHelp="Controls whether the splashscreen should be shown during launch of the application.." accessibleText="Splashscreen Setting" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Enabled" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <Label text="Buffer Size" />
         <Label text="Max. File Size" GridPane.rowIndex="1" />
         <Label text="Progress Interval" GridPane.rowIndex="2" />
         <Label text="Splashscreen" GridPane.rowIndex="4" />
-        <ChoiceBox fx:id="themeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <ChoiceBox fx:id="themeChoiceBox" accessibleHelp="Different styling options for the application." accessibleText="Styling Options" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
         <Label text="Styling" GridPane.rowIndex="5" />
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2">
             <tooltip>
@@ -66,7 +66,7 @@
                 <Tooltip text="Different styling options for the application." />
             </tooltip></Label>
         <Label text="Entropy Pool" GridPane.rowIndex="3" />
-        <TextField fx:id="maxEntropyPool" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="maxEntropyPool" accessibleHelp="Size of the pool of random mouse movement to be captured into memory before being converted into 32 byte SHA256 string. " accessibleText="Entropy Pool" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="3">
             <tooltip>
                 <Tooltip text="Size of the pool of random mouse movement to be captured into memory before being converted into 32 byte SHA256 string. " />
