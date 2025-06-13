@@ -1,0 +1,64 @@
+name: Java CI with Maven and jpackage for Linux
+
+on:
+  push:
+   tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Install jpackage dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y fakeroot rpm
+
+    - name: Build with Maven and create runtime image with jlink
+      run: mvn -B clean install javafx:jlink --file pom.xml
+
+    - name: Run jpackage for .deb
+      run: |
+        jpackage --type deb \
+          --app-version 1.0.1 \
+          --name "Hashana" \
+          --vendor "Yurinero" \
+          --runtime-image target/hashana-runtime \
+          --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
+          --dest target/installer-deb
+
+    - name: Run jpackage for .rpm
+      run: |
+        jpackage --type rpm \
+          --app-version 1.0.1 \
+          --name "Hashana" \
+          --vendor "Yurinero" \
+          --runtime-image target/hashana-runtime \
+          --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
+          --dest target/installer-rpm
+
+    - name: Archive .deb package
+      uses: actions/upload-artifact@v4
+      with:
+        name: Hashana-Linux-DEB
+        path: target/installer-deb/*.deb
+        if-no-files-found: error
+
+    - name: Archive .rpm package
+      uses: actions/upload-artifact@v4
+      with:
+        name: Hashana-Linux-RPM
+        path: target/installer-rpm/*.rpm
+        if-no-files-found: error
