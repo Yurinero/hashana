@@ -41,6 +41,9 @@ jobs:
     - name: Extract project version from pom.xml
       run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
+    - name: Create RPM-compliant version
+      run: echo "RPM_VERSION=$(echo ${{ env.PROJECT_VERSION }} | sed 's/-beta//g')" >> $GITHUB_ENV
+
     - name: Run jpackage for .deb
       run: |
         jpackage --type deb \
@@ -57,7 +60,7 @@ jobs:
     - name: Run jpackage for .rpm
       run: |
         jpackage --type rpm \
-          --app-version ${{ env.PROJECT_VERSION }} \
+          --app-version ${{ env.RPM_VERSION }} \
           --name "Hashana" \
           --vendor "Yurinero" \
           --runtime-image target/hashana-runtime \
