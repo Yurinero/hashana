@@ -38,10 +38,13 @@ jobs:
     - name: Build with Maven and create runtime image with jlink
       run: mvn -B clean install javafx:jlink --file pom.xml
 
+    - name: Extract project version from pom.xml
+      run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
     - name: Run jpackage for .deb
       run: |
         jpackage --type deb \
-          --app-version 1.0.1 \
+          --app-version ${{ env.PROJECT_VERSION }} \
           --name "Hashana" \
           --vendor "Yurinero" \
           --runtime-image target/hashana-runtime \
@@ -54,7 +57,7 @@ jobs:
     - name: Run jpackage for .rpm
       run: |
         jpackage --type rpm \
-          --app-version 1.0.1 \
+          --app-version ${{ env.PROJECT_VERSION }} \
           --name "Hashana" \
           --vendor "Yurinero" \
           --runtime-image target/hashana-runtime \
@@ -67,13 +70,13 @@ jobs:
     - name: Archive .deb package
       uses: actions/upload-artifact@v4
       with:
-        name: Hashana-Linux-DEB
+        name: Hashana-Linux-DEB-${{ env.PROJECT_VERSION }}
         path: target/installer-deb/*.deb
         if-no-files-found: error
 
     - name: Archive .rpm package
       uses: actions/upload-artifact@v4
       with:
-        name: Hashana-Linux-RPM
+        name: Hashana-Linux-RPM-${{ env.PROJECT_VERSION }}
         path: target/installer-rpm/*.rpm
         if-no-files-found: error

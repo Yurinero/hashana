@@ -33,6 +33,9 @@ jobs:
     - name: Build with Maven (jlink phase)
       run: mvn -B clean install javafx:jlink --file pom.xml
 
+    - name: Extract project version from pom.xml
+      run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
     - name: Run jpackage
       shell: pwsh
       run: jpackage --type "app-image" --name "Hashana" --dest "target/installer" --runtime-image "target/hashana-runtime" --module me.yurinero.hashana/me.yurinero.hashana.Hashana --icon src/main/resources/me/yurinero/hashana/hashana-icon.ico
@@ -40,6 +43,6 @@ jobs:
     - name: Archive application image
       uses: actions/upload-artifact@v4
       with:
-        name: Hashana-Windows-AppImage
+        name: Hashana-Windows-AppImage-${{ env.PROJECT_VERSION }}
         path: target/installer/Hashana/
         if-no-files-found: error
