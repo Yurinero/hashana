@@ -34,18 +34,11 @@ jobs:
       run: mvn -B clean install javafx:jlink --file pom.xml
 
     - name: Extract project version from pom.xml
-      shell: pwsh
-      run: |
-        $mavenOutput = mvn help:evaluate -Dexpression=project.version -q -DforceStdout
-
-        $version = $mavenOutput | Where-Object { $_.Trim() -ne '' } | Select-Object -Last 1
-
-        "PROJECT_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        
-        echo "Found and set version: $version"
+      shell: bash
+      run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
     - name: Run jpackage
-      shell: pwsh
+      shell: bash
       run: jpackage --type "app-image" --name "Hashana" --dest "target/installer" --runtime-image "target/hashana-runtime" --module me.yurinero.hashana/me.yurinero.hashana.Hashana --icon src/main/resources/me/yurinero/hashana/hashana-icon.ico
 
     - name: Archive application image
