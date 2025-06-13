@@ -5,6 +5,15 @@ on:
    tags:
       - 'v*.*.*'
   workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Purpose of the build'
+        required: true
+        default: 'Test'
+        type: choice
+        options:
+        - Test
+        - Release
 
 jobs:
   build-linux:
