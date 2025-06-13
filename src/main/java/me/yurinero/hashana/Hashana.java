@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 
 public class Hashana extends Application {
@@ -88,6 +89,7 @@ public class Hashana extends Application {
 		MainViewController controller = fxmlLoader.getController();
 		controller.setStage(stage);
 
+		setupSystemTray(stage);
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setTitle("Hashana");
 		stage.setScene(scene);
@@ -147,6 +149,41 @@ public class Hashana extends Application {
 		return UserSettings.getInstance().getSettings().acceptedLicense;
 	}
 
+	private void setupSystemTray(Stage stage) {
+		// Ensure the platform toolkit is initialized
+		java.awt.Toolkit.getDefaultToolkit();
+
+		// Check if the system tray is supported
+		if (!java.awt.SystemTray.isSupported()) {
+			logger.error("System tray is not supported");
+			return;
+		}
+
+		try {
+			java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+			// Load the small tray icon image
+			java.awt.Image image = javax.imageio.ImageIO.read(Objects.requireNonNull(getClass().getResource("/me/yurinero/hashana/tray-icon.png")));
+
+			// Create the tray icon
+			java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image, "Hashana");
+			trayIcon.setImageAutoSize(true);
+
+			java.awt.PopupMenu popup = new java.awt.PopupMenu();
+			java.awt.MenuItem showItem = new java.awt.MenuItem("Show");
+			showItem.addActionListener(e -> Platform.runLater(stage::show));
+			java.awt.MenuItem exitItem = new java.awt.MenuItem("Exit");
+			exitItem.addActionListener(e -> Platform.exit());
+			popup.add(showItem);
+			popup.add(exitItem);
+			trayIcon.setPopupMenu(popup);
+
+			// Add the icon to the system tray
+			tray.add(trayIcon);
+		} catch (Exception e) {
+			// Log the error
+			logger.error("A critical exception occurred while loading the system tray.", e);
+		}
+	}
 
 	// Calls the shutdown method from the ThreadPoolService to shut down any tasks running on background threads.
 	public void stop(){

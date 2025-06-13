@@ -38,6 +38,9 @@ jobs:
           --runtime-image target/hashana-runtime \
           --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
           --dest target/installer-deb
+          --icon src/main/resources/me/yurinero/hashana/hashana-icon.png \
+          --linux-shortcut \
+          --linux-menu-group "Utilities"
 
     - name: Run jpackage for .rpm
       run: |
@@ -48,6 +51,9 @@ jobs:
           --runtime-image target/hashana-runtime \
           --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
           --dest target/installer-rpm
+          --icon src/main/resources/me/yurinero/hashana/hashana-icon.png \
+          --linux-shortcut \
+          --linux-menu-group "Utilities"
 
     - name: Archive .deb package
       uses: actions/upload-artifact@v4
