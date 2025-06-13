@@ -2,6 +2,15 @@ name: Java CI with Maven and jpackage (Windows)
 
 on:
   workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Purpose of the build'
+        required: true
+        default: 'Test'
+        type: choice
+        options:
+        - Test
+        - Release
   push:
    tags:
    - 'v*.*.*'
