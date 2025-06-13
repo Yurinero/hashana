@@ -7,7 +7,6 @@
 /* TabPane styling */
 .tab-pane {
     -fx-tab-min-width: 120px;
-    -fx-tab-max-width: 120px;
     -fx-background-color: #181825; /* Mantle */
 }
 
