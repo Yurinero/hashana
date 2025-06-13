@@ -1,10 +1,11 @@
 name: Java CI with Maven and jpackage (Windows)
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+   tags:
+   - 'v*.*.*'
+  
 
 jobs:
   build-windows:
