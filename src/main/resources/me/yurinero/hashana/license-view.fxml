@@ -9,8 +9,8 @@
 
 <AnchorPane prefHeight="693.0" prefWidth="574.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.utils.LicenseUtil">
     <HBox fx:id="licenseTitle" alignment="CENTER" layoutX="200.0" prefHeight="37.0" prefWidth="600.0" spacing="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Button fx:id="licenseAccept" mnemonicParsing="false" text="Accept" />
-        <Button fx:id="licenseDeny" mnemonicParsing="false" text="Deny" />
+        <Button fx:id="licenseAccept" accessibleHelp="Accept the license terms" accessibleText="Accept" mnemonicParsing="false" text="Accept" />
+        <Button fx:id="licenseDeny" accessibleHelp="Do not accept the license terms. Application will close." accessibleText="Deny" mnemonicParsing="false" text="Deny" />
     </HBox>
    <ScrollPane centerShape="false" fitToWidth="true" layoutX="200.0" layoutY="100.0" prefHeight="340.0" prefWidth="502.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
        <Label fx:id="licenseLabel" textAlignment="CENTER" wrapText="true">
