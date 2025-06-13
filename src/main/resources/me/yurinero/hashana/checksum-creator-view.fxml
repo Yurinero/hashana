@@ -15,17 +15,17 @@
        <AnchorPane fx:id="createChecksumAnchor" prefHeight="293.0" prefWidth="427.0" styleClass="content-pane">
            <HBox alignment="CENTER" layoutX="28.0" layoutY="44.0" prefHeight="32.0" prefWidth="399.0" spacing="10.0">
                <Label text="Select File:" />
-               <TextField fx:id="filePathField" editable="false" />
-               <Button fx:id="browseButton" mnemonicParsing="false" onAction="#handleFileBrowse" text="Browse" />
+               <TextField fx:id="filePathField" accessibleHelp="Displays the path of the selected file to verify. Use the browse button to select a file." accessibleText="File Path" editable="false" />
+               <Button fx:id="browseButton" accessibleHelp="Opens system native window to pick desired file to generate checksum for." accessibleText="Browse Button" mnemonicParsing="false" onAction="#handleFileBrowse" text="Browse" />
            </HBox>
            <HBox alignment="CENTER" layoutX="56.0" layoutY="94.0" prefHeight="25.0" prefWidth="365.0" spacing="9.0">
                <Label text="Algorithm" />
-               <ChoiceBox fx:id="algorithmChoiceBox" prefHeight="25.0" prefWidth="96.0" />
-               <Button fx:id="createChecksumButton" mnemonicParsing="false" onAction="#handleCreateChecksum" text="Create Checksum" />
+               <ChoiceBox fx:id="algorithmChoiceBox" accessibleHelp="Dropdown menu to pick your desired algorhitm to be used." accessibleText="Algorhitm Choice" prefHeight="25.0" prefWidth="96.0" />
+               <Button fx:id="createChecksumButton" accessibleHelp="Hit this button to begin checksum creation." accessibleText="Create Checksum" mnemonicParsing="false" onAction="#handleCreateChecksum" text="Create Checksum" />
            </HBox>
            <TextArea fx:id="statusArea" editable="false" focusTraversable="false" layoutX="34.0" layoutY="140.0" prefHeight="125.0" prefWidth="387.0" promptText="Progress updates" wrapText="true" />
            <ProgressBar fx:id="hashProgress" layoutX="64.0" layoutY="296.0" prefHeight="18.0" prefWidth="279.0" progress="0.0" />
-           <Button fx:id="cancelButton" layoutX="355.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+           <Button fx:id="cancelButton" accessibleHelp="Cancell the checksum creation operation." accessibleText="Cancel" layoutX="355.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
            <Label fx:id="progressLabel" alignment="CENTER" layoutX="64.0" layoutY="275.0" prefHeight="17.0" prefWidth="279.0" text="Label" textAlignment="CENTER" />
            <padding>
                <Insets right="28.0" />
