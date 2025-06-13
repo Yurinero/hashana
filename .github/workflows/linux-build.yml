@@ -37,7 +37,7 @@ jobs:
           --vendor "Yurinero" \
           --runtime-image target/hashana-runtime \
           --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
-          --dest target/installer-deb
+          --dest target/installer-deb \
           --icon src/main/resources/me/yurinero/hashana/hashana-icon.png \
           --linux-shortcut \
           --linux-menu-group "Utilities"
@@ -50,7 +50,7 @@ jobs:
           --vendor "Yurinero" \
           --runtime-image target/hashana-runtime \
           --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
-          --dest target/installer-rpm
+          --dest target/installer-rpm \
           --icon src/main/resources/me/yurinero/hashana/hashana-icon.png \
           --linux-shortcut \
           --linux-menu-group "Utilities"
