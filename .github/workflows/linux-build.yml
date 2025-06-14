@@ -43,8 +43,7 @@ jobs:
       run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
     - name: Create RPM-compliant version
-      id: rpm_version
-      run: echo "RPM_VERSION=$(echo ${{ steps.project_version.outputs.PROJECT_VERSION }} | sed 's/-/~/g')" >> $GITHUB_OUTPUT
+      run: echo "RPM_VERSION=$(echo ${{ env.PROJECT_VERSION }} | sed 's/-/~/g')" >> $GITHUB_ENV
 
     - name: Run jpackage for .deb
       run: |
