@@ -56,7 +56,7 @@ jobs:
           --dest target/installer-deb \
           --icon src/main/resources/me/yurinero/hashana/hashana-icon.png \
           --linux-shortcut \
-          --linux-menu-group "Utilities"
+          --linux-menu-group "Utilities" \
           --linux-deb-maintainer contact@yurinero.me
 
     - name: Run jpackage for .rpm
