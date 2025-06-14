@@ -38,7 +38,7 @@ jobs:
 
       - name: Create RPM-compliant version
         id: rpm_version
-        run: echo "RPM_VERSION=$(echo ${{ steps.project_version.outputs.PROJECT_VERSION }} | sed ''s/-/~/g')" >> $GITHUB_OUTPUT
+        run: echo "RPM_VERSION=$(echo ${{ steps.project_version.outputs.PROJECT_VERSION }} | sed 's/-/~/g')" >> $GITHUB_OUTPUT
 
       - name: Run jpackage for .deb
         run: |
