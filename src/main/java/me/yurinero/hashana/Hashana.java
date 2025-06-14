@@ -24,6 +24,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -88,7 +89,8 @@ public class Hashana extends Application {
 		// Needed to pass the stage to the MainViewController
 		MainViewController controller = fxmlLoader.getController();
 		controller.setStage(stage);
-
+		// This is also for the system tray, because we need two, apparently. Words fail me.
+		stage.getIcons().add(new Image(Hashana.class.getResourceAsStream("hashana-icon.png")));
 		setupSystemTray(stage);
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setTitle("Hashana");
@@ -149,6 +151,7 @@ public class Hashana extends Application {
 		return UserSettings.getInstance().getSettings().acceptedLicense;
 	}
 
+	// This is for the system tray icon. Doesn't work that well Linux...too bad!
 	private void setupSystemTray(Stage stage) {
 		// Ensure the platform toolkit is initialized
 		java.awt.Toolkit.getDefaultToolkit();
