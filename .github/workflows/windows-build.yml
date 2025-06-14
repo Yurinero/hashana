@@ -1,3 +1,4 @@
+#Used to create either a test build or hotfix release for Windows
 name: Java CI with Maven and jpackage (Windows)
 
 on:
@@ -44,6 +45,6 @@ jobs:
     - name: Archive application image
       uses: actions/upload-artifact@v4
       with:
-        name: Hashana-Windows-AppImage-${{ env.PROJECT_VERSION }}
+        name: Hashana-Windows-${{ env.PROJECT_VERSION }}
         path: target/installer/Hashana/
         if-no-files-found: error

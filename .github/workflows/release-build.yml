@@ -1,0 +1,137 @@
+# Used to release full builds for both Windows & Linux at once and push them to GitHub Releases
+name: Release Build and Publish to GitHub Release section
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The release version tag (e.g., vX.X.X)'
+        required: true
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    outputs:
+      RPM_VERSION: ${{ steps.rpm_version.outputs.RPM_VERSION }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Install jpackage dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fakeroot rpm
+
+      - name: Build with Maven and create runtime image
+        run: mvn -B clean install javafx:jlink --file pom.xml
+
+      - name: Extract project version from pom.xml
+        id: project_version
+        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+
+      - name: Create RPM-compliant version
+        id: rpm_version
+        run: echo "RPM_VERSION=$(echo ${{ steps.project_version.outputs.PROJECT_VERSION }} | sed 's/-beta//g')" >> $GITHUB_OUTPUT
+
+      - name: Run jpackage for .deb
+        run: |
+          jpackage --type deb \
+            --app-version ${{ steps.project_version.outputs.PROJECT_VERSION }} \
+            --name "Hashana" \
+            --vendor "Yurinero" \
+            --runtime-image target/hashana-runtime \
+            --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
+            --dest target/installer-deb \
+            --icon src/main/resources/me/yurinero/hashana/hashana-icon.png \
+            --linux-shortcut \
+            --linux-menu-group "Utilities" \
+            --linux-deb-maintainer contact@yurinero.me
+
+      - name: Run jpackage for .rpm
+        run: |
+          jpackage --type rpm \
+            --app-version ${{ steps.rpm_version.outputs.RPM_VERSION }} \
+            --name "Hashana" \
+            --vendor "Yurinero" \
+            --runtime-image target/hashana-runtime \
+            --module me.yurinero.hashana/me.yurinero.hashana.Hashana \
+            --dest target/installer-rpm \
+            --icon src/main/resources/me/yurinero/hashana/hashana-icon.png \
+            --linux-shortcut \
+            --linux-menu-group "Utilities"
+
+      - name: Archive Linux Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-builds
+          path: |
+            target/installer-deb/*.deb
+            target/installer-rpm/*.rpm
+          if-no-files-found: error
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven (jlink phase)
+        run: mvn -B clean install javafx:jlink --file pom.xml
+
+      - name: Extract project version from pom.xml
+        id: project_version
+        shell: bash
+        run: echo "PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+
+      - name: Run jpackage to create App-Image
+        shell: bash
+        run: jpackage --type "app-image" --name "Hashana" --dest "target/installer" --runtime-image "target/hashana-runtime" --module me.yurinero.hashana/me.yurinero.hashana.Hashana --icon src/main/resources/me/yurinero/hashana/hashana-icon.ico
+
+      - name: Zip the application image
+        shell: pwsh
+        run: |
+          $version = "${{ steps.project_version.outputs.PROJECT_VERSION }}"
+          Compress-Archive -Path target/installer/Hashana -DestinationPath "target/Hashana-Windows-AppImage-$version.zip"
+
+      - name: Archive Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: target/*.zip
+          if-no-files-found: error
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-windows]
+    permissions:
+      contents: write
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: Release ${{ github.event.inputs.version }}
+          body: "New release of Hashana. See assets below."
+          files: |
+            artifacts/linux-builds/*.deb
+            artifacts/linux-builds/*.rpm
+            artifacts/windows-build/*.zip

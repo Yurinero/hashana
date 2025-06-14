@@ -1,3 +1,4 @@
+#Used to create either a test build or hotfix build for Linux manually
 name: Java CI with Maven and jpackage for Linux
 
 on:
