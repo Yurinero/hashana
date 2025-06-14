@@ -132,6 +132,6 @@ jobs:
           name: Release ${{ github.event.inputs.version }}
           body: "New release of Hashana. See assets below."
           files: |
-            artifacts/linux-builds/*.deb
-            artifacts/linux-builds/*.rpm
+            artifacts/linux-builds/target/installer-deb/*.deb
+            artifacts/linux-builds/target/installer-rpm/*.rpm
             artifacts/windows-build/*.zip
