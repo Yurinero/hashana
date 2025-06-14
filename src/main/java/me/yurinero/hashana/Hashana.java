@@ -67,7 +67,7 @@ public class Hashana extends Application {
 			}
 		}
 
-		FXMLLoader fxmlLoader = new FXMLLoader(Hashana.class.getResource("main-view.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(Hashana.class.getResource("view/main-view.fxml"));
 		Scene scene = new Scene(fxmlLoader.load());
 		String activeTheme = appSettings.activeTheme;
 		String cssPath = ThemeUtils.getCssPathForTheme(activeTheme);
@@ -107,7 +107,7 @@ public class Hashana extends Application {
 	private boolean showLicenseAgreement() {
 		try {
 			// First, check if the FXML file can be found.
-			URL fxmlUrl = getClass().getResource("/me/yurinero/hashana/license-view.fxml");
+			URL fxmlUrl = getClass().getResource("/me/yurinero/hashana/view/license-view.fxml");
 			if (fxmlUrl == null) {
 				logger.error("FATAL: Could not find FXML resource: /me/yurinero/hashana/license-view.fxml");
 				return false;

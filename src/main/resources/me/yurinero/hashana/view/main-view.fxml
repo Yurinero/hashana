@@ -16,7 +16,7 @@
             <Button fx:id="closeButton" accessibleHelp="Close the application" accessibleText="Close" alignment="CENTER" mnemonicParsing="false" styleClass="closeButton" text="✕" />
         </HBox>
         <ImageView fitHeight="37.0" fitWidth="41.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../HASHANA.png" />
+            <Image url="@../../../../HASHANA.png" />
         </ImageView>
     </AnchorPane>
     <TabPane layoutY="31.0" prefHeight="439.0" prefWidth="845.0" tabClosingPolicy="UNAVAILABLE">

@@ -44,11 +44,14 @@ public class AboutController implements Initializable {
 				prop.load(inputStream);
 				String version = prop.getProperty("app.version", "N/A");
 				versionInfoLabel.setText(version);
+				logger.debug("Version set to: {}", version);
 			} else {
 				versionInfoLabel.setText("Not found");
+				logger.warn("Version not found");
 			}
 		} catch (IOException e) {
 			versionInfoLabel.setText("Error");
+			logger.warn("Error loading properties file", e);
 
 		}
 		aboutText.setText(
@@ -67,6 +70,11 @@ public class AboutController implements Initializable {
 						• Google Guava: github.com/google/guava
 						• Jackson: github.com/FasterXML/jackson
 						• SLF4J & Logback: www.slf4j.org & logback.qos.ch
+						
+						--- Contact ---
+						If you wish to contact me:
+						E-Mail: contact@yurinero.me
+						GitHub: github.com/Yurinero/hashana
 						
 						--- Disclaimer ---
 						

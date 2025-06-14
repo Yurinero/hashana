@@ -15,7 +15,7 @@
        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
            <VBox alignment="CENTER" focusTraversable="true" prefHeight="403.0" prefWidth="400.0" spacing="10.0">
                <ImageView fitHeight="73.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
-                   <Image url="@../../../HASHANA.png" />
+                   <Image url="@../../../../HASHANA.png" />
                </ImageView>
                <TextArea fx:id="aboutText" accessibleText="About Section" depthTest="DISABLE" editable="false" focusTraversable="false" prefHeight="264.0" prefWidth="457.0" wrapText="true">
                    <VBox.margin>
@@ -41,7 +41,7 @@
            </VBox>
        </HBox>
        <ImageView depthTest="DISABLE" fitHeight="408.0" fitWidth="261.0" pickOnBounds="true" preserveRatio="true">
-           <Image url="@../../../hashana-about.PNG" />
+           <Image url="@../../../../hashana-about.PNG" />
            <StackPane.margin>
                <Insets right="460.0" />
            </StackPane.margin>

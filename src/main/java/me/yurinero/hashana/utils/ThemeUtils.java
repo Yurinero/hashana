@@ -29,12 +29,12 @@ public class ThemeUtils {
 	}
 	public static String getCssPathForTheme(String themeName) {
 		return switch (themeName) {
-			case "Light" -> "/me/yurinero/hashana/light-theme.css";
-			case "Accessible" -> "/me/yurinero/hashana/accessible-theme.css";
-			case "Dark" -> "/me/yurinero/hashana/dark-theme.css"; // Default/fallback
+			case "Light" -> "/me/yurinero/hashana/stylesheets/light-theme.css";
+			case "Accessible" -> "/me/yurinero/hashana/stylesheets/accessible-theme.css";
+			case "Dark" -> "/me/yurinero/hashana/stylesheets/dark-theme.css"; // Default/fallback
 			default -> {
 				logger.error("Theme could not be found, defaulting to theme Dark: {}", themeName);
-				yield "/me/yurinero/hashana/dark-theme.css";
+				yield "/me/yurinero/hashana/stylesheets/dark-theme.css";
 			}
 		};
 	}

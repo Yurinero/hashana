@@ -152,6 +152,7 @@ public class FIleCheckController extends FileOperationController {
 	private void handleCalculateHash(ActionEvent event) {
 		if (selectedFile == null) {
 			showError("Please select a file first!");
+			logger.debug("Please select a file first!");
 			return;
 		}
 

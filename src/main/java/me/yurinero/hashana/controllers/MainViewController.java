@@ -82,7 +82,7 @@ public class MainViewController implements Initializable {
 		try {
 			logger.debug("Opening settings window");
 			// Load the settings FXML file
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/me/yurinero/hashana/settings-view.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/me/yurinero/hashana/view/settings-view.fxml"));
 			Parent root = loader.load();
 
 			// Create new stage for settings window
