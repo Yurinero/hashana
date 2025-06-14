@@ -99,6 +99,9 @@
     -fx-background-color: linear-gradient(to bottom, #0d47a1 0%, #0b3d91 100%);
     -fx-text-fill: #ffffff;
 }
+#calculateHashButton {
+    -fx-padding: 6px 6px !important;
+}
 
 /* Hash Info Field */
 #hashInfoField {

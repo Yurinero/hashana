@@ -144,7 +144,8 @@ public class Hashana extends Application {
 			// This will catch ANY exception during the process (file not found, FXML error, etc.)
 			// and log it with a full stack trace.
 			logger.error("A critical exception occurred while loading the license screen.", e);
-			return false; // Ensure the app exits if the license screen fails to load.
+			// Ensure the app exits if the license screen fails to load.
+			return false;
 		}
 
 		// After the window is closed, check the flag to confirm acceptance.
