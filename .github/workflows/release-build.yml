@@ -124,9 +124,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts/
-      
-      - name: Display structure of downloaded files
-        run: ls -R artifacts
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -135,6 +132,6 @@ jobs:
           name: Release ${{ github.event.inputs.version }}
           body: "New release of Hashana. See assets below."
           files: |
-            artifacts/linux-builds/target/installer-deb/*.deb
-            artifacts/linux-builds/target/installer-rpm/*.rpm
+            artifacts/linux-builds/installer-deb/*.deb
+            artifacts/linux-builds/installer-rpm/*.rpm
             artifacts/windows-build/*.zip
