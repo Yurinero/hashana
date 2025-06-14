@@ -21,65 +21,63 @@
         </HBox>
     </AnchorPane>
    <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
-      <children>
-          <GridPane alignment="CENTER" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
-              <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="101.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="67.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="33.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <TextField fx:id="bufferSize" accessibleHelp="Size of the buffer in Kilobytes (KB) used for file hashing operations. Larger values may speed up hashing for large files but consume more memory." accessibleText="Buffer Size" maxWidth="125.0" GridPane.columnIndex="1" />
-              <TextField fx:id="maxFileSize" accessibleHelp="Maximum allowed file size in Megabytes (MB) for hashing. Files larger than this will be rejected." accessibleText="Maximum File Size" maxWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-              <TextField fx:id="progressIntervalMS" accessibleHelp="Update interval in Milliseconds (ms) for the progress bar during file hashing. Lower values provide more frequent updates but may have a slight performance overhead." accessibleText="Progress Interval" maxWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-              <CheckBox fx:id="splashScreenEnabled" accessibleHelp="Controls whether the splashscreen should be shown during launch of the application.." accessibleText="Splashscreen Setting" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Enabled" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-              <Label text="Buffer Size" />
-              <Label text="Max. File Size" GridPane.rowIndex="1" />
-              <Label text="Progress Interval" GridPane.rowIndex="2" />
-              <Label text="Splashscreen" GridPane.rowIndex="4" />
-              <ChoiceBox fx:id="themeChoiceBox" accessibleHelp="Different styling options for the application." accessibleText="Styling Options" maxWidth="125.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-              <Label text="Styling" GridPane.rowIndex="5" />
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2">
-                  <tooltip>
-                      <Tooltip styleClass="help-tooltip" text="Size of the buffer in Kilobytes (KB) used for file hashing operations. Larger values may speed up hashing for large files but consume more memory." textAlignment="CENTER" wrapText="true" />
-                  </tooltip>
-              </Label>
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                  <tooltip>
-                      <Tooltip text="Maximum allowed file size in Megabytes (MB) for hashing. Files larger than this will be rejected." />
-                  </tooltip>
-            </Label>
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                  <tooltip>
-                      <Tooltip text="Update interval in Milliseconds (ms) for the progress bar during file hashing. Lower values provide more frequent updates but may have a slight performance overhead." />
-                  </tooltip>
-            </Label>
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                  <tooltip>
-                      <Tooltip text="Controls whether the splashscreen should be shown during launch of the application.." />
-                  </tooltip>
-            </Label>
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                  <tooltip>
-                      <Tooltip text="Different styling options for the application." />
-                  </tooltip>
-            </Label>
-              <Label text="Entropy Pool" GridPane.rowIndex="3" />
-              <TextField fx:id="maxEntropyPool" accessibleHelp="Size of the pool of random mouse movement to be captured into memory before being converted into 32 byte SHA256 string. " accessibleText="Entropy Pool" maxWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                  <tooltip>
-                      <Tooltip text="Size of the pool of random mouse movement to be captured into memory before being converted into 32 byte SHA256 string. " />
-                  </tooltip>
-              </Label>
-          </GridPane>
-      </children>
+       <GridPane alignment="CENTER" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+           <columnConstraints>
+               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="101.0" />
+               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="67.0" />
+               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="33.0" />
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+           </rowConstraints>
+           <TextField fx:id="bufferSize" accessibleHelp="Size of the buffer in Kilobytes (KB) used for file hashing operations. Larger values may speed up hashing for large files but consume more memory." accessibleText="Buffer Size" maxWidth="125.0" GridPane.columnIndex="1" />
+           <TextField fx:id="maxFileSize" accessibleHelp="Maximum allowed file size in Megabytes (MB) for hashing. Files larger than this will be rejected." accessibleText="Maximum File Size" maxWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+           <TextField fx:id="progressIntervalMS" accessibleHelp="Update interval in Milliseconds (ms) for the progress bar during file hashing. Lower values provide more frequent updates but may have a slight performance overhead." accessibleText="Progress Interval" maxWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+           <CheckBox fx:id="splashScreenEnabled" accessibleHelp="Controls whether the splashscreen should be shown during launch of the application.." accessibleText="Splashscreen Setting" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Enabled" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+           <Label text="Buffer Size" />
+           <Label text="Max. File Size" GridPane.rowIndex="1" />
+           <Label text="Progress Interval" GridPane.rowIndex="2" />
+           <Label text="Splashscreen" GridPane.rowIndex="4" />
+           <ChoiceBox fx:id="themeChoiceBox" accessibleHelp="Different styling options for the application." accessibleText="Styling Options" maxWidth="125.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+           <Label text="Styling" GridPane.rowIndex="5" />
+           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2">
+               <tooltip>
+                   <Tooltip styleClass="help-tooltip" text="Size of the buffer in Kilobytes (KB) used for file hashing operations. Larger values may speed up hashing for large files but consume more memory." textAlignment="CENTER" wrapText="true" />
+               </tooltip>
+           </Label>
+           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <tooltip>
+                   <Tooltip text="Maximum allowed file size in Megabytes (MB) for hashing. Files larger than this will be rejected." />
+               </tooltip>
+           </Label>
+           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <tooltip>
+                   <Tooltip text="Update interval in Milliseconds (ms) for the progress bar during file hashing. Lower values provide more frequent updates but may have a slight performance overhead." />
+               </tooltip>
+           </Label>
+           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <tooltip>
+                   <Tooltip text="Controls whether the splashscreen should be shown during launch of the application.." />
+               </tooltip>
+           </Label>
+           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <tooltip>
+                   <Tooltip text="Different styling options for the application." />
+               </tooltip>
+           </Label>
+           <Label text="Entropy Pool" GridPane.rowIndex="3" />
+           <TextField fx:id="maxEntropyPool" accessibleHelp="Size of the pool of random mouse movement to be captured into memory before being converted into 32 byte SHA256 string. " accessibleText="Entropy Pool" maxWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="22.0" styleClass="help-icon-label" text="?" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <tooltip>
+                   <Tooltip text="Size of the pool of random mouse movement to be captured into memory before being converted into 32 byte SHA256 string. " />
+               </tooltip>
+           </Label>
+       </GridPane>
    </AnchorPane>
     <Label fx:id="statusLabel" alignment="CENTER" layoutX="3.0" layoutY="321.0" prefHeight="31.0" prefWidth="426.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="325.0" />
 </AnchorPane>

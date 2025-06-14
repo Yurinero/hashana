@@ -90,7 +90,7 @@ public class Hashana extends Application {
 		MainViewController controller = fxmlLoader.getController();
 		controller.setStage(stage);
 		// This is also for the system tray, because we need two, apparently. Words fail me.
-		stage.getIcons().add(new Image(Hashana.class.getResourceAsStream("hashana-icon.png")));
+		stage.getIcons().add(new Image(Objects.requireNonNull(Hashana.class.getResourceAsStream("hashana-icon.png"))));
 		setupSystemTray(stage);
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setTitle("Hashana");
