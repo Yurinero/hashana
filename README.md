@@ -32,6 +32,18 @@ By clicking the gear icon in the top-right corner, next to the Minimize and Clos
 
 **Styling:** Three possible styling options. Dark/Light are based on Catpuccin colour schemes, while Accessible aims to follow WCAG 2.1 standards.
 
+## Screenshots
+### Hash
+![hash_tabpng](https://github.com/user-attachments/assets/79afa77f-a8d0-4847-81b2-7bf713959657)
+### Verify Checksum
+![verify_checksum_tab](https://github.com/user-attachments/assets/bf83a643-93aa-495c-92cb-08fed3b99b15)
+### Create Checksum
+![create_checksum_tab](https://github.com/user-attachments/assets/92751d41-6510-4473-a726-687df2ce4db6)
+### Password Generator
+![password_gen_tab](https://github.com/user-attachments/assets/d035fe57-95c0-4a7e-ba1d-6ea8345d55b9)
+### Settings
+![settings_tab](https://github.com/user-attachments/assets/1c9b6d6f-7a8d-4f4d-9622-193977ec836d)
+
 ## Credits
 Libraries used:
 
