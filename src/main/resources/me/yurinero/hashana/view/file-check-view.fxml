@@ -8,78 +8,74 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="rootAnchor" prefHeight="400.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.FIleCheckController">
-   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-       <AnchorPane fx:id="fileCheckAnchor" prefHeight="300.0" prefWidth="596.0" styleClass="content-pane">
-         <VBox alignment="CENTER" prefHeight="300.0" prefWidth="358.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-             <GridPane alignment="CENTER" hgap="5.0" vgap="5.0">
-                 <columnConstraints>
-                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="217.5" minWidth="10.0" prefWidth="153.0" />
-                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.5" minWidth="10.0" prefWidth="130.0" />
-                 </columnConstraints>
-                 <rowConstraints>
-                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                 </rowConstraints>
-                 <Button fx:id="verifyButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleVerify" text="Verify" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                     <GridPane.margin>
-                         <Insets />
-                     </GridPane.margin>
-                 </Button>
-                 <TextField fx:id="computedHashField" accessibleHelp="The computed hash from the file will appear here." accessibleText="Computed hash field" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                 <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="107.0" text="Computed Hash:" GridPane.rowIndex="4" />
-                 <TextField fx:id="expectedHashField" accessibleHelp="Paste the known checksum here to compare against. The application will attempt to auto-fill this if a checksum file is found." accessibleText="Expected Hash" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                 <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="103.0" text="Expected Hash:" GridPane.rowIndex="2" />
-                 <Button fx:id="browseButton" accessibleHelp="Browse for files on your computer to check the hash." accessibleText="Browse" onAction="#handleFileBrowse" text="Browse..." GridPane.columnIndex="2">
-                     <tooltip>
-                         <Tooltip fx:id="cancelTooltip" text="CTRL + O" textAlignment="CENTER" wrapText="true" />
-                     </tooltip>
-                     <GridPane.margin>
-                         <Insets />
-                     </GridPane.margin>
-                 </Button>
-                 <TextField fx:id="filePathField" accessibleHelp="Displays the path of the selected file to verify. Use the browse button to select a file." accessibleText="File Path" editable="false" GridPane.columnIndex="1" />
-                 <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="17.0" prefWidth="103.0" text="Select File:" />
-                 <Label fx:id="verificationStatus" alignment="CENTER" prefHeight="17.0" prefWidth="178.0" text="Match?" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                 <HBox alignment="CENTER" prefHeight="22.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <Button fx:id="cancelButton" accessibleHelp="This button will cancel the file check operation, use CTRL + X as a shortcut." accessibleText="Cancel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
-                 </HBox>
-                 <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="106.0" text="Algorithm:" GridPane.rowIndex="1" />
-                 <Button fx:id="calculateHashButton" accessibleHelp="Initiate the hash calculation after selecting a file." accessibleText="Calculate hash" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#handleCalculateHash" prefHeight="25.0" prefWidth="78.0" text="Calculate" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                 <HBox alignment="CENTER" prefHeight="29.0" prefWidth="172.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <ChoiceBox fx:id="fileHashChoice" accessibleHelp="Choose the relevant hashing algorhitm" accessibleText="Algorhitm Choice Box" prefHeight="25.0" prefWidth="113.0" />
-                 </HBox>
-                 <VBox.margin>
-                     <Insets />
-                 </VBox.margin>
-             </GridPane>
-             <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="17.0" prefWidth="406.0" text="Progress" textAlignment="CENTER">
-                 <VBox.margin>
-                     <Insets left="10.0" right="10.0" />
-                 </VBox.margin>
-             </Label>
-             <ProgressBar fx:id="hashProgress" prefHeight="18.0" prefWidth="303.0" progress="0.0" />
-         </VBox>
-           <HBox.margin>
-               <Insets bottom="30.0" top="50.0" />
-           </HBox.margin>
-       </AnchorPane>
-       <AnchorPane prefHeight="290.0" prefWidth="349.0">
-           <TextArea fx:id="helpTextArea" accessibleText="Instructions" editable="false" focusTraversable="false" layoutX="5.0" prefHeight="281.0" prefWidth="340.0" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="10.0" />
-       </AnchorPane>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-   </HBox>
 
-</AnchorPane>
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.FIleCheckController">
+   <VBox alignment="CENTER" spacing="5.0" styleClass="content-pane" HBox.hgrow="ALWAYS">
+       <GridPane alignment="CENTER" hgap="2.0" VBox.vgrow="ALWAYS">
+           <columnConstraints>
+               <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
+               <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+               <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints vgrow="ALWAYS" />
+               <RowConstraints vgrow="ALWAYS" />
+               <RowConstraints vgrow="ALWAYS" />
+               <RowConstraints vgrow="ALWAYS" />
+               <RowConstraints vgrow="ALWAYS" />
+               <RowConstraints vgrow="ALWAYS" />
+           </rowConstraints>
+           <Button fx:id="verifyButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleVerify" text="Verify" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+               <GridPane.margin>
+                   <Insets />
+               </GridPane.margin>
+           </Button>
+           <TextField fx:id="computedHashField" accessibleHelp="The computed hash from the file will appear here." accessibleText="Computed hash field" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+           <Label alignment="CENTER_RIGHT" text="Computed Hash:" GridPane.rowIndex="4" />
+           <TextField fx:id="expectedHashField" accessibleHelp="Paste the known checksum here to compare against. The application will attempt to auto-fill this if a checksum file is found." accessibleText="Expected Hash" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+           <Label alignment="CENTER_RIGHT" text="Expected Hash:" GridPane.rowIndex="2" />
+           <Button fx:id="browseButton" accessibleHelp="Browse for files on your computer to check the hash." accessibleText="Browse" onAction="#handleFileBrowse" text="Browse..." GridPane.columnIndex="2" GridPane.hgrow="ALWAYS">
+               <tooltip>
+                   <Tooltip fx:id="cancelTooltip" text="CTRL + O" textAlignment="CENTER" wrapText="true" />
+               </tooltip>
+               <GridPane.margin>
+                   <Insets />
+               </GridPane.margin>
+           </Button>
+           <TextField fx:id="filePathField" accessibleHelp="Displays the path of the selected file to verify. Use the browse button to select a file." accessibleText="File Path" editable="false" GridPane.columnIndex="1" />
+           <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="0.0" text="Select File:" />
+           <Label fx:id="verificationStatus" alignment="CENTER" prefHeight="17.0" prefWidth="178.0" text="Match?" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+           <HBox alignment="CENTER" prefHeight="22.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <Button fx:id="cancelButton" accessibleHelp="This button will cancel the file check operation, use CTRL + X as a shortcut." accessibleText="Cancel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" />
+           </HBox>
+           <Label alignment="CENTER_RIGHT" text="Algorithm:" GridPane.rowIndex="1" />
+           <Button fx:id="calculateHashButton" accessibleHelp="Initiate the hash calculation after selecting a file." accessibleText="Calculate hash" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#handleCalculateHash" text="Calculate" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+           <HBox alignment="CENTER" prefHeight="29.0" prefWidth="172.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <ChoiceBox fx:id="fileHashChoice" accessibleHelp="Choose the relevant hashing algorhitm" accessibleText="Algorhitm Choice Box" />
+           </HBox>
+           <VBox.margin>
+               <Insets />
+           </VBox.margin>
+       </GridPane>
+       <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" text="Progress" textAlignment="CENTER">
+           <VBox.margin>
+               <Insets left="10.0" right="10.0" />
+           </VBox.margin>
+       </Label>
+       <ProgressBar fx:id="hashProgress" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" progress="0.0" />
+      <HBox.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </HBox.margin>
+   </VBox>
+     <TextArea fx:id="helpTextArea" accessibleText="Instructions" editable="false" focusTraversable="false" wrapText="true" HBox.hgrow="ALWAYS">
+      <HBox.margin>
+         <Insets bottom="10.0" right="10.0" top="10.0" />
+      </HBox.margin>
+   </TextArea>
+</HBox>

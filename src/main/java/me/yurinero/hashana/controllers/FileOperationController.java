@@ -24,6 +24,7 @@ import com.google.common.hash.Hasher;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -55,7 +56,7 @@ public abstract class FileOperationController {
 	protected abstract ProgressBar getProgressBar();
 	protected abstract Label getProgressLabel();
 	protected abstract Button getCancelButton();
-	protected abstract AnchorPane getRootPane();
+	// protected abstract AnchorPane getRootPane();
 
 	// Abstract hooks for subclass specific logic
 
@@ -197,11 +198,6 @@ public abstract class FileOperationController {
 
 	public void addAccelerator(KeyCode keyCode, KeyCombination.Modifier modifier, Runnable action ) {
 		KeyCombination keyCombination = new KeyCodeCombination(keyCode, modifier);
-		getRootPane().sceneProperty().addListener((observable, oldScene, newScene) -> {
-			if (newScene != null) {
-				newScene.getAccelerators().put(keyCombination, action);
-			}
-		});
 	}
 
 }
