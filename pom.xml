@@ -6,7 +6,7 @@
 
     <groupId>me.yurinero</groupId>
     <artifactId>hashana</artifactId>
-    <version>1.0.0-release</version>
+    <version>1.0.1-dev</version>
     <name>hashana</name>
 
     <properties>
