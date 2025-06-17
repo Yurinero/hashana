@@ -10,14 +10,14 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="422.0" prefWidth="729.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.AboutController">
-   <StackPane prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-           <VBox alignment="CENTER" focusTraversable="true" prefHeight="403.0" prefWidth="400.0" spacing="10.0">
-               <ImageView fitHeight="73.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.AboutController">
+   <StackPane AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+       <HBox alignment="CENTER" StackPane.alignment="CENTER">
+           <VBox alignment="CENTER" focusTraversable="true" spacing="10.0" HBox.hgrow="NEVER">
+               <ImageView fitHeight="73.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
                    <Image url="@../../../../HASHANA.png" />
                </ImageView>
-               <TextArea fx:id="aboutText" accessibleText="About Section" depthTest="DISABLE" editable="false" focusTraversable="false" prefHeight="264.0" prefWidth="457.0" wrapText="true">
+               <TextArea fx:id="aboutText" accessibleText="About Section" depthTest="DISABLE" editable="false" focusTraversable="false" prefHeight="264.0" prefWidth="457.0" wrapText="true" VBox.vgrow="ALWAYS">
                    <VBox.margin>
                        <Insets />
                    </VBox.margin>
@@ -40,7 +40,7 @@
                </HBox.margin>
            </VBox>
        </HBox>
-       <ImageView depthTest="DISABLE" fitHeight="408.0" fitWidth="261.0" pickOnBounds="true" preserveRatio="true">
+       <ImageView depthTest="DISABLE" fitHeight="408.0" fitWidth="261.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
            <Image url="@../../../../hashana-about.PNG" />
            <StackPane.margin>
                <Insets right="460.0" />
