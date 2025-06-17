@@ -78,6 +78,21 @@ public class MainViewController implements Initializable {
 			Platform.exit();
 			System.exit(0);
 		});
+		// Dynamically change the font size based on window size.
+		// Add a listener to the stage's width property
+		this.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+			// Calculate a new base font size.
+			double newSize = newVal.doubleValue() / 90; // Example formula
+
+			// Set a minimum size to prevent text from becoming too small
+			if (newSize < 12) {
+				newSize = 12;
+			}
+
+			// Get the root node of the scene and update its font size style
+			Parent root = this.stage.getScene().getRoot();
+			root.setStyle("-fx-font-size: " + newSize + "px;");
+		});
 		logger.debug("Setting up window controls");
 	}
 
