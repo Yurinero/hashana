@@ -162,6 +162,7 @@
 }
 
 /* Default state for title bar buttons */
+#maximizeButton,
 #minimizeButton,
 #closeButton,
 #settingsButton {
@@ -169,10 +170,13 @@
     -fx-text-fill: #89b4fa;          /* Light blue text directly on button (fallback) */
     -fx-padding: 5px 10px;           /* Adjust padding as needed for title bar */
     -fx-effect: none;                /* Remove general button dropshadow */
+    -fx-font-size: 14px !important;
+
 
 }
 
 /* Specifically style the inner text node for title bar buttons */
+#maximizeButton .text,
 #minimizeButton .text,
 #closeButton .text,
 #settingsButton .text {
@@ -180,10 +184,12 @@
 }
 
 /* Hover states for title bar buttons */
+#maximizeButton:hover,
 #minimizeButton:hover,
 #settingsButton:hover {
     -fx-background-color: #45475a; /* Surface1 */
 }
+#maximizeButton:hover .text,
 #minimizeButton:hover .text,
 #settingsButton:hover .text {
     -fx-fill: #89b4fa !important; /* Keep text light blue on hover, or change as needed */
