@@ -85,7 +85,7 @@ public class Hashana extends Application {
 			System.err.println("Couldn't find css path: " + cssPath);
 		}
 
-
+		stage.setScene(scene);
 		// Needed to pass the stage to the MainViewController
 		MainViewController controller = fxmlLoader.getController();
 		controller.setStage(stage);
@@ -94,7 +94,6 @@ public class Hashana extends Application {
 		setupSystemTray(stage);
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setTitle("Hashana");
-		stage.setScene(scene);
 		stage.show();
 
 

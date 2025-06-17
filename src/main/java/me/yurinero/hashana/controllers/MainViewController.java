@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.yurinero.hashana.utils.ThemeUtils;
 import me.yurinero.hashana.utils.UserSettings;
+import me.yurinero.hashana.utils.WindowResizer;
 import me.yurinero.hashana.utils.WindowUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,7 @@ public class MainViewController implements Initializable {
 		WindowUtils.setupDragging(this.stage, titleBar);
 		WindowUtils.setupMinimizeButton(this.stage, minimizeButton);
 		WindowUtils.setupMaximizeRestore(this.stage, maximizeButton);
+		new WindowResizer(stage);
 
 		// Since the main window also exists the application, it needs specific logic for it, as such the WindowUtils class isn't relevant.
 		closeButton.setOnAction(event -> {
