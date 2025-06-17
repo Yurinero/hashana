@@ -52,6 +52,7 @@ public class MainViewController implements Initializable {
 	public Button settingsButton;
 	public Button minimizeButton;
 	public Button closeButton;
+	public Button maximizeButton;
 
 	private Stage stage;
 	private  static final Logger logger = LoggerFactory.getLogger(MainViewController.class);
@@ -68,6 +69,7 @@ public class MainViewController implements Initializable {
 		// Setup window controls using WindowUtils class.
 		WindowUtils.setupDragging(this.stage, titleBar);
 		WindowUtils.setupMinimizeButton(this.stage, minimizeButton);
+		WindowUtils.setupMaximizeRestore(this.stage, maximizeButton);
 
 		// Since the main window also exists the application, it needs specific logic for it, as such the WindowUtils class isn't relevant.
 		closeButton.setOnAction(event -> {
