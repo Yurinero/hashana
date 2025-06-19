@@ -18,6 +18,11 @@
 .tab:selected {
     -fx-background-color: #1a56db; /* Darker blue for contrast */
     -fx-text-fill: #ffffff;
+    /* Prevent default JavaFX focus ring from being drawn,
+       the background colour change provides enough of a highlight.*/
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-color: transparent;
 }
 
 .tab-label {
