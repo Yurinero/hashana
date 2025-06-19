@@ -56,7 +56,6 @@ public abstract class FileOperationController {
 	protected abstract ProgressBar getProgressBar();
 	protected abstract Label getProgressLabel();
 	protected abstract Button getCancelButton();
-	// protected abstract AnchorPane getRootPane();
 
 	// Abstract hooks for subclass specific logic
 
@@ -198,6 +197,16 @@ public abstract class FileOperationController {
 
 	public void addAccelerator(KeyCode keyCode, KeyCombination.Modifier modifier, Runnable action ) {
 		KeyCombination keyCombination = new KeyCodeCombination(keyCode, modifier);
+		// Using the getFilePathField to get a Node to the scene property and listen for initialization so we can set up the shortcuts properly.
+		getFilePathField().sceneProperty().addListener((obs, oldScene, newScene) -> {
+			if (oldScene != null) {
+				// Clean up the accelerator from the old scene if it changes
+				oldScene.getAccelerators().remove(keyCombination);
+			}
+			if (newScene != null) {
+				newScene.getAccelerators().put(keyCombination, action);
+			}
+		});
 	}
 
 }

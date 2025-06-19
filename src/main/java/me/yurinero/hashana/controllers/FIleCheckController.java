@@ -108,7 +108,6 @@ public class FIleCheckController extends FileOperationController {
 	@Override protected ProgressBar getProgressBar() { return hashProgress; }
 	@Override protected Label getProgressLabel() { return progressLabel; }
 	@Override protected Button getCancelButton() { return cancelButton; }
-	// @Override protected AnchorPane getRootPane() { return rootAnchor; }
 
 	// Controller Specific methods
 
