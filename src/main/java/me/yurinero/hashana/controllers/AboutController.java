@@ -43,7 +43,7 @@ public class AboutController implements Initializable {
 			if (inputStream != null) {
 				prop.load(inputStream);
 				String version = prop.getProperty("app.version", "N/A");
-				versionInfoLabel.setText(version);
+				versionInfoLabel.setText("Version: " + version);
 				logger.debug("Version set to: {}", version);
 			} else {
 				versionInfoLabel.setText("Not found");
