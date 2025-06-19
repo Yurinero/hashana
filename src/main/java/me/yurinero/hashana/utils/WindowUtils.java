@@ -19,6 +19,7 @@
 package me.yurinero.hashana.utils;
 
 
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -63,6 +64,17 @@ public class WindowUtils {
 	 */
 	public static void setupCloseButton(Stage stage, Button closeButton) {
 		closeButton.setOnAction(event -> stage.close());
+	}
+
+	/** Sets up a button to close down/exit the entire application.
+	 *
+	 * @param closeButton The button to trigger the action.
+	 */
+	public static void setupApplicationCloseButton(Button closeButton) {
+		closeButton.setOnAction(event -> {
+			Platform.exit();
+			System.exit(0);
+		});
 	}
 
 	/** Sets up a button to minimize the stage.

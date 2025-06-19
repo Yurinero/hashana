@@ -71,14 +71,11 @@ public class MainViewController implements Initializable {
 		WindowUtils.setupDragging(this.stage, titleBar);
 		WindowUtils.setupMinimizeButton(this.stage, minimizeButton);
 		WindowUtils.setupMaximizeRestore(this.stage, maximizeButton);
+		WindowUtils.setupDoubleClickMaximizeRestore(this.stage, titleBar);
+		WindowUtils.setupApplicationCloseButton(closeButton);
+		// Setup window resizing by edge-dragging using the WindowResizer class.
 		new WindowResizer(stage);
 
-		WindowUtils.setupDoubleClickMaximizeRestore(this.stage, titleBar);
-		// Since the main window also exists the application, it needs specific logic for it, as such the WindowUtils class isn't relevant.
-		closeButton.setOnAction(event -> {
-			Platform.exit();
-			System.exit(0);
-		});
 		// Dynamically change the font size based on window size.
 		// Add a listener to the stage's width property
 		this.stage.widthProperty().addListener((obs, oldVal, newVal) -> {
