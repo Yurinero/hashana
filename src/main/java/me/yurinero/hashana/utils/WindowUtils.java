@@ -116,6 +116,14 @@ public class WindowUtils {
 		stage.setWidth(visualBounds.getWidth());
 		stage.setHeight(visualBounds.getHeight());
 
+		// Check if the visual bounds take up the whole screen height.
+		// If so, subtract 1px to allow an auto-hiding taskbar to appear.
+		if (visualBounds.getHeight() == Screen.getPrimary().getBounds().getHeight()) {
+			stage.setHeight(visualBounds.getHeight() - 1);
+		} else {
+			stage.setHeight(visualBounds.getHeight());
+		}
+
 		state.maximized = true;
 	}
 
