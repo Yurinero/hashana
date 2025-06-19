@@ -22,6 +22,7 @@ package me.yurinero.hashana.utils;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -85,6 +86,24 @@ public class WindowUtils {
 				restoreWindow(stage, state);
 			} else {
 				maximizeWindow(stage, state);
+			}
+		});
+	}
+
+	/** Sets up a node, such as a custom title bar to maximize/minimize the window if double-clicked.
+	 *
+	 * @param stage The stage to be maximized.
+	 * @param title The node on which to listen for a double click event.
+	 */
+	public static void setupDoubleClickMaximizeRestore(Stage stage, Node title) {
+		title.setOnMouseClicked(event -> {
+			WindowState state = getWindowState(stage);
+			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+				if (state.maximized) {
+					restoreWindow(stage, state);
+				} else  {
+					maximizeWindow(stage, state);
+				}
 			}
 		});
 	}

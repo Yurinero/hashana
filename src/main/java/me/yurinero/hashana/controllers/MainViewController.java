@@ -73,6 +73,7 @@ public class MainViewController implements Initializable {
 		WindowUtils.setupMaximizeRestore(this.stage, maximizeButton);
 		new WindowResizer(stage);
 
+		WindowUtils.setupDoubleClickMaximizeRestore(this.stage, titleBar);
 		// Since the main window also exists the application, it needs specific logic for it, as such the WindowUtils class isn't relevant.
 		closeButton.setOnAction(event -> {
 			Platform.exit();
