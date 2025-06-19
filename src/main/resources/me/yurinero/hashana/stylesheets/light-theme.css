@@ -50,13 +50,11 @@
 .text-area .content {
     -fx-background-color: #ccd0da; /* Surface0 */
 }
-
-/* Hash ChoiceBox */
 .choice-box {
     -fx-background-color: #ccd0da; /* Surface0 */
     -fx-mark-color: #1e66f5; /* Blue */
     -fx-text-fill: #4c4f69; /* Text */
-    -fx-border-color: #9ca0b0; /* Overlay0 */
+    -fx-border-color: #4c4f69; /* Overlay0 */
     -fx-border-radius: 5px;
 }
 
@@ -93,16 +91,6 @@
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #5c73e7 0%, #1a5ce0 100%);
     -fx-text-fill: #eff1f5;
-}
-/* Hash Info Field */
-#hashInfoField {
-    -fx-background-color: #bcc0cc; /* Surface1 */
-    -fx-border-color: #acb0be; /* Surface2 */
-}
-
-/* About Section */
-#aboutPane {
-    -fx-background-color: #eff1f5; /* Base */
 }
 
 /* Focus highlighting */
