@@ -46,7 +46,6 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-padding: 8px;
-    -fx-font-size: 14px; /* Larger font size */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 
@@ -61,7 +60,6 @@
     -fx-text-fill: #222222; /* Near-black text */
     -fx-border-color: #888888;
     -fx-border-radius: 5px;
-    -fx-font-size: 14px;
 }
 
 .choice-box .menu-item:focused {
@@ -88,7 +86,6 @@
     -fx-padding: 6px 12px; /* More padding */
     -fx-cursor: hand;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 0, 2, 0, 1);
 }
 .button .text {
@@ -107,7 +104,6 @@
 #hashInfoField {
     -fx-background-color: #e8eaf6; /* Light blue-gray */
     -fx-border-color: #888888;
-    -fx-font-size: 14px;
 }
 
 /* About Section */
@@ -179,6 +175,7 @@
 }
 
 /* Default state for title bar buttons */
+#maximizeButton,
 #minimizeButton,
 #closeButton,
 #settingsButton {
@@ -192,6 +189,7 @@
 }
 
 /* Specifically style the inner text node for title bar buttons */
+#maximizeButton .text,
 #minimizeButton .text,
 #closeButton .text,
 #settingsButton .text {
@@ -199,10 +197,13 @@
 }
 
 /* Hover states for title bar buttons */
+#maximizeButton:hover,
 #minimizeButton:hover,
 #settingsButton:hover {
     -fx-background-color: rgba(255,255,255,0.2); /* Semi-transparent white (as per original) */
 }
+
+#maximizeButton:hover .text,
 #minimizeButton:hover .text,
 #settingsButton:hover .text {
     -fx-fill: #ffffff !important;         /* Keep text White on hover */
@@ -258,7 +259,7 @@
 }
 
 .label {
-    -fx-font-size: 12px;
+    -fx-font-size: 1em;
 }
 
 /* Focus indicators for keyboard navigation */

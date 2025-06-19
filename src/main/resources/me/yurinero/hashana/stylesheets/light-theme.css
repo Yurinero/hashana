@@ -170,6 +170,7 @@
 }
 
 /* Default state for title bar buttons */
+#maximizeButton,
 #minimizeButton,
 #closeButton,
 #settingsButton {
@@ -179,9 +180,11 @@
     -fx-border-radius: 0;               /* Ensure no radius */
     -fx-padding: 5px 10px;                /* Adjust padding as needed, or use original values: 0 for some? */
     -fx-effect: none;                     /* Remove general button dropshadow */
+    -fx-font-size: 14px !important;
 }
 
 /* Specifically style the inner text node for title bar buttons */
+#maximizeButton .text,
 #minimizeButton .text,
 #closeButton .text,
 #settingsButton .text {
@@ -189,11 +192,13 @@
 }
 
 /* Hover states for title bar buttons */
+#maximizeButton:hover,
 #minimizeButton:hover,
 #settingsButton:hover {
     -fx-background-color: #bcc0cc;        /* Surface1 (as per your original light theme spec) */
 }
 /* Text on hover for these buttons */
+#maximizeButton:hover .text,
 #minimizeButton:hover .text,
 #settingsButton:hover .text {
     -fx-fill: #1e66f5 !important;         /* Keep text Blue on hover, or change if needed */

@@ -5,46 +5,43 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.AboutController">
-   <StackPane AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-       <HBox alignment="CENTER" StackPane.alignment="CENTER">
-           <VBox alignment="CENTER" focusTraversable="true" spacing="10.0" HBox.hgrow="NEVER">
-               <ImageView fitHeight="73.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
-                   <Image url="@../../../../HASHANA.png" />
-               </ImageView>
-               <TextArea fx:id="aboutText" accessibleText="About Section" depthTest="DISABLE" editable="false" focusTraversable="false" prefHeight="264.0" prefWidth="457.0" wrapText="true" VBox.vgrow="ALWAYS">
-                   <VBox.margin>
-                       <Insets />
-                   </VBox.margin>
-               </TextArea>
-               <HBox alignment="CENTER" fillHeight="false" prefHeight="27.0" prefWidth="350.0">
-                   <Label fx:id="versionInfoLabel" accessibleHelp="Currently running version of Hashana" accessibleText="Application Version" prefHeight="17.0" prefWidth="130.0" text="Label">
-                       <graphic>
-                           <Label text="Version:" />
-                       </graphic>
-                   </Label>
-                   <VBox.margin>
-                       <Insets bottom="10.0" />
-                   </VBox.margin>
-               </HBox>
-               <padding>
-                   <Insets left="10.0" right="10.0" />
-               </padding>
-               <HBox.margin>
-                   <Insets />
-               </HBox.margin>
-           </VBox>
-       </HBox>
-       <ImageView depthTest="DISABLE" fitHeight="408.0" fitWidth="261.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
-           <Image url="@../../../../hashana-about.PNG" />
-           <StackPane.margin>
-               <Insets right="460.0" />
-           </StackPane.margin>
-       </ImageView>
-   </StackPane>
-</AnchorPane>
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.yurinero.hashana.controllers.AboutController">
+    <HBox alignment="CENTER" StackPane.alignment="CENTER">
+        <VBox alignment="CENTER" focusTraversable="true" spacing="10.0" HBox.hgrow="ALWAYS">
+            <ImageView fitHeight="73.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="SOMETIMES">
+                <Image url="@../../../../HASHANA.png" />
+            </ImageView>
+            <TextArea fx:id="aboutText" accessibleText="About Section" depthTest="DISABLE" editable="false" focusTraversable="false" prefHeight="264.0" prefWidth="457.0" wrapText="true" VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets left="100.0" right="100.0" />
+                </VBox.margin>
+            </TextArea>
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="27.0" prefWidth="350.0">
+                <Label fx:id="versionInfoLabel" accessibleHelp="Currently running version of Hashana" accessibleText="Application Version" prefHeight="17.0" prefWidth="130.0" text="Label">
+                    <graphic>
+                        <Label text="Version:" />
+                    </graphic>
+                </Label>
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </HBox>
+            <padding>
+                <Insets left="10.0" right="10.0" />
+            </padding>
+            <HBox.margin>
+                <Insets />
+            </HBox.margin>
+        </VBox>
+    </HBox>
+    <ImageView depthTest="DISABLE" fitHeight="408.0" fitWidth="261.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_LEFT">
+        <Image url="@../../../../hashana-about.PNG" />
+      <StackPane.margin>
+         <Insets />
+      </StackPane.margin>
+    </ImageView>
+</StackPane>
